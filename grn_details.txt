@@ -1,0 +1,36 @@
+-Item master
+	-code
+	-stock
+	-name
+	-id
+
+-Stock master
+	-id
+	-count
+	-item_id
+	-company_id
+
+-Transaction
+	-id
+	-transaction_code
+	-sender
+	-sender_details
+	-recivr
+	-recvr_details
+	-status
+	
+-Transaction_details
+	-id
+	-transaction_id
+	-details
+	-status['send','accepted','rejected']
+	-notes
+
+-Accepted_details
+	-transaction_details_id
+	-quantity
+	-inspected
+
+
+
+

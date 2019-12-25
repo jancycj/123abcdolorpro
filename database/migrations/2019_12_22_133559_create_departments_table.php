@@ -15,6 +15,13 @@ class CreateDepartmentsTable extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('company_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
+            $table->string('autherized_person')->nullable();
+            $table->string('autherized_person_phone')->nullable();
+            $table->enum('status',['active','inactive', 'blocked']);
+            $table->unsignedInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

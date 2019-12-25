@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsTable extends Migration
+class CreateShadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('shades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->nullable();
-            $table->enum('method', ['get','post', 'delete','put']);
-            $table->enum('type', ['view','create', 'edit','delete']);
-            $table->string('url')->nullable();
-            $table->unsignedInteger('page_id');
+            $table->string('name')->nullable();
+            $table->string('colour')->nullable();
+            $table->string('code')->nullable();
+            $table->integer('priority')->nullable();
             $table->unsignedInteger('created_by')->nullable();
+            $table->enum('status',['active','inactive', 'blocked']);
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('shades');
     }
 }

@@ -9,13 +9,13 @@
                     <li class="menu-title">User Management</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Company</a>
-                        <ul class="sub-menu children dropdown-menu">                            <li><i class="fa fa-puzzle-piece"></i><a href="{{url('/companies')}}">Comapany</a></li>
+                        <ul class="sub-menu children dropdown-menu">                            <li><i class="fa fa-puzzle-piece"></i><a href="{{url('/admin/companies')}}">Comapany</a></li>
                             <li><i class="fa fa-id-badge"></i><a href="{{url('/branches')}}">Branch</a></li>
                             <li><i class="fa fa-bars"></i><a href="{{url('/departments')}}">Departments</a></li>
 
                             <li><i class="fa fa-id-card-o"></i><a href="{{url('/employees')}}">Employee</a></li>
                             <li><i class="fa fa-exclamation-triangle"></i><a href="{{url('/companies')}}">State</a></li>
-                            <li><i class="fa fa-spinner"></i><a href="{{url('/companies')}}">District </a></li>
+                            <li><i class="fa fa-spinner"></i><a href="{{url('/admin/companies')}}">District </a></li>
                             <li><i class="fa fa-fire"></i><a href="{{url('/companies')}}">Locations</a></li>
                             <li><i class="fa fa-book"></i><a href="{{url('/companies')}}">Shades</a></li>
                             <li><i class="fa fa-th"></i><a href="{{url('/companies')}}">Genders</a></li>

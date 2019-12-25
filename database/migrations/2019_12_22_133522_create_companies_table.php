@@ -15,6 +15,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('parent_id')->default(0);
             $table->string('name')->nullable();
             $table->string('short_name')->nullable();
             $table->string('autherized_person')->nullable();
@@ -47,7 +48,6 @@ class CreateCompaniesTable extends Migration
             $table->string('ce_collectorate')->nullable();
             $table->string('service_tax_reg_no')->nullable();
             $table->string('pan_gir_no')->nullable();
-            $table->string('ie_code')->nullable();
             $table->string('ie_code')->nullable();
             $table->date('ie_reg_date')->nullable();
             $table->string('municipal_trade_licence')->nullable();

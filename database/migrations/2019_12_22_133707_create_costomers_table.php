@@ -48,7 +48,6 @@ class CreateCostomersTable extends Migration
             $table->string('service_tax_reg_no')->nullable();
             $table->string('pan_gir_no')->nullable();
             $table->string('ie_code')->nullable();
-            $table->string('ie_code')->nullable();
             $table->date('ie_reg_date')->nullable();
             $table->string('municipal_trade_licence')->nullable();
             $table->string('leagel_meterology_sales')->nullable();

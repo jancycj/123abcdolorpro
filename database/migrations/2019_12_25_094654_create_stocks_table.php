@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBranchesTable extends Migration
+class CreateStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateBranchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('branches', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('ref_no')->nullable();
             $table->unsignedInteger('company_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('code')->nullable();
-            $table->string('autherized_person')->nullable();
-            $table->string('autherized_person_phone')->nullable();
-            $table->enum('status',['active','inactive', 'blocked']);
+            $table->unsignedInteger('item_id')->nullable();
+            $table->unsignedInteger('unit_id')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->string('location')->nullable();
             $table->unsignedInteger('created_by')->nullable();
+            $table->enum('status',['active','inactive', 'blocked']);
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ class CreateBranchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branches');
+        Schema::dropIfExists('stocks');
     }
 }

@@ -1,4 +1,4 @@
-@extends('v1.app')
+@extends('v1.company')
 
 
 @section('appstyles')
@@ -12,7 +12,7 @@
                     <div class="col-sm-4">
                         <div class="page-header float-left">
                             <div class="page-title">
-                                <h1>Companies</h1>
+                                <h1>Company Items</h1>
 
 
                             </div>
@@ -24,6 +24,7 @@
                                 <ol class="breadcrumb text-right">
                                     <li><a href="#">Dashboard</a></li>
                                     <li><a href="#">Companies</a></li>
+                                    <li><a href="#">Items</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -39,27 +40,31 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Company List</strong>
-                                <a href="{{url('admin/companies/create')}}" class="btn btn-sm btn-outline-secondary float-right"><i class="fa fa-plus"></i>create</a>
+                                <strong class="card-title">Company Item List</strong>
+                                <a href="{{url('/company/stocks/create')}}" class="btn btn-sm btn-outline-secondary float-right"><i class="fa fa-plus"></i>create</a>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Code</th>
-                                            <th>Address</th>
-                                            <th>Place</th>
+                                            <th>Category</th>
+                                            <th>Stock ref</th>
+                                            <th>Unit</th>
+                                            <th>Quantity</th>
+                                            <th>Location</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        @foreach ($companies as $company)
+                                        @foreach ($items as $item)
                                         <tr>
-                                            <td>{{$company->name}}</td>
-                                            <td>{{$company->company_code}}</td>
-                                            <td>{{$company->address_line1}}</td>
-                                            <td>{{$company->address_line2}}</td>
+                                            <td>{{$item->item}}</td>
+                                            <td>{{$item->category}}</td>
+                                            <td>{{$item->ref_no}}</td>
+                                            <td>{{$item->unit}}</td>
+                                            <td>{{$item->quantity}}</td>
+                                            <td>{{$item->location}}</td>
                                         </tr>
                                         @endforeach
                                         

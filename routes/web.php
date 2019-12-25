@@ -11,13 +11,39 @@
 */
 
 
+// Route::get('/', function () {
+//     return view('v1.company.home');
+// });
 Route::get('/', function () {
-    return view('v1.company.home');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::prefix('admin')->group(function() {
+
+	Route::group(['middleware' => ['auth']],function() {
+      Route::resource('companies', 'CompanyController');
+      Route::resource('items', 'ItemController');
+      
+	});
+	
+});
+
+Route::prefix('company')->group(function() {
+
+	Route::group(['middleware' => ['auth']],function() {
+      Route::resource('stocks', 'StockController');
+      Route::resource('transaction', 'MaterialTransferController');
+      
+	});
+	
+});
+
+
 Route::get('/testRedis', 'GeneralController@redis')->name('redis');
 Route::get('/testMultiTenent', 'GeneralController@multi')->name('multi');
 Route::get('get_pdf', function () {
@@ -39,9 +65,9 @@ Route::get('notify', function () {
 Route::get('color', function () {
    return view('v1.home');
 });
-Route::get('companies', function () {
-   return view('v1.company.companies');
-});
+// Route::get('companies', function () {
+//    return view('v1.company.companies');
+// });
 Route::get('branches', function () {
    return view('v1.company.branches');
 });

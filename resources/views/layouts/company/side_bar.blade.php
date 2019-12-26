@@ -4,7 +4,7 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                    <a href="{{url('/')}}"><i class="menu-icon fa fa-laptop"></i>dashboard </a>
+                    <a href="{{url('/home')}}"><i class="menu-icon fa fa-laptop"></i>dashboard </a>
                     </li>
                     <li class="menu-title">{{$user->name}}</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">

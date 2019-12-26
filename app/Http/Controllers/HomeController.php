@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\CompanyUser;
+use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
@@ -33,9 +35,9 @@ class HomeController extends Controller
                 return view('v1.company.home',compact('user'));
             break;
             case 'admin':
-
+                $items= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
                  $user = User::where('id',Auth::id())->with('company')->first();
-                return view('v1.company_dashbord.home',compact('user'));
+                return view('v1.company_dashbord.home',compact('user','items'));
             break;
             case 'employee':
                 return view('v1.company.home');

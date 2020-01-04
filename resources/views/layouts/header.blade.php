@@ -18,3 +18,20 @@
     <link rel="stylesheet" href="{{asset('assets/css/lib/chosen/chosen.min.css')}}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <style>
+    .table td, .table th {
+        padding: 0.4rem !important;
+    }
+    .card .card-body {
+        padding: 0.25em;
+    }
+    .container-fluid {
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+        padding-top: 15px !important;
+    }
+    body {
+        font-size: 13px !important;
+    }
+    </style>

@@ -19,10 +19,11 @@ class CreateCostomersTable extends Migration
             $table->string('short_name')->nullable();
             $table->string('autherized_person')->nullable();
             $table->string('autherized_person_phone')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('district_id')->nullable();
             $table->unsignedInteger('state_id')->nullable();
             $table->unsignedInteger('country_id')->nullable();
-            $table->string('company_code')->nullable();
+            $table->string('customer_code')->nullable();
             $table->text('address_line1')->nullable();
             $table->text('address_line2')->nullable();
             $table->text('address_line3')->nullable();
@@ -75,6 +76,7 @@ class CreateCostomersTable extends Migration
             $table->date('gst_date')->nullable();
             $table->string('company_id_no')->nullable();
             $table->unsignedInteger('created_by')->nullable();
+            $table->enum('type',['vendor','reseller', 'suplier', 'other']);
             $table->enum('status',['active','inactive', 'blocked']);
             $table->boolean('is_available')->default(0);
             $table->boolean('is_deleted')->default(0);

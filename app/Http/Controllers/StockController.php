@@ -16,12 +16,18 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        
+
         $company =  CompanyUser::where('user_id', Auth::id())->first();
-        $items= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
+        $items = Item::all();
+        $stocks= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
         $user = User::where('id',Auth::id())->with('company')->first();
-        return view('v1.company_dashbord.items',compact('items','user'));//
+        if($request->has('json')){
+            return $items;
+        }
+        return view('v1.colorpro.company.items',compact('items','user','stocks'));//
     }
 
     /**
@@ -72,7 +78,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        //
+        return $stock;
     }
 
     /**

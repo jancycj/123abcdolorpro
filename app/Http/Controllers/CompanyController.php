@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyUser;
+use App\Rates;
+use App\Stock;
 use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class CompanyController extends Controller
 {
@@ -19,7 +22,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies =  Company::all();
-        return view('v1.company.companies',compact('companies'));//
+        return view('v1.colorpro.admin.companies',compact('companies'));//
     }
 
     /**
@@ -29,7 +32,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('v1.company.create_company');
+        return view('v1.colorpro.admin.create_company');
     }
 
     /**
@@ -125,5 +128,21 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         //
+    }
+    public function get_items(Request $request)
+    {
+        if($request->has('json') && $request->has('json')){
+            $items_id = Rates::where('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->pluck('item_id');
+
+            return Stock::whereIn('id',$items_id)->get();
+        }
+        if($request->has('json') ){
+
+            return Stock::whereIn('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->get();
+        }
+    }
+    public function get_rate($stock_id)
+    {
+        return Rates::where('item_id',$stock_id)->first();
     }
 }

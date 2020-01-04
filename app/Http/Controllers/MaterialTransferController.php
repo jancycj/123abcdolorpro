@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyUser;
+use App\Costomers;
 use App\Item;
 use App\MaterialTransfer;
 use App\Stock;
@@ -25,7 +26,8 @@ class MaterialTransferController extends Controller
         $received = MaterialTransfer::where('ship_to',$company_id)->get();
         $items= Stock::where('company_id',$company_id)->get();
         $user = User::where('id',Auth::id())->with('company')->first();
-        return view('v1.company_dashbord.material_transfer',compact('items','user','sent','received'));//
+        $customers =  Costomers::where('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->get();
+        return view('v1.colorpro.company.material_transfer',compact('items','user','sent','received','customers'));//
     }
 
     /**
@@ -54,7 +56,7 @@ class MaterialTransferController extends Controller
         $this->validate($request, [
             'item'     => 'required',
             'quantity'    => 'required|numeric',
-            'company'            => 'required',
+            'customer'            => 'required',
             'unit'           => 'required',
         ]);
         // return $request->item;
@@ -68,7 +70,7 @@ class MaterialTransferController extends Controller
         $material->item_id = $request->item;
         $material->unit_id = $request->unit;
         $material->quantity = $request->quantity;
-        $material->ship_to = $request->company;
+        $material->ship_to = $request->customer;
         $material->created_by = Auth::id();
         $material->purpose = $request->purpose;
         $material->status = 'sent';
@@ -77,7 +79,8 @@ class MaterialTransferController extends Controller
         $material->save();
         $item->quantity = $item->quantity - $request->quantity;
         $item->save();
-        return redirect('/company/transaction/create')->with('message','Transaction added');
+        return 'saved successfully!';
+        // return redirect('/company/transaction/create')->with('message','Transaction added');
     }
 
     /**

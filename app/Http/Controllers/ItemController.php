@@ -18,7 +18,7 @@ class ItemController extends Controller
     {   
         $user = User::where('id',Auth::id())->with('company')->first();
         $items =  Item::all();
-        return view('v1.company.items',compact('items','user'));//
+        return view('v1.colorpro.admin.items',compact('items','user'));//
     }
 
     /**
@@ -50,7 +50,7 @@ class ItemController extends Controller
 
         $item->code = 'ITEM-'.$item->id;
         $item->save();
-        return redirect('/admin/items')->with(['message' => 'successfully added']);
+        // return redirect('/admin/items')->with(['message' => 'successfully added']);
     }
 
     /**

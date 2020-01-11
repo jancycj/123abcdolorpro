@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Events\VacancyCreated;
+use App\LookupMaster;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
@@ -28,5 +29,42 @@ class GeneralController extends Controller
     {
         return DB::select('select * from users');
         dd('redis');
+    }
+
+    /*
+    get taxes 
+    **/
+    public function get_taxes(Request $request)
+    {
+        if($request->has('json')){
+
+            return LookupMaster::where('lookup_key','TAX')->get();
+
+        }
+
+    }
+    /*
+    get departments 
+    **/
+    public function get_departments(Request $request)
+    {
+        if($request->has('json')){
+
+            return LookupMaster::where('lookup_key','DEPARTMENT')->get();
+
+        }
+
+    }
+    /*
+    get departments 
+    **/
+    public function get_currency(Request $request)
+    {
+        if($request->has('json')){
+
+            return LookupMaster::where('lookup_key','CURRENCY')->get();
+
+        }
+
     }
 }

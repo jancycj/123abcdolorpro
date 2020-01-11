@@ -131,7 +131,7 @@ class CompanyController extends Controller
     }
     public function get_items(Request $request)
     {
-        if($request->has('json') && $request->has('json')){
+        if($request->has('json') && $request->has('rates')){
             $items_id = Rates::where('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->pluck('item_id');
 
             return Stock::whereIn('id',$items_id)->get();

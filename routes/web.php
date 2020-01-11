@@ -58,6 +58,19 @@ Route::prefix('company')->group(function() {
 });
 
 
+
+
+Route::prefix('general')->group(function() {
+
+	Route::group(['middleware' => ['auth']],function() {
+      Route::get('/tax', 'GeneralController@get_taxes')->name('general.tax');
+      Route::get('/department', 'GeneralController@get_departments')->name('general.department');
+      Route::get('/currency', 'GeneralController@get_currency')->name('general.currency');
+      
+	});
+	
+});
+
 Route::get('/testRedis', 'GeneralController@redis')->name('redis');
 Route::get('/testMultiTenent', 'GeneralController@multi')->name('multi');
 Route::get('get_pdf', function () {

@@ -19,7 +19,7 @@ class StockController extends Controller
     public function index(Request $request)
     {
         
-
+        
         $company =  CompanyUser::where('user_id', Auth::id())->first();
         $items = Item::all();
         $stocks= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();

@@ -15,6 +15,7 @@ class CreateRatesTable extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('item_id')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('primary_unit')->nullable();

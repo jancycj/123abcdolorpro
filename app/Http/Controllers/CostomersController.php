@@ -136,8 +136,12 @@ class CostomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function company_customer_index()
+    public function company_customer_index(Request $request)
     {
+
+        if($request->has('json')){
+            return Costomers::where('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->get();
+        }
         $user = User::where('id',Auth::id())->with('roles')->get();
         // return User::where('id',5)->with('roles')->get();
         $customers =  Costomers::where('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->get();

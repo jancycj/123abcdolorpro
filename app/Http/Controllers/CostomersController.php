@@ -8,6 +8,8 @@ use App\User;
 use App\UserRole;
 use App\Company;
 use App\CompanyUser;
+use App\Order;
+use App\QCPlan;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -208,5 +210,37 @@ class CostomersController extends Controller
         $user_role->role_id = 4;
         $user_role->save();
         return redirect('/company/customer/');
+    }
+
+    public function order(Request $request)
+    {
+
+        $customer_id = CustomerUser::where('user_id',Auth::id())->pluck('customer_id')->first();
+        $company_id = Costomers::where('id',$customer_id)->pluck('company_id')->first();
+        $orders = Order::where('shipto_customer_id',$customer_id)->get();
+        return view('v1.colorpro.customer.order', compact('orders','company_id'));
+    }
+    public function get_order(Request $request , $id)
+    {
+       if($request->has('json')){
+            // return $id;
+            return Order::where('id',$id)->with('details')->with('details.schedules')->first();
+       }
+    }
+
+    public function customers()
+    {
+        $customer_id = CustomerUser::where('user_id',Auth::id())->pluck('customer_id')->first();
+        $company_id = Costomers::where('id',$customer_id)->pluck('company_id')->first();
+        return Costomers::where('company_id',$company_id)->get();
+
+    }
+    public function get_qc(Request $request)
+    {
+        $customer_id = CustomerUser::where('user_id',Auth::id())->pluck('customer_id')->first();
+        $company_id = Costomers::where('id',$customer_id)->pluck('company_id')->first();
+        if($request->has('item_id')){
+            return QCPlan::where('comapny_id',$company_id)->where('item_id',$request->item_id)->get();
+        }
     }
 }

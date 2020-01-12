@@ -67,4 +67,6 @@ class GeneralController extends Controller
         }
 
     }
+
+    
 }

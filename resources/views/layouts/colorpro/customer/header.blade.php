@@ -34,19 +34,11 @@
          <ul class="nav navbar-menu">
            <li class="nav-label pd-l-20 pd-lg-l-25 d-lg-none">Main Navigation</li>
            <li class="nav-item  ">
-             <a href="#" class="nav-link"><i data-feather="pie-chart"></i> Home</a>
+             <a href="{{url('home')}}" class="nav-link"><i data-feather="pie-chart"></i> Home</a>
            </li>
-           <li class="nav-item with-sub">
-             <a href="#" class="nav-link"><i data-feather="package"></i> Oreders</a>
-             <ul class="navbar-menu-sub">
-               <li class="nav-sub-item"><a href="app-calendar.html" class="nav-sub-link"><i data-feather="calendar"></i>Item</a></li>
-               <li class="nav-sub-item"><a href="app-chat.html" class="nav-sub-link"><i data-feather="message-square"></i>Shades</a></li>
-               <li class="nav-sub-item"><a href="app-contacts.html" class="nav-sub-link"><i data-feather="users"></i>Country</a></li>
-               <li class="nav-sub-item"><a href="app-file-manager.html" class="nav-sub-link"><i data-feather="file-text"></i>States</a></li>
-               <li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Districts</a></li>
-               <li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Departments</a></li>
-             </ul>
-           </li>
+           <li class="nav-item  ">
+           <a href="{{url('customer/order')}}" class="nav-link"><i data-feather="pie-chart"></i> Orders</a>
+            </li>
            <li class="nav-item with-sub">
              <a href="#" class="nav-link"><i data-feather="package"></i> Report</a>
              <ul class="navbar-menu-sub">

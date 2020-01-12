@@ -43,6 +43,7 @@ Route::prefix('company')->group(function() {
       Route::resource('transaction', 'MaterialTransferController');
       Route::resource('orders', 'OrderController');
       Route::resource('rates', 'RatesController');
+      Route::resource('qc', 'QCPlanController');
       Route::get('/customer', 'CostomersController@company_customer_index')->name('company.customer');
       Route::post('/customer', 'CostomersController@create_company_customer')->name('company.customer.save');
       Route::get('/customer/create', 'CostomersController@company_customer_create')->name('company.customer.create');
@@ -57,7 +58,17 @@ Route::prefix('company')->group(function() {
 	
 });
 
+Route::prefix('customer')->group(function() {
 
+	Route::group(['middleware' => ['auth']],function() {
+      Route::get('/order', 'CostomersController@order')->name('customer.order');
+      Route::get('/customers', 'CostomersController@customers')->name('customer.order');
+      Route::get('/order/{id}', 'CostomersController@get_order')->name('customer.get_order');
+      Route::get('/qc', 'CostomersController@get_qc')->name('customer.get_qc');
+      
+	});
+	
+});
 
 
 Route::prefix('general')->group(function() {

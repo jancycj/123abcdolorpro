@@ -73,7 +73,7 @@
                         <div class="col-2 offset-8" v-if="order_flag">
                             <div class="form-group">
                                 <label for="inputAddress">Currency:</label>
-                                <select class="custom-select form-control"  v-model="order_currency">
+                                <select class="custom-select form-control"  v-model="order.currency">
                                     <option value="" disabled="" selected="">select Type</option>
                                     <option v-for="cur in currencies" :value="cur" >@{{cur.lookup_value}}</option>
                                    
@@ -97,7 +97,7 @@
                         <div class="col-2">
                             <div class="form-group">
                                 <label for="inputAddress">Quotation No:</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" >
+                                <input type="text" class="form-control" id="inputAddress" placeholder="Quotation no" v-model="order.quotation_no" >
                             </div>   
                         </div>
                         {{-- <div class="col-2 offset-6">
@@ -111,7 +111,7 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="inputAddress">Ship To:</label>
-                                <select class="custom-select form-control" v-model="order_ship_to">
+                                <select class="custom-select form-control" v-model="order.ship_to">
                                     <option value="" disabled="" selected="">select supplier</option>
                                 <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
                                    
@@ -121,7 +121,7 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="inputAddress">Bill To:</label>
-                                <select class="custom-select form-control" v-model="order_bill_to">
+                                <select class="custom-select form-control" v-model="order.bill_to">
                                     <option value="" disabled="" selected="">select supplier</option>
                                     <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
                                            
@@ -131,7 +131,7 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="inputAddress">Department</label>
-                                <select class="custom-select form-control" v-model="order_department">
+                                <select class="custom-select form-control" v-model="order.department">
                                     <option value="" disabled="" selected="">select department</option>
                                 <option v-for="dpt in departments" :value="dpt.lookup_value">@{{dpt.lookup_value}}</option>
                                 </select>
@@ -265,9 +265,9 @@
                         <div class="col-2 ">
                             <div class="form-group">
                                 <label for="inputAddress">Tax</label>
-                                <select class="custom-select form-control"  v-model="tax_value" :disabled="final_sub_total == 0">
+                                <select class="custom-select form-control"  v-model="tax_object" @change="get_tax(tax_object)" :disabled="final_sub_total == 0">
                                     <option value="" disabled="" selected="" >select Tax</option>
-                                <option v-for="tax in taxes" :value="tax.genaral_value">@{{tax.lookup_value}}-@{{tax.lookup_description}}</option>
+                                <option v-for="tax in taxes" :value="tax">@{{tax.lookup_value}}-@{{tax.lookup_description}}</option>
                                 </select>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                     </div>
                     <div class="row order-ft">
                         <div class="col-2 offset-10 mg-t-5">
-                                <button class="btn btn-primary btn-block ">Create Order</button>
+                                <button class="btn btn-primary btn-block " @click="save_oreder()">Create Order</button>
                         </div>
                     </div>
                     </div>
@@ -414,6 +414,7 @@
            order_department : '',
            currencies : [],
            order_currency:{},
+           tax_object:{},
        },
    methods: {
          toggleShow: function() {
@@ -500,7 +501,7 @@
         /*
         get taxes
         **/
-        get_department:function(){
+        get_currency:function(){
 
             var vm = this;
             axios.get('/general/currency?json=true').then((response) => {
@@ -643,12 +644,17 @@
 
                 var disc = parseFloat(this.pf_percentage/100);
                 var pf_amount = parseFloat(this.final_basic_total)*disc;
+                this.order.pf_amount = pf_amount;
+
                 
              } else if(this.pf_amount !=0){
                 var pf_amount = parseFloat(this.pf_amount);
+                this.order.pf_amount = pf_amount;
              }
              else{
                 var pf_amount = 0;
+                this.order.pf_amount = pf_amount;
+                
              }
             var sub_total = parseFloat(this.final_basic_total + pf_amount);
             if(this.courrier_amount > 0){
@@ -656,6 +662,11 @@
             }
             this.final_sub_total = sub_total;
             return sub_total;
+         },
+
+         get_tax(tax_ob){
+                this.order.tax_ob = tax_ob;
+                this.tax_value = tax_ob.genaral_value;
          },
 
          /*
@@ -669,6 +680,8 @@
                     var tax_value = parseFloat(this.tax_value);
                     var disc = parseFloat(tax_value/100);
                     var tax_amount = parseFloat(this.final_sub_total)*disc;
+                    this.order.tax_amount = tax_amount;
+
                     var grant_total = parseFloat(this.final_sub_total + tax_amount);
                     this.final_grant_total = grant_total;
                     return grant_total;
@@ -678,6 +691,69 @@
             }
             return 0;
          },
+
+         /* save order 
+         **/
+         save_oreder: function(){
+
+            if(!this.order.department){
+                alert('please select a department');
+                return;
+            }
+            if(!this.order.ship_to){
+                alert('please select ship to');
+                return;
+            }
+            if(!this.order.bill_to){
+                alert('please select bill to');
+                return;
+            }
+            if(!this.order.order_type){
+                
+                alert('please select order type!');
+                return;
+            }
+            if(this.order.order_type === 'O'){
+                if(!this.order.currency){
+                    alert('please select the currency!');
+                    return;
+                }
+            }
+            if(!this.order.quotation_no){
+                
+                alert('please provide a quatation no!');
+                return;
+            }
+            if(this.order_detail_array.length <= 0){
+                
+                alert('please provide order details!');
+                return;
+            }
+            this.order.tax_value = this.tax_value;
+            this.order.sub_total = this.final_sub_total;
+            this.order.basic_total = this.final_basic_total;
+            this.order.grant_total = this.final_grant_total;
+            this.order.courrier_amount = this.courrier_amount;
+            this.order.order_date = new Date();
+
+             console.log(this.order);
+             console.log(this.order_detail_array);
+            // var post_data = {};
+            // post_data.order = this.order;
+            // post_data.order_details = this.order_detail_array;
+             axios.post('/company/orders',{
+                 order:this.order,
+                 order_details:this.order_detail_array,
+             })
+            .then(response => {
+               
+                alert('successfully created!');
+            })
+            .catch((err) =>{
+                this.errors = err.response.data.errors;
+                console.log(this.errors)
+            });
+         }
          
          
      
@@ -687,6 +763,7 @@
         this.get_taxes();
         this.get_department();
         this.get_customers();
+        this.get_currency();
 
      }
     });

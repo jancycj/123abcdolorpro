@@ -20,6 +20,7 @@ class CreateStocksTable extends Migration
             $table->unsignedInteger('item_id')->nullable();
             $table->unsignedInteger('unit_id')->nullable();
             $table->integer('quantity')->nullable();
+            $table->unsignedInteger('warehouse_id')->nullable();
             $table->string('location')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['active','inactive', 'blocked']);

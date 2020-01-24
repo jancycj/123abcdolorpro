@@ -66,6 +66,18 @@ class GeneralController extends Controller
 
         }
 
+    } 
+    /*
+    get departments 
+    **/
+    public function get_lookup(Request $request)
+    {
+        if($request->has('json')){
+
+            return LookupMaster::where('lookup_key',$request->key)->get();
+
+        }
+
     }
 
     

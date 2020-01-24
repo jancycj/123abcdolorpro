@@ -36,7 +36,7 @@
            <li class="nav-item  ">
            <a href="{{url('/home')}}" class="nav-link"><i data-feather="pie-chart"></i> Home</a>
            </li>
-           <li class="nav-item with-sub">
+           {{-- <li class="nav-item with-sub">
              <a href="#" class="nav-link"><i data-feather="package"></i> Catelog</a>
              <ul class="navbar-menu-sub">
              <li class="nav-sub-item"><a href="{{url('/admin/items')}}" class="nav-sub-link"><i data-feather="calendar"></i>Item</a></li>
@@ -46,7 +46,9 @@
                <li class="nav-sub-item"><a href="{{url('/admin/districts')}}" class="nav-sub-link"><i data-feather="mail"></i>Districts</a></li>
                <li class="nav-sub-item"><a href="{{url('/admin/departments')}}" class="nav-sub-link"><i data-feather="mail"></i>Departments</a></li>
              </ul>
-           </li>
+           </li> --}}
+           <li class="nav-item"><a href="{{url('/admin/items')}}" class="nav-link"><i data-feather="box"></i> Item</a></li>
+           <li class="nav-item"><a href="{{url('/admin/lookup')}}" class="nav-link"><i data-feather="box"></i> Masters</a></li>
            <li class="nav-item"><a href="{{url('/admin/process')}}" class="nav-link"><i data-feather="box"></i> Process</a></li>
            <li class="nav-item"><a href="{{url('/admin/companies')}}" class="nav-link"><i data-feather="box"></i> Companies</a></li>
            <li class="nav-item"><a href="{{url('/admin/customers')}}" class="nav-link"><i data-feather="box"></i> Customers</a></li>

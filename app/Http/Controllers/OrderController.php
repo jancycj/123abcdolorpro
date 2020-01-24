@@ -63,7 +63,7 @@ class OrderController extends Controller
         // $order->approved_by         = $order_ob
         // $order->approved_date       = $order_ob
         // $order->currency            = $order_ob
-        // $order->exchange_rate       = $order_ob
+        $order->status              = 'pending';
         $order->basic_total         = $order_ob['basic_total'];
         $order->sub_total           = $order_ob['sub_total'];
         $order->pnf_total           = $order_ob['pf_amount'];

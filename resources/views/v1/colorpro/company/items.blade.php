@@ -39,8 +39,6 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Category</th>
-                            <th>Stock ref</th>
                             <th>Unit</th>
                             <th>Quantity</th>
                             <th>Location</th>
@@ -52,8 +50,6 @@
                         @foreach ($stocks as $item)
                         <tr>
                             <td>{{$item->item}}</td>
-                            <td>{{$item->category}}</td>
-                            <td>{{$item->ref_no}}</td>
                             <td>{{$item->unit}}</td>
                             <td>{{$item->quantity}}</td>
                             <td>{{$item->location}}</td>
@@ -148,7 +144,7 @@
     </div><!-- modal end -->
 
       <div class="modal fade " id="itemModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
-                <div class="modal-dialog modal-lg " role="document">
+                <div class="modal-dialog modal-md " role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="mediumModalLabel">Item Details</h4>
@@ -161,158 +157,142 @@
                                 <div class="default-tab" v-if="item">
                                         <nav>
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Item Details</a>
-                                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Stock details</a>
-                                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Company Details</a>
+                                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Stock Details</a>
+                                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Item details</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content  pt-2" id="nav-tabContent">
                                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                      <div class="row">
-                                      
-                                                          <div class="col-xs-12 col-sm-12">
-                                                              <div class="card" style="margin-top:15px;">
-                                                                  <div class="card-body card-block custom-card">
-                                                                      
-                                                                        <div class="form-group">
-                                                                            <label class=" form-control-label">Iem name</label>
-                                                                            <div class="input-group">
-                                                                                <input class="form-control" name="item" v-model="item.item">
-                                                                            </div>
-                                                                        </div>
-                                                                      <div class="form-group">
-                                                                          <label class=" form-control-label">Quantity</label>
-                                                                          <div class="input-group">
-                                                                              <input class="form-control" name="quantity"
-                                                                              v-model="item.quantity">
-                                                                          </div>
-                                                                      </div>
-                                                                      <div class="form-group">
-                                                                          <label class=" form-control-label">Unit</label>
-                                                                          <div class="input-group">
-                                                                              <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="item.unit_id">
-                                                                                  <option value="" label="default"></option>
-                                                                                  <option value="1">Kg</option>
-                                                                                  <option value="2">No</option>
-                                                                                  <option value="3">Chees</option>
-                                                                                  <option value="4">Packet</option>
-                                                                                  <option value="5">Box</option>
-                                                                                  
-                                                                              </select>
-                                                                          </div>
-                                                                      </div>
-                                      
-                                                                      <div class="form-group">
-                                                                          <label class=" form-control-label">location</label>
-                                                                          <div class="input-group">
-                                                                              <input class="form-control" name="location" v-model="item.location">
-                                                                          </div>
-                                                                      </div>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                      
-                                                        </div><!-- /div row -->
+                                                <div class="row">
+                                
+                                                    <div class="col-xs-12 col-sm-12">
+                                                        <div class="card" style="margin-top:15px;">
+                                                            <div class="card-body card-block custom-card">
+                                                                
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Iem name</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="item" v-model="item.name" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" v-if="stock.quantity">
+                                                                    <label class=" form-control-label">Quantity</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="quantity"
+                                                                        v-model="stock.quantity" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" v-if="!stock.quantity">
+                                                                    <label class=" form-control-label">Opening Stock</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="quantity"
+                                                                        v-model="opening.stock" >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Unit</label>
+                                                                    <div class="input-group">
+                                                                        <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="stock.unit_id" disabled>
+                                                                        <option  v-for="unit in units" :value="unit.id">@{{unit.lookup_value}}</option>
+                                                                            
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                    
+                                                                <div class="form-group" v-if="stock.location">
+                                                                    <label class=" form-control-label">Warehouse</label>
+                                                                    <div class="input-group">
+                                                                        <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="stock.location_id" disabled>
+                                                                            <option  v-for="unit in units" :value="unit.id">@{{unit.lookup_value}}</option>
+                                                                                
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" v-if="!stock.location">
+                                                                    <label class=" form-control-label">Warehouse</label>
+                                                                    <div class="input-group">
+                                                                        <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="opening.warehouse_id">
+                                                                            <option  v-for="location in locations" :value="location.id">@{{location.lookup_value}}</option>
+                                                                                
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" >
+                                                                    <label class=" form-control-label">Location</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="quantity"
+                                                                            v-model="opening.location" >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                
+                                                </div><!-- /div row -->
                                             </div>
                                             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                                    <div class="row">
-                                      
-                                                            <div class="col-xs-12 col-sm-12">
-                                                                <div class="card" style="margin-top:15px;">
-                                                                    <div class="card-body card-block custom-card">
-                                                                        
-                                                                          <div class="form-group">
-                                                                              <label class=" form-control-label">Iem name</label>
-                                                                              <div class="input-group">
-                                                                                  <input class="form-control" name="item" v-model="item.item">
-                                                                              </div>
-                                                                          </div>
-                                                                        <div class="form-group">
-                                                                            <label class=" form-control-label">Quantity</label>
-                                                                            <div class="input-group">
-                                                                                <input class="form-control" name="quantity"
-                                                                                v-model="item.quantity">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label class=" form-control-label">Unit</label>
-                                                                            <div class="input-group">
-                                                                                <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="item.unit_id">
-                                                                                    <option value="" label="default"></option>
-                                                                                    <option value="1">Kg</option>
-                                                                                    <option value="2">No</option>
-                                                                                    <option value="3">Chees</option>
-                                                                                    <option value="4">Packet</option>
-                                                                                    <option value="5">Box</option>
-                                                                                    
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                        
-                                                                        <div class="form-group">
-                                                                            <label class=" form-control-label">location</label>
-                                                                            <div class="input-group">
-                                                                                <input class="form-control" name="location" v-model="item.location">
-                                                                            </div>
-                                                                        </div>
-                                                                       
-                                                                        
-                                                                        
+                                                <div class="row">
+                                    
+                                                    <div class="col-xs-12 col-sm-12">
+                                                        <div class="card" style="margin-top:15px;">
+                                                            <div class="card-body card-block custom-card">
+                                                                
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Iem name</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="item" v-model="item.name" disabled>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                        
-                                                          </div><!-- /div row -->
-                                            </div>
-                                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                                    <div class="row">
-                                      
-                                                            <div class="col-xs-12 col-sm-12">
-                                                                <div class="card" style="margin-top:15px;">
-                                                                    <div class="card-body card-block custom-card">
-                                                                        
-                                                                          <div class="form-group">
-                                                                              <label class=" form-control-label">Iem namessss</label>
-                                                                              <div class="input-group">
-                                                                                  <input class="form-control" name="item" v-model="item.item">
-                                                                              </div>
-                                                                          </div>
-                                                                        <div class="form-group">
-                                                                            <label class=" form-control-label">Quantity</label>
-                                                                            <div class="input-group">
-                                                                                <input class="form-control" name="quantity"
-                                                                                v-model="item.quantity">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label class=" form-control-label">Unit</label>
-                                                                            <div class="input-group">
-                                                                                <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="item.unit_id">
-                                                                                    <option value="" label="default"></option>
-                                                                                    <option value="1">Kg</option>
-                                                                                    <option value="2">No</option>
-                                                                                    <option value="3">Chees</option>
-                                                                                    <option value="4">Packet</option>
-                                                                                    <option value="5">Box</option>
-                                                                                    
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                        
-                                                                        <div class="form-group">
-                                                                            <label class=" form-control-label">location</label>
-                                                                            <div class="input-group">
-                                                                                <input class="form-control" name="location" v-model="item.location">
-                                                                            </div>
-                                                                        </div>
-                                                                       
-                                                                        
-                                                                        
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Part No</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="quantity"
+                                                                        v-model="item.part_no" disabled>
                                                                     </div>
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Unit</label>
+                                                                    <div class="input-group">
+                                                                        <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="stock.unit_id">
+                                                                        <option  v-for="unit in units" :value="unit.id">@{{unit.lookup_value}}</option>
+                                                                            
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Catelog/Drawing No</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="location" v-model="item.catelog_drwaing_no" disabled>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">HSN Code</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="hsn" v-model="item.hsn_code" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Part type</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="hsn" v-model="item.part_type" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class=" form-control-label">Sourcing code</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" name="sourcing" v-model="item.sourcing_code" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                
+                                                                
                                                             </div>
-                                        
-                                                          </div><!-- /div row -->
+                                                        </div>
+                                                    </div>
+                                
+                                                </div><!-- /div row -->
                                             </div>
                                         </div>
 
@@ -320,7 +300,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-outline-primary">Update Changes</button>
+                            <button type="button" class="btn btn-outline-primary" @click="update_stock()">Update Changes</button>
                         </div>
                     </div>
                 </div>
@@ -354,14 +334,23 @@
     data: {
       items:[],
       item:{},
+      stock:{},
+      units:[],
+      locations:[],
+      opening : {},
+      stock_id:'',
     },
     methods: {
 
         get_item_by:function(id){
 
             var vm = this;
-            axios.get('/company/stocks/'+id).then((response) => {
-            vm.item = response.data;
+            vm.stock_id = id;
+            axios.get('/company/stocks/'+vm.stock_id).then((response) => {
+            vm.stock = response.data;
+            vm.item = response.data.item_ob;
+            vm.opening.location = vm.stock.location;
+            vm.opening.warehouse_id = vm.stock.warehouse_id;
             console.log(vm.items);
              $("#itemModal").modal('toggle');
             }, (error) => {
@@ -410,12 +399,59 @@
                 this.errors = err.response.data.errors;
                 console.log(this.errors)
             });
-         }
+         },
+         /*
+        get taxes
+        **/
+        get_unit:function(){
+
+            var vm = this;
+            axios.get('/general/lookup?json=true&&key=UNIT').then((response) => {
+            vm.units = response.data;
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+
+        },
+        /*
+        get taxes
+        **/
+        get_store:function(){
+
+            var vm = this;
+            axios.get('/general/lookup?json=true&&key=STORE').then((response) => {
+            vm.locations = response.data;
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+
+        },
+        /*
+        update stock **/
+        update_stock:function() {
+           console.log(this.opening);
+
+            axios.put('/company/stocks/'+this.stock_id,this.opening)
+            .then(response => {
+                location.reload();
+                $("#itemModal").modal('toggle');
+                $(".modal-backdrop").remove();
+                alert('successfully created!');
+            })
+            .catch((err) =>{
+                this.errors = err.response.data.errors;
+                console.log(this.errors)
+            });
+         },
       },
       computed: {
       },
       mounted() {
 
+        this.get_unit();
+        this.get_store();
         this.get_items();
         $('#neww').DataTable();
         $('.collapse').collapse();

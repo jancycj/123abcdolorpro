@@ -217,14 +217,14 @@ class CostomersController extends Controller
 
         $customer_id = CustomerUser::where('user_id',Auth::id())->pluck('customer_id')->first();
         $company_id = Costomers::where('id',$customer_id)->pluck('company_id')->first();
-        $orders = Order::where('shipto_customer_id',$customer_id)->get();
+        $orders = Order::where('shipto_customer_id',$customer_id)->whereIn('status',['pending','processing'])->get();
         return view('v1.colorpro.customer.order', compact('orders','company_id'));
     }
     public function get_order(Request $request , $id)
     {
        if($request->has('json')){
             // return $id;
-            return Order::where('id',$id)->with('details')->with('details.schedules')->first();
+            return Order::where('id',$id)->whereIn('status',['pending','processing'])->with('details')->with('details.schedules')->first();
        }
     }
 

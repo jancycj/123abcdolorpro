@@ -20,6 +20,12 @@ class CreateOrderReceiptHeadersTable extends Migration
             $table->unsignedInteger('billto_customer_id')->nullable();
             $table->unsignedInteger('ship_customer_id')->nullable();
             $table->text('remark')->nullable();
+            $table->string('vendor_dc_no')->nullable();
+            $table->date('vendor_dc_date')->nullable();
+            $table->string('vendor_invoice_no')->nullable();
+            $table->date('vendor_invoice_date')->nullable();
+            $table->string('gate_entry_no')->nullable();
+            $table->date('gate_entry_date')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['active','inactive', 'blocked']);
             $table->timestamps();

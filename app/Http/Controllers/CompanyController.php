@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyUser;
+use App\Order;
+use App\OrderReceiptDetails;
 use App\Rates;
 use App\Stock;
+use App\Traits\OrderTrait;
 use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
@@ -14,6 +17,7 @@ use Auth;
 
 class CompanyController extends Controller
 {
+    use OrderTrait;
     /**
      * Display a listing of the resource.
      *
@@ -144,5 +148,45 @@ class CompanyController extends Controller
     public function get_rate($stock_id)
     {
         return Rates::where('item_id',$stock_id)->first();
+    }
+    public function get_order_reciept()
+    {
+        
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+        $pending_orders = Order::where('shipto_customer_id',$company_id)->whereIn('status',['pending','processing'])->get();
+        $completed_orders = Order::where('shipto_customer_id',$company_id)->where('status','completed')->get();
+        $shortclosed_orders = Order::where('shipto_customer_id',$company_id)->where('status','short_closed')->get();
+        return view('v1.colorpro.company.order_reciept',compact('pending_orders','completed_orders','shortclosed_orders','company_id'));
+
+    }
+    public function get_order(Request $request , $id)
+    {
+       if($request->has('json')){
+            // return OrderReceiptDetails::all();
+            return Order::where('id',$id)->whereIn('status',['pending','processing'])->with('details')->with('details.schedules')->with('details.reciept')->with('details.qc_details')->first();
+       }
+    }
+
+    public function accept_order(Request $request)
+    {
+       $data = $request->all();
+       $order_details = $data['details'];
+       foreach($order_details as $detail){
+           $reciepts = $detail['reciept'];
+           foreach($reciepts as $reciept){
+                $ord_reciept = OrderReceiptDetails::find( $reciept['id']);
+                $ord_reciept->accepted_quantity = $reciept['accepted_quantity'];
+                $ord_reciept->rejected_quantity = $reciept['rejected_quantity'];
+                $ord_reciept->rework_quantity = $reciept['rework_quantity'];
+                $ord_reciept->save();
+           }
+       }
+       $finish = $this->is_order_finished($data['id']);
+       if($finish === 1){
+            $ordr = Order::find($data['id']);
+            $ordr->status = 'completed';
+            $ordr->save();
+       }
+       return 'true';
     }
 }

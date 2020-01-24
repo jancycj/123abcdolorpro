@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CompanyUser;
 use App\Item;
+use App\LookupMaster;
+use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
@@ -16,9 +19,11 @@ class ItemController extends Controller
      */
     public function index()
     {   
+        $units = LookupMaster::where('lookup_key','UNIT')->get();
+        $categories = LookupMaster::where('lookup_key','ITEM CATEGORY')->get();
         $user = User::where('id',Auth::id())->with('company')->first();
         $items =  Item::all();
-        return view('v1.colorpro.admin.items',compact('items','user'));//
+        return view('v1.colorpro.admin.items',compact('items','user','units','categories'));//
     }
 
     /**
@@ -41,15 +46,29 @@ class ItemController extends Controller
     {
         $this->validate($request, [
             'name'     => 'required',
+            'part_no'    => 'required',
             'category'    => 'required',
         ]);
+        $company_id = CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first();
         $item = new Item;
         $item->name = $request->name;
+        $item->company_id =$request->has('admin')? 0:$company_id ;
         $item->category_id = $request->category;
+        $item->part_no = $request->part_no;
+        $item->unit_id = $request->unit;
+        $item->catelog_drwaing_no = $request->catelog_drwaing_no;
+        $item->hsn_code = $request->hsn_code;
+        $item->part_type = $request->part_type;
+        $item->sourcing_code = $request->sourcing_code;
         $item->save();
 
-        $item->code = 'ITEM-'.$item->id;
-        $item->save();
+        $stock = new Stock;
+        $stock->company_id  = $company_id ;
+        $stock->item_id     = $item->id;
+        $stock->unit_id     = $item->unit_id;
+        $stock->created_by  = Auth::id();
+        $stock->save();
+
         // return redirect('/admin/items')->with(['message' => 'successfully added']);
     }
 
@@ -96,5 +115,14 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         //
+    }
+    public function company_item()
+    {
+        $company_id = CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first();
+        $units = LookupMaster::where('lookup_key','UNIT')->get();
+        $categories = LookupMaster::where('lookup_key','ITEM CATEGORY')->get();
+        $user = User::where('id',Auth::id())->with('company')->first();
+        $items =  Item::where('company_id',$company_id)->get();
+        return view('v1.colorpro.company.item_master',compact('items','user','units','categories'));//
     }
 }

@@ -15,9 +15,15 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('company_id')->nullable();
             $table->string('name')->nullable();
             $table->unsignedInteger('category_id')->nullable();
-            $table->string('code')->nullable();
+            $table->string('part_no')->nullable();
+            $table->unsignedInteger('unit_id')->nullable();
+            $table->string('catelog_drwaing_no')->nullable();
+            $table->string('hsn_code')->nullable();
+            $table->string('part_type')->nullable();
+            $table->string('sourcing_code')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['active','inactive', 'blocked']);
             $table->timestamps();

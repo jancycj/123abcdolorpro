@@ -101,7 +101,18 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
-        //
+        $this->validate($request, [
+            'warehouse_id'     => 'required',
+        ]);
+         $stock->location = $request->location;
+         if($request->has('quantity')){
+            $stock->quantity = $request->stock;
+
+         }
+         $stock->warehouse_id = $request->warehouse_id;
+         $stock->save();
+         return 'Stock successfully updated !';
+
     }
 
     /**

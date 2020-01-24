@@ -1,4 +1,4 @@
-@extends('layouts.colorpro.customer.app')
+@extends('layouts.colorpro.app')
 @section('style')
 
 <style type="text/css">
@@ -55,8 +55,8 @@
 
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                        <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">New Orders</a>
-                                        <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Recieved</a>
+                                        <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Pending Orders</a>
+                                        <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Completed Orders</a>
                                         <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Inspection</a>
                                     </div>
                                 </nav>
@@ -74,7 +74,7 @@
                                             </thead>
                                             <tbody>
         
-                                                @foreach ($orders as $item)
+                                                @foreach ($pending_orders as $item)
                                                 <tr>
                                                     <td>{{$item->order_number}}</td>
                                                     <td>{{$item->quote_ref_no}}</td>
@@ -104,7 +104,7 @@
                                                 </thead>
                                                 <tbody>
             
-                                                    @foreach ($orders as $item)
+                                                    @foreach ($completed_orders as $item)
                                                     <tr>
                                                         <td>{{$item->order_number}}</td>
                                                         <td>{{$item->quote_ref_no}}</td>
@@ -134,7 +134,7 @@
                                                 </thead>
                                                 <tbody>
             
-                                                    @foreach ($orders as $item)
+                                                    @foreach ($shortclosed_orders as $item)
                                                     <tr>
                                                         <td>{{$item->order_number}}</td>
                                                         <td>{{$item->quote_ref_no}}</td>
@@ -222,28 +222,7 @@
                                 </div> 
                             </div> --}}
                         </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label for="inputAddress">Ship To:</label>
-                                    <select class="custom-select form-control" v-model="order.shipto_customer_id">
-                                        <option value="" disabled="" selected="">select supplier</option>
-                                    <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
-                                        
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label for="inputAddress">Bill To:</label>
-                                    <select class="custom-select form-control" v-model="order.billto_customer_id">
-                                        <option value="" disabled="" selected="">select supplier</option>
-                                        <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
-                                                
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                       
                         
                     </div><!-- card-header -->
                     <div class="card-body card-block">
@@ -252,44 +231,53 @@
                                     <thead>
                                         <tr>
                                             <th class="">Item</th>
-                                            <th class="">Date</th>
+                                            <th class="" style="min-width:80px;">Date</th>
                                             <th class="">Quantity</th>
+                                            <th class="">Send</th>
                                             <th class="">Unit</th>
-                                            <th class="">Sched</th>
-                                            <th class="">Rate</th>
-                                            <th class="">Disc.</th>
-                                            <th class="">Net Rate</th>
                                             <th class="">Amount</th>
-                                            <th class="">Completed</th>
-                                            <th class="">QC entry</th>
+                                            <th class="">QC</th>
+                                            <th class="">Received</th>
+                                            <th class="">Accept</th>
+                                            <th class="">Rework</th>
+                                            <th class="">Reject</th>
                                             <th class="">remarks</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                       
-                                        <tr v-for="ord in order.details" v-if="ord.balance > 0 ">
-                                            <td class="tx-medium ">@{{ord.item}}</td>
-                                            <td class="tx-medium ">
-                                                <span v-if="ord.schedules.length > 0"> <small class="tx-teal"> Scheduled</small></span> <span v-if="ord.schedules.length <= 0">@{{ord.delivery_date}}</span>
-                                            </td>
-                                            <td class="tx-medium ">@{{ord.balance}}</td>
-                                            <td class="tx-medium ">@{{ord.purchase_unit_id}}</td>
-                                            <td class="tx-medium "> 
-                                                
-                                                <span v-if="ord.schedule"> <a href="#" ><i class="fa fa-calendar"></i></a></span> <span v-if="!ord.schedule">--</span>
-                                            </td>
-                                            <td class="tx-medium tx-primary">@{{ord.rate}}</td>
-                                            <td class=" tx-teal">- @{{ord.rate}}%</td>
-                                            <td class=" tx-pink">@{{ord.rate}}</td>
-                                            <td class="tx-medium ">@{{ord.rate}}  </td>
+                                    <tbody v-for="ord_detail in order.details">
                                             
+                                        <tr v-for="ord in ord_detail.reciept" >
+                                            <td class="tx-medium ">@{{ord_detail.item}}</td>
+                                            <td class="tx-medium " style="min-width:80px;">
+                                                <span ><small>@{{ord.delivery_date}}</small></span>
+                                            </td>
+                                            <td class="tx-medium ">@{{ord_detail.quantity}}</td>
+                                            <td class="tx-medium ">@{{ord.recieved_quantity}}</td>
+                                            <td class="tx-medium ">@{{ord_detail.purchase_unit_id}}</td>
+                                            <td class="tx-medium ">@{{ord_detail.rate}}  </td>
                                             
-                                            <td>
-                                                <input class="form-control" name="quantity"  v-model="ord.recieved" @input="check_balance(ord.balance,ord.recieved)">
-                                            </td> 
                                             <td class="tx-medium "> 
                                                 <span > <button class="btn btn-sm btn-success" @click="add_qc(ord.item_id)" >QC </button></span> 
                                             </td>
+                                            <td>
+                                                <input class="form-control" name="quantity"  v-model="ord.recieved_quantity" @input="check_balance(ord.balance,ord.recieved)"
+                                                :disabled="ord.balance <= 0">
+                                            </td> 
+                                            <td>
+                                                <input class="form-control"  
+                                                @input="check_quantity(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)"
+                                                :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''" name="quantity"  v-model="ord.accepted_quantity">
+                                            </td> 
+                                            <td>
+                                                <input class="form-control" name="quantity"  v-model="ord.rework_quantity" 
+                                                @input="check_quantity(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)"
+                                                :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''">
+                                            </td> 
+                                            <td>
+                                                <input class="form-control" name="quantity"  v-model="ord.rejected_quantity" 
+                                                @input="check_quantity(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)"  
+                                                :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''" name="quantity"  v-model="ord.accepted_quantity" >
+                                            </td>   
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.remarks">
                                             </td> 
@@ -303,7 +291,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="send_order()" :disabled="disable_flag">Send Order</button>
+                    <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="send_order()" :disabled="quantity_accept_flag">Accept Order</button>
                 </div>
             </div>
         </div>
@@ -417,6 +405,7 @@
       reciept : [],
       disable_flag : false,
       item_detail_id : '',
+      quantity_accept_flag : false,
     },
     methods: {
 
@@ -439,7 +428,7 @@
         view_order: function(id){
             // alert(id)
             var vm = this;
-            axios.get('/customer/order/'+id+'?json=true').then((response) => {
+            axios.get('/company/reciept/'+id+'?json=true').then((response) => {
             vm.order = response.data;
             // vm.reciept = vm.order.details.reciept;
             console.log(vm.order.details)
@@ -466,11 +455,8 @@
 
         },
         add_qc : function(id){
-            // alert(id);  
-            var vm = this;
+             var vm = this;
             vm.item_detail_id = id;
-            // vm.qc_array = qc;
-            // $("#add_qc").modal('toggle');
             axios.get('/customer/qc?item_id='+vm.item_detail_id).then((response) => {
             vm.qc_array = response.data;
             console.log(vm.qc_array);
@@ -482,26 +468,17 @@
         },
         add_qc_to_object : function(){
             var vm = this;
-
-            vm.order.details.map(function(e){
-                if(e.id === vm.item_detail_id){
-                    e.qc_details = vm.qc_array;
-                }
-            });
-             vm.qc_array = [];
-             vm.item_detail_id = '';
-             console.log(vm.order);
+            vm.order.qc = vm.qc_array;
             $("#add_qc").modal('toggle');
         },
         send_order : function(){
             var vm = this;
 
-            axios.post('/customer/OrderReceiptDetails',vm.order)
+            axios.post('/company/accept_order',vm.order)
             .then(response => {
                 vm.order = {};
-                $("#view_order").modal('toggle');
+                // $("#view_order").modal('toggle');
                
-                location.reload();
             })
             .catch((err) =>{
                 this.errors = err.response.data.errors;
@@ -515,7 +492,37 @@
                 alert('the quantity is exeeded');
                 this.disable_flag = true;
             }
-        }
+        },
+        check_quantity(accept,reject,rework,quantity){
+            this.quantity_accept_flag = false;
+            var acc = accept?accept:0;
+            var rej = reject?reject:0;
+            var rew = rework?rework:0;
+            // alert(parseFloat(quantity))
+            // alert(parseFloat(acc)+parseFloat(rej)+parseFloat(rew))
+            if(parseFloat(acc)+parseFloat(rej)+parseFloat(rew) > parseFloat(quantity)){
+                alert('the quantity is exceded');
+                this.quantity_accept_flag = true;
+            }
+        },
+        is_equal(accept,reject,rework,quantity){
+            var acc = accept?accept:0;
+            var rej = reject?reject:0;
+            var rew = rework?rework:0;
+            // alert(parseFloat(quantity))
+            // alert(parseFloat(acc)+parseFloat(rej)+parseFloat(rew))
+            var total = parseFloat(acc)+parseFloat(rej)+parseFloat(rew);
+            if(total == parseFloat(quantity) || total == 0 ){
+                this.quantity_accept_flag = false;
+                return false;
+            }else if(total == 0){
+                this.quantity_accept_flag = true;
+                return true;
+            }else{
+                this.quantity_accept_flag = true;
+                return true;
+            }
+        },
 
 
       },

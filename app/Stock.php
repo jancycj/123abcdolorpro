@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Stock extends Model
 {
     
-    public $appends = ['item','unit', 'category'];
+    public $appends = ['item','item_ob','unit', 'category'];
     /**
      * [Item]
      */
@@ -16,12 +16,17 @@ class Stock extends Model
         return Item::where('id',$this->item_id)->pluck('name')->first();
 
     }
+    public function getItemObAttribute() {
+       
+        return Item::where('id',$this->item_id)->first();
+
+    }
      /**
      * [Item]
      */
     public function getUnitAttribute() {
        
-        return 'NO';
+        return LookupMaster::where('id',$this->unit_id)->pluck('lookup_value')->first();
 
     }
      /**
@@ -29,7 +34,8 @@ class Stock extends Model
      */
     public function getCategoryAttribute() {
        
-        return 'Dyed';
+        // return LookupMaster::where('id',$this->category_id)->pluck('lookup_value')->first();
+        return 'null';
 
     }
 }

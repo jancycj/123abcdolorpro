@@ -44,6 +44,7 @@ Route::prefix('company')->group(function() {
       Route::resource('orders', 'OrderController');
       Route::resource('rates', 'RatesController');
       Route::resource('qc', 'QCPlanController');
+      Route::get('/item', 'ItemController@company_item')->name('company.item');
       Route::get('/customer', 'CostomersController@company_customer_index')->name('company.customer');
       Route::post('/customer', 'CostomersController@create_company_customer')->name('company.customer.save');
       Route::get('/customer/create', 'CostomersController@company_customer_create')->name('company.customer.create');
@@ -51,7 +52,9 @@ Route::prefix('company')->group(function() {
       Route::post('/lookup', 'LookupMasterController@company_post_lookup')->name('company.lookup.post');
       Route::get('/get_items', 'CompanyController@get_items')->name('company.get_item');
       Route::get('/get_rate/{id}', 'CompanyController@get_rate')->name('company.get_rate');
-
+      Route::get('/order/reciept','CompanyController@get_order_reciept')->name('order.reciept');
+      Route::get('/reciept/{id}', 'CompanyController@get_order')->name('company.reciept');
+      Route::post('/accept_order', 'CompanyController@accept_order')->name('company.accept_order');
 
       
 	});
@@ -65,6 +68,7 @@ Route::prefix('customer')->group(function() {
       Route::get('/customers', 'CostomersController@customers')->name('customer.order');
       Route::get('/order/{id}', 'CostomersController@get_order')->name('customer.get_order');
       Route::get('/qc', 'CostomersController@get_qc')->name('customer.get_qc');
+      Route::resource('/OrderReceiptDetails', 'OrderReceiptDetailsController');
       
 	});
 	
@@ -77,7 +81,7 @@ Route::prefix('general')->group(function() {
       Route::get('/tax', 'GeneralController@get_taxes')->name('general.tax');
       Route::get('/department', 'GeneralController@get_departments')->name('general.department');
       Route::get('/currency', 'GeneralController@get_currency')->name('general.currency');
-      
+      Route::get('/lookup', 'GeneralController@get_lookup')->name('general.lookup');
 	});
 	
 });

@@ -36,7 +36,7 @@
            <li class="nav-item  ">
            <a href="{{url('/home')}}" class="nav-link"><i data-feather="pie-chart"></i> Home</a>
            </li>
-           <li class="nav-item with-sub">
+           {{-- <li class="nav-item with-sub">
              <a href="#" class="nav-link"><i data-feather="package"></i> Catelog</a>
              <ul class="navbar-menu-sub">
                <li class="nav-sub-item"><a href="app-chat.html" class="nav-sub-link"><i data-feather="message-square"></i>Shades</a></li>
@@ -45,19 +45,23 @@
                <li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Districts</a></li>
                <li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Departments</a></li>
              </ul>
-           </li>
+           </li> --}}
            
            <li class="nav-item"><a href="{{url('company/lookup')}}" class="nav-link"><i data-feather="box"></i> Masters</a></li>
-           <li class="nav-item"><a href="{{url('company/stocks')}}" class="nav-link"><i data-feather="box"></i> Items</a></li>
+           <li class="nav-item"><a href="{{url('company/item')}}" class="nav-link"><i data-feather="box"></i> Items</a></li>
+           <li class="nav-item"><a href="{{url('company/stocks')}}" class="nav-link"><i data-feather="box"></i> Inventory</a></li>
            <li class="nav-item"><a href="{{url('company/rates')}}" class="nav-link"><i data-feather="box"></i> Rates</a></li>
-           <li class="nav-item"><a href="{{url('company/orders')}}" class="nav-link"><i data-feather="box"></i> Orders</a></li>
+           
            <li class="nav-item with-sub">
               <a href="#" class="nav-link"><i data-feather="package"></i> Transactions</a>
               <ul class="navbar-menu-sub">
               <li class="nav-sub-item"><a href="{{url('company/transaction')}}" class="nav-sub-link"><i data-feather="message-square"></i>Material transfer</a></li>
+              <li class="nav-sub-item"><a href="{{url('company/orders')}}" class="nav-sub-link"><i data-feather="message-square"></i> Orders</a></li>
+              <li class="nav-sub-item"><a href="{{url('company/order/reciept')}}" class="nav-sub-link"><i data-feather="message-square"></i> Orders Reciept</a></li>
+
               </ul>
             </li>
-          <li class="nav-item"><a href="{{url('company/customer')}}" class="nav-link"><i data-feather="box"></i> Customers</a></li>
+          <li class="nav-item"><a href="{{url('company/customer')}}" class="nav-link"><i data-feather="box"></i> Clients</a></li>
           <li class="nav-item"><a href="{{url('company/reports')}}" class="nav-link"><i data-feather="archive"></i> reports</a></li>
          </ul>
        </div><!-- navbar-menu-wrapper -->

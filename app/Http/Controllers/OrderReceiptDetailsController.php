@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
+use App\OrderDetails;
+use App\OrderQCDetails;
 use App\OrderReceiptDetails;
+use Carbon\Carbon;
+use Auth;
 use Illuminate\Http\Request;
 
 class OrderReceiptDetailsController extends Controller
@@ -35,7 +40,39 @@ class OrderReceiptDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $order = $request->all();
+        $order_details =  $order['details'];
+        
+        $order_ob = Order::find($request->id);
+        $order_ob->status = 'processing';
+        $order_ob->save();
+        foreach($order_details as $ord){
+            $order_details = OrderDetails::find($ord['id']);
+            $order_details->recieved_quantity = $order_details->recieved_quantity + $ord['recieved'];
+            $order_details->save();
+            $ord_entry = new OrderReceiptDetails;
+            $ord_entry->order_details_id = $ord['id'];
+            $ord_entry->recieved_quantity = $ord['recieved'];
+            $ord_entry->delivery_date = Carbon::now();
+            $ord_entry->created_by = Auth::id();
+            $ord_entry ->save();
+            $order_qc =  $ord['qc_details'];
+            foreach($order_qc as $qc){
+                $qc_details = new OrderQCDetails;
+                $qc_details->qc_plan_id = $qc['id'];
+                $qc_details->order_details_id = $order_details->id;
+                $qc_details->result = isset($qc['inspection'])?$qc['inspection']:'';
+                $qc_details->remark = isset($qc['remark'])?$qc['remark']:'';
+                $qc_details->qc_date = Carbon::now();
+                $qc_details->created_by= Auth::id();
+                $qc_details->save();
+    
+            }
+        }
+
+        
+        return 'Saved successfully!';
     }
 
     /**

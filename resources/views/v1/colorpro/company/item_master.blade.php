@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.colorpro.app')
 @section('style')
 
 <style type="text/css">
@@ -128,7 +128,7 @@
                                 <label class=" form-control-label">UOM </label>
                                 <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.unit">
                                         @foreach ($units as $item)
-                                            <option value="{{$item->lookup_value}}">{{$item->lookup_value}}</option>
+                                            <option value="{{$item->id}}">{{$item->lookup_value}}</option>
                                         @endforeach
                                         
                                 </select>
@@ -140,7 +140,7 @@
                                 <div class="input-group">
                                     <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.category">
                                         @foreach ($categories as $item)
-                                            <option value="{{$item->lookup_value}}">{{$item->lookup_value}}</option>
+                                            <option value="{{$item->id}}">{{$item->lookup_value}}</option>
                                         @endforeach
                                             
                                     </select>
@@ -251,7 +251,7 @@
          },
          save_item:function() {
            console.log(this.item);
-           this.item.admin = true;
+
             axios.post('/admin/items',this.item)
             .then(response => {
                 $("#addItem").modal('toggle');

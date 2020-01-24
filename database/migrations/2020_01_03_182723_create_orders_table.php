@@ -38,7 +38,7 @@ class CreateOrdersTable extends Migration
             $table->double('tax_percent', 8, 2)->nullable();
             $table->float('tax_amount')->nullable();
             $table->float('grant_total')->nullable();
-            $table->enum('status',['active','inactive', 'blocked','closed','short_closed']);
+            $table->enum('status',['active','pending','completed','processing','accepted','inactive','closed','short_closed']);
             $table->timestamps();
         });
     }

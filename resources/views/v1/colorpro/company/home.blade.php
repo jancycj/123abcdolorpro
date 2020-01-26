@@ -28,152 +28,29 @@
         </div>
       </div>
 
-      <div class="row row-xs">
-         
-          <div class="col-lg-3 col-md-6 mg-t-10">
-            <div class="card">
-              <div class="card-body pd-y-20 pd-x-25">
-                <div class="row row-sm">
-                  <div class="col-7">
-                  <h3 class="tx-normal tx-rubik tx-spacing--1 mg-b-5">{{count($stock)}}</h3>
-                    <h6 class="tx-12 tx-semibold tx-uppercase tx-spacing-1 tx-primary mg-b-5">Items</h6>
-                    <p class="tx-11 tx-color-03 mg-b-0">Total item stocked</p>
-                  </div>
-                  <div class="col-5">
-                    <div class="chart-ten">
-                      <div id="flotChart3" class="flot-chart"></div>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          <div class="col-lg-3 col-md-6 mg-t-10">
-            <div class="card">
-              <div class="card-body pd-y-20 pd-x-25">
-                <div class="row row-sm">
-                  <div class="col-7">
-                    <h3 class="tx-normal tx-rubik tx-spacing--1 mg-b-5">0</h3>
-                    <h6 class="tx-12 tx-semibold tx-uppercase tx-spacing-1 tx-teal mg-b-5">Orders </h6>
-                    <p class="tx-11 tx-color-03 mg-b-0">Total orders recieved</p>
-                  </div>
-                  <div class="col-5">
-                    <div class="chart-ten">
-                      <div id="flotChart4" class="flot-chart"></div>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          <div class="col-lg-3 col-md-6 mg-t-10">
-            <div class="card">
-              <div class="card-body pd-y-20 pd-x-25">
-                <div class="row row-sm">
-                  <div class="col-7">
-                    <h3 class="tx-normal tx-rubik tx-spacing--1 mg-b-5">0</h3>
-                    <h6 class="tx-12 tx-semibold tx-uppercase tx-spacing-1 tx-pink mg-b-5"> Transactions</h6>
-                    <p class="tx-11 tx-color-03 mg-b-0">Total transactions made</p>
-                  </div>
-                  <div class="col-5">
-                    <div class="chart-ten">
-                      <div id="flotChart5" class="flot-chart"></div>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          <div class="col-lg-3 col-md-6 mg-t-10">
-              <div class="card">
-                <div class="card-body pd-y-20 pd-x-25">
-                  <div class="row row-sm">
-                    <div class="col-7">
-                    <h3 class="tx-normal tx-rubik tx-spacing--1 mg-b-5">{{count($customers)}}</h3>
-                      <h6 class="tx-12 tx-semibold tx-uppercase tx-spacing-1 tx-pink mg-b-5"> Customers</h6>
-                      <p class="tx-11 tx-color-03 mg-b-0">Total Customers</p>
-                    </div>
-                    <div class="col-5">
-                      <div class="chart-ten">
-                        <div id="flotChart5" class="flot-chart"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- card-body -->
-              </div><!-- card -->
-            </div><!-- col -->
-          
-          <div class="col-lg-6 mg-t-10">
-            <div class="card">
-              <div class="card-header d-flex align-items-start justify-content-between">
-                <h6 class="lh-5 mg-b-0">Total Items </h6>
-              <a href="#" class="tx-13 link-03">@{{new Date()}}<i class="icon ion-ios-arrow-down"></i></a>
-              </div><!-- card-header -->
-              <div class="card-body pd-y-15 pd-x-10">
-                <div class="table-responsive">
-                  <table class="table table-borderless table-sm tx-13 tx-nowrap mg-b-0">
-                    <thead>
-                      <tr class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase">
-                        <th>Items</th>
-                        <th class="text-right">Location</th>
-                        <th class="text-right">Quantity</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($items as $item)
-                      <tr>
-                      <td class="align-middle tx-medium">{{$item->item}}</td>
-                      <td class="align-middle text-right">
-                          <span class="text-right tx-pink">{{$item->location}}</span>
-                      </td>
-                      <td class="align-middle text-right">
-                          <span class="text-right {{$item->quantity > 5 ?'tx-teal':'tx-pink'}}">{{$item->quantity}}</span>
-                      </td>
-                      </tr>
-                      @endforeach
-
-                    </tbody>
-                  </table>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          <div class="col-lg-6 mg-t-10">
-            <div class="card">
-              <div class="card-header d-sm-flex align-items-start justify-content-between">
-                <h6 class="lh-5 mg-b-0">Customer list</h6>
-                <a href="#" class="tx-13 link-03">Mar 01 - Mar 20, 2019 <i class="icon ion-ios-arrow-down"></i></a>
-              </div><!-- card-header -->
-              <div class="card-body pd-y-15 pd-x-10">
-                <div class="table-responsive">
-                  <table class="table table-borderless table-sm tx-13 tx-nowrap mg-b-0">
-                    <thead>
-                      <tr class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase">
-                        <th class="text-right">ID</th>
-                        <th class="text-right">Name</th>
-                        <th class="text-right">Customer code</th>
-                        <th class="text-right">Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($customers as $item)
-                      <tr>
-                        <td class="text-right">#</td>
-                        <td class="text-right">{{$item->name}}</td>
-                        <td class="text-right">{{$item->customer_code}}</td>
-                        <td class="text-right">{{$item->email}}</td>
-                      </tr>
-                      @endforeach
-
-                    </tbody>
-                  </table>
-                </div><!-- table-responsive -->
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-        </div><!-- row -->
-
       
+
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-7">
+            <div class="row no-gutters mg-t-10">
+                <div class="col-3 col-sm-5 col-md-6 col-lg-5 bg-primary rounded-left">
+                  <div class="wd-150p ht-100p">
+                    <img src="{{asset('new_assets/assets/img/cmpny.jpeg')}}" class="wd-100p img-fit-cover img-object-top rounded-left" alt="">
+                  </div>
+                </div><!-- col -->
+                <div class="col-9 col-sm-7 col-md-6 col-lg-7 bg-white rounded-right">
+                  <div class="ht-100p d-flex flex-column justify-content-center pd-20 pd-sm-30 pd-md-40">
+                    <span class="tx-color-04"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 wd-40 ht-40 stroke-wd-3 mg-b-20"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
+                    <h3 class="tx-16 tx-sm-20 tx-md-24 mg-b-15 mg-md-b-20">Company Profile</h3>
+                    <p class="tx-14 tx-md-16 tx-color-02">Ei quo quas vocent. Vel libris luptatum ut, ex mel graeci comprehensam, ut doming antiopam tincidunt sed. Quis</p>
+                    <p class="tx-12 tx-md-13 tx-color-03 mg-b-25">Ei quo quas vocent. Vel libris luptatum ut, ex mel graeci comprehensam, ut doming antiopam tincidunt sed. Quis efficiantur vix eu, ne eum quas antiopam, ex fugit atqui mel...</p>
+                    <a href="" class="btn btn-primary btn-block btn-uppercase">Manage</a>
+                  </div>
+                </div><!-- col -->
+              </div>
+        </div>
+      </div>
     </div><!-- container -->
   </div><!-- content -->
 

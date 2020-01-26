@@ -33,7 +33,12 @@ class OrderDetails extends Model
     /*Schedule relation*/
     public function reciept()
     {
-        return $this->hasMany('App\OrderReceiptDetails','order_details_id');
+        return $this->hasMany('App\OrderReceiptDetails','order_details_id')->whereIn('status',['pending','processing']);
+    }
+    /*Schedule relation*/
+    public function completed_reciept()
+    {
+        return $this->hasMany('App\OrderReceiptDetails','order_details_id')->where('status','completed');
     }
      /*Schedule relation*/
      public function qc_details()

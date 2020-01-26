@@ -57,7 +57,7 @@ class OrderReceiptDetailsController extends Controller
             $ord_entry->delivery_date = Carbon::now();
             $ord_entry->created_by = Auth::id();
             $ord_entry ->save();
-            $order_qc =  $ord['qc_details'];
+            $order_qc =  isset($ord['qc_details'])?$ord['qc_details']:[];
             foreach($order_qc as $qc){
                 $qc_details = new OrderQCDetails;
                 $qc_details->qc_plan_id = $qc['id'];

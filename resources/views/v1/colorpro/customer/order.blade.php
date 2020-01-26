@@ -56,8 +56,7 @@
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">New Orders</a>
-                                        <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Recieved</a>
-                                        <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Inspection</a>
+                                       
                                     </div>
                                 </nav>
                                 <div class="tab-content pl-3 pt-2" id="nav-tabContent">
@@ -91,68 +90,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="tab-pane fade" id="custom-nav-profile" role="tabpanel" aria-labelledby="custom-nav-profile-tab">
-                                            <table id="table_1" class="table table-striped table-bordered" style="margin-top:10px;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Order_No</th>
-                                                        <th>Quotation ref no</th>
-                                                        <th>Amount</th>
-                                                        <th>Date</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-            
-                                                    @foreach ($orders as $item)
-                                                    <tr>
-                                                        <td>{{$item->order_number}}</td>
-                                                        <td>{{$item->quote_ref_no}}</td>
-                                                        <td>{{$item->grant_total}}</td>
-                                                        <td>{{date('d-m-Y', strtotime($item->order_date))}}</td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i class="fa fa-eye text-primary"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                    
-                                                </tbody>
-                                            </table>
-                                    </div>
-                                    <div class="tab-pane fade" id="custom-nav-contact" role="tabpanel" aria-labelledby="custom-nav-contact-tab">
-                                            <table id="table_1" class="table table-striped table-bordered" style="margin-top:10px;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Order_No</th>
-                                                        <th>Quotation ref no</th>
-                                                        <th>Amount</th>
-                                                        <th>Date</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-            
-                                                    @foreach ($orders as $item)
-                                                    <tr>
-                                                        <td>{{$item->order_number}}</td>
-                                                        <td>{{$item->quote_ref_no}}</td>
-                                                        <td>{{$item->grant_total}}</td>
-                                                        <td>{{date('d-m-Y', strtotime($item->order_date))}}</td>
-                                                        
-                                                        <td>
-                                                            <a href="#">
-                                                                <i class="fa fa-eye text-primary"></i>
-                                                            </a>
-                                                        </td>
-
-                                                    </tr>
-                                                    @endforeach
-                                                    
-                                                </tbody>
-                                            </table>
-                                    </div>
+                                    
+                                    
                                 </div>
 
                             </div>

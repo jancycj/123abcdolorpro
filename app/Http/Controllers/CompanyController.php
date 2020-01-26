@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CompanyUser;
 use App\Order;
+use App\OrderDetails;
 use App\OrderReceiptDetails;
 use App\Rates;
 use App\Stock;
@@ -169,20 +170,34 @@ class CompanyController extends Controller
 
     public function accept_order(Request $request)
     {
-       $data = $request->all();
-       $order_details = $data['details'];
+       $data            = $request->all();
+       $order_details   = $data['details'];
        foreach($order_details as $detail){
-           $reciepts = $detail['reciept'];
+           $reciepts    = $detail['reciept'];
            foreach($reciepts as $reciept){
-                $ord_reciept = OrderReceiptDetails::find( $reciept['id']);
+                $ord_reciept                    = OrderReceiptDetails::find( $reciept['id']);
+                $ord_reciept->recieved_quantity = $reciept['recieved_quantity'];
                 $ord_reciept->accepted_quantity = $reciept['accepted_quantity'];
                 $ord_reciept->rejected_quantity = $reciept['rejected_quantity'];
-                $ord_reciept->rework_quantity = $reciept['rework_quantity'];
+                $ord_reciept->rework_quantity   = $reciept['rework_quantity'];
+                $ord_reciept->status            = 'completed';
                 $ord_reciept->save();
            }
+           $order_detail = OrderDetails::find($detail['id']);
+           $order_detail->recieved_quantity = isset($order_detail->recieved_quantity)?$order_detail->recieved_quantity:0 + isset($reciept['recieved_quantity'])? $reciept['recieved_quantity'] : 0;
+
+           $order_detail->accepted_quantity = isset($order_detail->accepted_quantity)?$order_detail->accepted_quantity:0 + isset($reciept['accepted_quantity'])? $reciept['accepted_quantity'] : 0;
+
+           $order_detail->rejected_quantity = isset($order_detail->rejected_quantity)?$order_detail->rejected_quantity:0 + isset($reciept['rejected_quantity'])? $reciept['rejected_quantity'] : 0;
+
+           $order_detail->rework_quantity = isset($order_detail->rework_quantity)?$order_detail->rework_quantity:0 + isset($reciept['rework_quantity'])? $reciept['rework_quantity'] : 0;
+           $order_detail->save();
+
+        $finish_details = $this->is_order_details_finished($detail['id']);
+
        }
        $finish = $this->is_order_finished($data['id']);
-       if($finish === 1){
+       if($finish == 1){
             $ordr = Order::find($data['id']);
             $ordr->status = 'completed';
             $ordr->save();

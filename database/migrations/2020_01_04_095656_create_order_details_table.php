@@ -28,7 +28,7 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedInteger('primary_unit_id')->nullable();
             $table->float('conversion_factor')->nullable();
             $table->date('delivery_date')->nullable();
-            $table->enum('status',['active','inactive', 'blocked']);
+            $table->enum('status',['active','inactive', 'blocked','completed','pending']);
             $table->timestamps();
         });
     }

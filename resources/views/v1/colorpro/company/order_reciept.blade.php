@@ -477,7 +477,7 @@
             axios.post('/company/accept_order',vm.order)
             .then(response => {
                 vm.order = {};
-                // $("#view_order").modal('toggle');
+                $("#view_order").modal('toggle');
                
             })
             .catch((err) =>{

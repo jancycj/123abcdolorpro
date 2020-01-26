@@ -62,6 +62,21 @@
                                 </nav>
                                 <div class="tab-content pl-3 pt-2" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="custom-nav-home" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                    <div class="form-group">
+                                                            <label for="inputAddress"> Client:</label>
+                                                            <select class="custom-select form-control" >
+                                                                <option value="" disabled="" selected="">select supplier</option>
+                                                            <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                            </div>
+                                            <div class="col-9">
+
+                                            </div>
+                                        </div>
                                         <table id="table_1" class="table table-striped table-bordered" style="margin-top:10px;">
                                             <thead>
                                                 <tr>
@@ -83,6 +98,9 @@
                                                     <td>
                                                         <a href="#" @click="view_order({{$item->id}})">
                                                             <i class="fa fa-eye text-primary"></i>
+                                                        </a>
+                                                        <a href="#" class="mg-l-10" @click="view_order({{$item->id}})">
+                                                            <i class="fa fa-file-pdf-o text-danger"></i>
                                                         </a>
                                                     </td>
                                                 </tr>

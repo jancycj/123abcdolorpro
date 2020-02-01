@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyUser;
+use App\Costomers;
 use App\Order;
 use App\OrderDetails;
 use App\OrderReceiptDetails;
@@ -15,6 +16,8 @@ use App\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+// use Barryvdh\DomPDF\PDF;
+use PDF;
 
 class CompanyController extends Controller
 {
@@ -24,8 +27,11 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->has('json')){
+            return Company::select('id','name')->get();
+        }
         $companies =  Company::all();
         return view('v1.colorpro.admin.companies',compact('companies'));//
     }
@@ -162,6 +168,8 @@ class CompanyController extends Controller
     }
     public function get_order(Request $request , $id)
     {
+
+        
        if($request->has('json')){
             // return OrderReceiptDetails::all();
             return Order::where('id',$id)->whereIn('status',['pending','processing'])->with('details')->with('details.schedules')->with('details.reciept')->with('details.qc_details')->first();
@@ -193,6 +201,10 @@ class CompanyController extends Controller
            $order_detail->rework_quantity = isset($order_detail->rework_quantity)?$order_detail->rework_quantity:0 + isset($reciept['rework_quantity'])? $reciept['rework_quantity'] : 0;
            $order_detail->save();
 
+           $stock = Stock::where('id',$detail['item_id'])->first();
+           $stock->quantity = $stock->quantity + $order_detail->accepted_quantity;
+           $stock->save();
+
         $finish_details = $this->is_order_details_finished($detail['id']);
 
        }
@@ -203,5 +215,22 @@ class CompanyController extends Controller
             $ordr->save();
        }
        return 'true';
+    }
+
+    public function get_pdf (Request $request , $id)
+    {
+         $candidateInvoice = Order::where('id',$id)->whereIn('status',['pending','processing'])->with('details')
+        ->with('ship_to')
+        ->with('bill_to')
+        ->with('details.schedules')->with('details.reciept')->with('details.qc_details')->first();
+        $bill_to = Costomers::where('id',$candidateInvoice->billto_customer_id)
+        ->select('name','customer_code','address_line1','address_line2','address_line3','post_code','place','phone_number','email')->first();
+         $ship_to = Costomers::where('id',$candidateInvoice->shipto_customer_id)
+        ->select('name','customer_code','address_line1','address_line2','address_line3','post_code','place','phone_number','email')->first();
+
+        $pdf = PDF::loadView('pdf.invoice',compact('candidateInvoice','bill_to' , 'ship_to'));
+        $pdf->setPaper('A4', 'landscape'); 
+        return $pdf->stream('download.pdf');
+        return view('pdf.invoice',compact('candidateInvoice','bill_to' , 'ship_to'));
     }
 }

@@ -18,4 +18,15 @@ class Order extends Model
     {
         return $this->hasMany('App\OrderDetails','order_id')->where('status','completed');
     }
+
+    /*details relation*/
+    public function ship_to()
+    {
+        return $this->belongsTo('App\Costomers','shipto_customer_id');
+    }
+    /*details relation*/
+    public function bill_to()
+    {
+        return $this->belongsTo('App\Costomers','billto_customer_id');
+    }
 }

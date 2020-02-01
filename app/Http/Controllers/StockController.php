@@ -105,7 +105,7 @@ class StockController extends Controller
             'warehouse_id'     => 'required',
         ]);
          $stock->location = $request->location;
-         if($request->has('quantity')){
+         if($request->has('stock')){
             $stock->quantity = $request->stock;
 
          }

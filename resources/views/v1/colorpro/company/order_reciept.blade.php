@@ -99,7 +99,7 @@
                                                         <a href="#" @click="view_order({{$item->id}})">
                                                             <i class="fa fa-eye text-primary"></i>
                                                         </a>
-                                                        <a href="#" class="mg-l-10" @click="view_order({{$item->id}})">
+                                                    <a  target="_blank" href="{{url('company/po/pdf/'.$item->id)}}"  class="mg-l-10" >
                                                             <i class="fa fa-file-pdf-o text-danger"></i>
                                                         </a>
                                                     </td>

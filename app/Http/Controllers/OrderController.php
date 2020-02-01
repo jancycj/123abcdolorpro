@@ -31,7 +31,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('v1.colorpro.company.create_order');
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+        return view('v1.colorpro.company.create_order',compact('company_id'));
     }
 
     /**
@@ -47,16 +48,19 @@ class OrderController extends Controller
             'order'     => 'required',
             'order_details'    => 'required',
         ]);
+
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $order_ob = $request->order;
         // return $order_ob['quotation_no'];
         $order_details_ob = $request->order_details;
         $order = new order;
-        $order->comapny_id          = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+        $order->comapny_id          = $company_id;
         $order->order_number        = $order_ob['quotation_no'];
         $order->order_date          = Carbon::now();
         $order->order_type          = $order_ob['order_type'];
         $order->shipto_customer_id  = $order_ob['ship_to'];
-        $order->billto_customer_id  = $order_ob['bill_to'];
+        $order->suppier_id          = $order_ob['supplier'];
+        $order->billto_customer_id  = $company_id;
         $order->quote_ref_no        = $order_ob['quotation_no'];
         // $order->quote_ref_date      = $order_ob
         $order->created_by          = Auth::id();
@@ -88,6 +92,7 @@ class OrderController extends Controller
             $order_details->purchase_unit_id = $od['purchase_unit'];
             $order_details->conversion_factor = $od['conversion_factor'];
             $order_details->delivery_date = $od['date'];
+            $order_details->status              = 'pending';
             $order_details->save();
 
             $order_details_id = $order_details->id;

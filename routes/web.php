@@ -11,9 +11,7 @@
 */
 
 
-Route::get('/dash', function () {
-    return view('v1.colorpro.customers');
-});
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -55,6 +53,7 @@ Route::prefix('company')->group(function() {
       Route::get('/order/reciept','CompanyController@get_order_reciept')->name('order.reciept');
       Route::get('/reciept/{id}', 'CompanyController@get_order')->name('company.reciept');
       Route::post('/accept_order', 'CompanyController@accept_order')->name('company.accept_order');
+      Route::get('po/pdf/{id}', 'CompanyController@get_pdf')->name('company.pdf');
 
       
 	});

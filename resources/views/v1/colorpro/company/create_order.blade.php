@@ -110,8 +110,8 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="form-group">
-                                <label for="inputAddress">Ship To:</label>
-                                <select class="custom-select form-control" v-model="order.ship_to">
+                                <label for="inputAddress">Supplier:</label>
+                                <select class="custom-select form-control" v-model="order.supplier">
                                     <option value="" disabled="" selected="">select supplier</option>
                                 <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
                                    
@@ -120,10 +120,10 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                <label for="inputAddress">Bill To:</label>
-                                <select class="custom-select form-control" v-model="order.bill_to">
-                                    <option value="" disabled="" selected="">select supplier</option>
-                                    <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
+                                <label for="inputAddress">Ship To:</label>
+                                <select class="custom-select form-control" v-model="order.ship_to">
+                                    <option value="" disabled="" selected="">select ship to </option>
+                                    <option v-for="cmp in companies" :value="cmp.id">@{{cmp.name}}</option>
                                            
                                 </select>
                             </div>
@@ -390,7 +390,9 @@
            order_flag:false,
            tax_class:{},
            tax_value:0,
-           order:{},
+           order:{
+               ship_to:{{$company_id}},
+           },
            company_item_details:{},
            company_items:[],
            departments : [],
@@ -415,6 +417,8 @@
            currencies : [],
            order_currency:{},
            tax_object:{},
+           companies : [],
+           comapny_id : {{$company_id}},
        },
    methods: {
          toggleShow: function() {
@@ -492,6 +496,21 @@
             axios.get('/company/customer?json=true').then((response) => {
             vm.customers = response.data;
             console.log(vm.customers);
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+
+        },
+        /*
+        get taxes
+        **/
+        get_companies:function(){
+
+            var vm = this;
+            axios.get('/admin/companies?json=true').then((response) => {
+            vm.companies = response.data;
+            console.log(vm.companies);
 
             }, (error) => {
             // vm.errors = error.errors;
@@ -704,8 +723,8 @@
                 alert('please select ship to');
                 return;
             }
-            if(!this.order.bill_to){
-                alert('please select bill to');
+            if(!this.order.supplier){
+                alert('please select Supplier');
                 return;
             }
             if(!this.order.order_type){
@@ -763,6 +782,7 @@
         this.get_taxes();
         this.get_department();
         this.get_customers();
+        this.get_companies();
         this.get_currency();
 
      }

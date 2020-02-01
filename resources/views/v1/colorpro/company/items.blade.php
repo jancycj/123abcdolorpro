@@ -431,7 +431,6 @@
         /*
         update stock **/
         update_stock:function() {
-           console.log(this.opening);
 
             axios.put('/company/stocks/'+this.stock_id,this.opening)
             .then(response => {

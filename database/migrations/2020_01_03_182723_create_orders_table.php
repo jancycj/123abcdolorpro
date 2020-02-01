@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('comapny_id')->nullable();
             $table->string('order_number')->nullable();
             $table->date('order_date')->nullable();
+            $table->unsignedInteger('suppier_id')->nullable();
             $table->unsignedInteger('billto_customer_id')->nullable();
             $table->string('order_type')->nullable();
             $table->integer('amendment_no')->nullable();

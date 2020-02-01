@@ -88,7 +88,7 @@
                                 <label for="inputAddress">PO type</label>
                                 <select class="custom-select form-control" @change="set_order_type(order.order_type)" v-model="order.order_type">
                                     <option value="" disabled="" selected="">select Type</option>
-                                    <option value="L" >(L)&nbsp;Local</option>
+                                    <option value="L" >(L)&nbsp;Standard</option>
                                     <option value="I" >(I)&nbsp;Import</option>
                                     <option value="O" >(OTR)&nbsp;OTR</option>
                                 </select>
@@ -100,12 +100,7 @@
                                 <input type="text" class="form-control" id="inputAddress" placeholder="Quotation no" v-model="order.quotation_no" >
                             </div>   
                         </div>
-                        {{-- <div class="col-2 offset-6">
-                            <div class="form-group">
-                                <label for="inputAddress">Quotation No:</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" >
-                            </div> 
-                        </div> --}}
+                        
                     </div>
                     <div class="row">
                         <div class="col-3">

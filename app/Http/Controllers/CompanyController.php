@@ -148,8 +148,8 @@ class CompanyController extends Controller
             return Stock::whereIn('id',$items_id)->get();
         }
         if($request->has('json') ){
-
-            return Stock::whereIn('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->get();
+            $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+            return Stock::where('company_id',$company_id)->get();
         }
     }
     public function get_rate($stock_id)
@@ -158,12 +158,17 @@ class CompanyController extends Controller
     }
     public function get_order_reciept()
     {
+
+        // return OrderDetails::with('completed_reciept')->get();
         
         $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $pending_orders = Order::where('shipto_customer_id',$company_id)->whereIn('status',['pending','processing'])->get();
         $completed_orders = Order::where('shipto_customer_id',$company_id)->where('status','completed')->get();
+
+        $stock_update   =   Order::where('shipto_customer_id',$company_id)->whereHas('exact_details.completed_reciept')->with('exact_details.completed_reciept')->get();
+
         $shortclosed_orders = Order::where('shipto_customer_id',$company_id)->where('status','short_closed')->get();
-        return view('v1.colorpro.company.order_reciept',compact('pending_orders','completed_orders','shortclosed_orders','company_id'));
+        return view('v1.colorpro.company.order_reciept',compact('pending_orders','completed_orders','shortclosed_orders','company_id','stock_update'));
 
     }
     public function get_order(Request $request , $id)
@@ -173,6 +178,16 @@ class CompanyController extends Controller
        if($request->has('json')){
             // return OrderReceiptDetails::all();
             return Order::where('id',$id)->whereIn('status',['pending','processing'])->with('details')->with('details.schedules')->with('details.reciept')->with('details.qc_details')->first();
+       }
+    }
+
+    public function get_order_update(Request $request , $id)
+    {
+
+        
+       if($request->has('json')){
+            // return OrderReceiptDetails::all();
+            return Order::where('id',$id)->with('exact_details.completed_reciept')->first();
        }
     }
 
@@ -201,9 +216,9 @@ class CompanyController extends Controller
            $order_detail->rework_quantity = isset($order_detail->rework_quantity)?$order_detail->rework_quantity:0 + isset($reciept['rework_quantity'])? $reciept['rework_quantity'] : 0;
            $order_detail->save();
 
-           $stock = Stock::where('id',$detail['item_id'])->first();
-           $stock->quantity = $stock->quantity + $order_detail->accepted_quantity;
-           $stock->save();
+        //    $stock = Stock::where('id',$detail['item_id'])->first();
+        //    $stock->quantity = $stock->quantity + $order_detail->accepted_quantity;
+        //    $stock->save();
 
         $finish_details = $this->is_order_details_finished($detail['id']);
 
@@ -214,7 +229,7 @@ class CompanyController extends Controller
             $ordr->status = 'completed';
             $ordr->save();
        }
-       return 'true';
+       return $finish_details;
     }
 
     public function get_pdf (Request $request , $id)
@@ -232,5 +247,30 @@ class CompanyController extends Controller
         $pdf->setPaper('A4', 'landscape'); 
         return $pdf->stream('download.pdf');
         return view('pdf.invoice',compact('candidateInvoice','bill_to' , 'ship_to'));
+    }
+
+    public function post_order_update(Request $request )
+    {
+
+        
+        $data            = $request->all();
+        $order_details   = $data['exact_details'];
+        foreach($order_details as $detail){
+            $reciepts    = $detail['completed_reciept'];
+            foreach($reciepts as $reciept){
+                 $ord_reciept                    = OrderReceiptDetails::find( $reciept['id']);
+                 $ord_reciept->status            = 'stocked';
+                 $ord_reciept->save();
+            }
+            
+            $order_detail = OrderDetails::find($detail['id']);
+            $stock = Stock::where('id',$detail['item_id'])->first();
+            $stock->quantity = $stock->quantity + $order_detail->accepted_quantity;
+            $stock->save();
+ 
+ 
+        }
+        
+        return 'True';
     }
 }

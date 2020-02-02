@@ -26,11 +26,12 @@ trait OrderTrait {
             $acc = isset($order_detail->accepted_quantity)?$order_detail->accepted_quantity:0;
             $rew = isset($order_detail->rework_quantity)?$order_detail->rework_quantity:0;
             $rej = isset($order_detail->rejected_quantity)?$order_detail->rejected_quantity:0;
-            $qt = isset($order_detail->quantity)?$order_detail->quantity:0;
+            $qt = isset($order_detail->quantity)? $order_detail->quantity:0;
             $total = $acc+$rew +$rej;
 
             if($qt <= $total){
                 return $finished = 1;
+
             }
 
         }

@@ -6,7 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    
+    public $appends = ['ship_to_company_name','bill_to_company_name'];
+    /**
+     * [Item]
+     */
+    public function getShipToCompanyNameAttribute() {
+       
+        return Company::where('id',$this->shipto_customer_id)->pluck('name')->first();
+
+    }
+    /**
+     * [Item]
+     */
+    public function getBillToCompanyNameAttribute() {
+       
+        return Company::where('id',$this->billto_customer_id)->pluck('name')->first();
+
+    }
+    /*details relation*/
+    public function exact_details()
+    {
+        return $this->hasMany('App\OrderDetails','order_id');
+    }
+
     /*details relation*/
     public function details()
     {

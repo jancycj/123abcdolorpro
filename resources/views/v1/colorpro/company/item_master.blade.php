@@ -5,6 +5,9 @@
   .fade:not(.show) {
       opacity: 5;
   }
+  .tab-content {
+        margin-bottom: 0 !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -48,6 +51,7 @@
                               <th>HSN Code</th>
                               <th>Part Type</th>
                               <th>Sourcing Code</th>
+                              <th> Action</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -62,6 +66,11 @@
                               <td>{{$item->hsn_code}}</td>
                               <td>{{$item->part_type}}</td>
                               <td>{{$item->sourcing_code}}</td>
+                              <td>
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                @click="get_item_by('{{$item->id}}')"><i class="fa fa-pencil-square-o" ></i></button>
+                              
+                              </td>
                             </tr>
                           @endforeach
                           
@@ -149,19 +158,27 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
-                                <label class=" form-control-label">Drwaing/Catelog NO </label>
+                                <label class=" form-control-label">DRAW/CATLG NO </label>
                                 <div class="input-group">
                                     <input class="form-control" name="unit" v-model="item.catelog_drwaing_no">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label class=" form-control-label">HSN code </label>
                                 <div class="input-group">
                                     <input class="form-control" name="hsn" v-model="item.hsn_code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class=" form-control-label">ROL </label>
+                                <div class="input-group">
+                                    <input class="form-control" name="hsn" v-model="item.rol">
                                 </div>
                             </div>
                         </div>
@@ -199,7 +216,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        
                     </div>
+                    
                       
               </div>
           </div>
@@ -212,6 +232,225 @@
 </div><!-- modal end -->
     </div><!-- container -->
   </div><!-- content -->
+
+  <div class="modal fade " id="itemModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-md " role="document">
+        <div class="modal-content card">
+            <div class="card-header ">
+                    <div class="row">
+                        <div class="col-8">
+                                <div class="pd-t-20 d-sm-flex align-items-start justify-content-between bd-b-0 pd-b-0">
+                                    <div>
+                                        <h4 class=" tx-teal mg-b-10">#Item</h4> 
+                                    </div> 
+                                </div>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+
+            </div>
+            <div class="modal-body">
+                    <div class="default-tab" v-if="item">
+                            <ul class="nav nav-line" id="myTab5" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab5" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Item</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab5" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Details</a>
+                                </li>
+                                
+                            </ul>
+                            {{-- <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Item </a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Details</a>
+                                </div>
+                            </nav> --}}
+                            <div class="tab-content  pt-2" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="row">
+                    
+                                        <div class="col-xs-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Iem name</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="item" v-model="item_ob.name" >
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Part No</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="quantity"
+                                                            v-model="item_ob.part_no" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Unit</label>
+                                                        <div class="input-group">
+                                                            <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="item_ob.unit_id" disabled>
+                                                            <option  v-for="unit in units" :value="unit.id">@{{unit.lookup_value}}</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Category</label>
+                                                        <div class="input-group">
+                                                            <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="item_ob.category_id" >
+                                                            <option  v-for="cat in categories" :value="cat.id">@{{cat.lookup_value}}</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Status</label>
+                                                        <div class="input-group">
+                                                            <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="item_ob.status" >
+                                                            <option  value="active">Active</option>
+                                                            <option  value="inactive">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    
+                                        </div>
+                    
+                                    </div><!-- /div row -->
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="row">
+                        
+                                        <div class="col-xs-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-6" >
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Catelog/Drawing No</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="location" v-model="item_ob.catelog_drwaing_no" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">HSN Code</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="hsn" v-model="item_ob.hsn_code" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Part type</label>
+                                                        <div class="input-group">
+                                                            <select data-placeholder="Choose a Category..." class="standardSelect form-control" tabindex="1" name="category" v-model="item_ob.part_type">
+                                                                <option value="V">V(Variant)</option>
+                                                                <option value="A">A(Assembly)</option>
+                                                                <option value="C">C(Component) </option>
+                                                                <option value="R">R(Raw MAterial)</option>
+                                                                <option value="T">T(Tool)</option>
+                                                                <option value="O">O(Consumable)</option>
+                                                                <option value="W">W(Semi finished)</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Sourcing code</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group">
+                                                                <select data-placeholder="Choose a Category..." class="standardSelect form-control" tabindex="1" name="category" v-model="item_ob.sourcing_code">
+                                                                    <option value="MFG">MFG(Manufacturing)</option>
+                                                                    <option value="PUR">PUR(Standard Purchase)</option>
+                                                                    <option value="SUB">SUB(Sub Contract Purchase) </option>
+                                                                    <option value="OSV">OSV(Outside Processing)</option>
+                                                                    <option value="PHT">PHT(Phantom)</option>
+                                                                    <option value="IMP">IMP(Import)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Listed Price</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="hsn" v-model="item_ob.list_price" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Wt_avg rate</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="sourcing" v-model="item_ob.wt_average_rate" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Created at</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="hsn" v-model="item_ob.created_date" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Last update</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="sourcing" v-model="item_ob.updated_date" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                    
+                                    </div><!-- /div row -->
+                                </div>
+                            </div>
+
+                        </div><!-- /tab default -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" @click="update_item_ob()">Update Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
   
 @endsection
@@ -240,6 +479,10 @@
            showMenu: false,
            item:{},
            errors:[],
+           item_ob : {},
+           opening : {},
+           units : [],
+           categories : [],
        },
    methods: {
          toggleShow: function() {
@@ -263,10 +506,72 @@
                 this.errors = err.response.data.errors;
                 console.log(this.errors)
             });
-         }
+         },
+         /* get item
+         **/
+         get_item_by:function(id){
+
+            var vm = this;
+            axios.get('/admin/items/'+id).then((response) => {
+                vm.item_ob = response.data;
+                $("#itemModal").modal('toggle');
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+
+        },
+        /*
+        get taxes
+        **/
+        get_unit:function(){
+
+            var vm = this;
+            axios.get('/general/lookup?json=true&&key=UNIT').then((response) => {
+            vm.units = response.data;
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+
+        },
+        /*
+        get taxes
+        **/
+        get_category:function(){
+
+            var vm = this;
+            axios.get('/general/lookup?json=true&&key=ITEM CATEGORY').then((response) => {
+            vm.categories = response.data;
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+
+        },
+        /*
+        update stock **/
+        update_item_ob:function() {
+
+            axios.put('/admin/items/'+this.item_ob.id,this.item_ob)
+            .then(response => {
+                this.item_ob = {};
+                $("#itemModal").modal('toggle');
+                $(".modal-backdrop").remove();
+                alert('successfully updated!');
+                location.reload();
+
+            })
+            .catch((err) =>{
+                this.errors = err.response.data.errors;
+                console.log(this.errors)
+            });
+        },
      
      },
      mounted(){
+         this.get_unit();
+         this.get_category();
+
      }
     });
 </script>

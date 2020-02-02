@@ -20,6 +20,32 @@
     input.form-control.err {
         border: 1px solid red !important;
     }
+
+    .form-group {
+            margin-bottom: 2px !important;
+        }
+        input {
+            max-height: 28px !important;
+        }
+        select {
+            max-height: 28px !important;
+            padding: 5px !important;
+        }
+        label {
+            color: #6b6666 !important;
+            font-size: 12px !important;
+            margin-bottom: 0px !important;
+        }
+        .custom-body {
+            padding: 0 !important;
+        }
+        .custom-table th, .custom-table td {
+            padding: 3px 5px !important;
+            line-height: 1.2 !important;
+        }
+        .acc {
+            max-width: 65px !important;
+        }
 </style>
 @endsection
 @section('content')
@@ -56,8 +82,8 @@
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Pending Orders</a>
-                                        <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Completed Orders</a>
                                         <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Inspection</a>
+                                        <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Stock update</a>
                                     </div>
                                 </nav>
                                 <div class="tab-content pl-3 pt-2" id="nav-tabContent">
@@ -102,6 +128,7 @@
                                                     <a  target="_blank" href="{{url('company/po/pdf/'.$item->id)}}"  class="mg-l-10" >
                                                             <i class="fa fa-file-pdf-o text-danger"></i>
                                                         </a>
+                                                        
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -117,20 +144,20 @@
                                                         <th>Quotation ref no</th>
                                                         <th>Amount</th>
                                                         <th>Date</th>
-                                                        <th>Action</th>
+                                                        <th>Update</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
             
-                                                    @foreach ($completed_orders as $item)
+                                                    @foreach ($stock_update as $item)
                                                     <tr>
                                                         <td>{{$item->order_number}}</td>
                                                         <td>{{$item->quote_ref_no}}</td>
                                                         <td>{{$item->grant_total}}</td>
                                                         <td>{{date('d-m-Y', strtotime($item->order_date))}}</td>
                                                         <td>
-                                                            <a href="#">
-                                                                <i class="fa fa-eye text-primary"></i>
+                                                            <a href="#" @click="approve_accept_order({{$item->id}})" class="tx-16 mg-l-5">
+                                                                <i class="fa  fa-check-circle text-success"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -160,9 +187,9 @@
                                                         <td>{{date('d-m-Y', strtotime($item->order_date))}}</td>
                                                         
                                                         <td>
-                                                            <a href="#">
-                                                                <i class="fa fa-eye text-primary"></i>
-                                                            </a>
+                                                                <a href="#" @click="approve_accept_order({{$item->id}})" class="tx-16 mg-l-5">
+                                                                        <i class="fa  fa-check-circle text-success"></i>
+                                                                    </a>
                                                         </td>
 
                                                     </tr>
@@ -199,7 +226,7 @@
                             <div class="col-4 offset-4">
                                     <div class="pd-t-20    bd-b-0 pd-b-0">
                                         <div class="order-cap">
-                                        <h3 class=" tx-teal mg-b-10">#@{{order.order_number}}</h3> 
+                                        <h3 class=" tx-teal mg-b-10">Goods Receiving</h3> 
                                         </div> 
                                         
                                     </div>
@@ -390,7 +417,107 @@
             </div>
             </div><!-- modal end -->
 
-  
+            <div class="modal fade" id="stock_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
+            aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          
+                      <div class="modal-content tx-14 card">
+          
+                          <!-- <div class="modal-header">
+                          <h6 class="modal-title" id="exampleModalLabel4">Add new Item</h6>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>  -->
+          
+                          <div class="modal-body">
+                              <div class="card-header ">
+                                  <div class="row">
+                                      <div class="col-4 offset-4">
+                                              <div class="pd-t-20    bd-b-0 pd-b-0">
+                                                  <div class="order-cap">
+                                                  <h3 class=" tx-teal mg-b-10">Update warehouse </h3> 
+                                                  </div> 
+                                                  
+                                              </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-2">
+                                          <div class="form-group">
+                                              <label for="inputAddress">Order No:</label>
+                                              <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" v-model="update_order.order_number" disabled>
+                                          </div>
+                                      </div>
+                                      
+                                      
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-2 ">
+                                          <div class="form-group">
+                                              <label for="inputAddress">PO type</label>
+                                              <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" v-model="update_order.order_type" disabled>
+                                          </div>
+                                      </div>
+                                      <div class="col-2">
+                                          <div class="form-group">
+                                              <label for="inputAddress">Quotation No:</label>
+                                              <input type="text" class="form-control" id="inputAddress" placeholder="Quotation no" v-model="update_order.quote_ref_no" disabled>
+                                          </div>   
+                                      </div>
+                                      
+                                  </div>
+                                 
+                                  
+                              </div><!-- card-header -->
+                              <div class="card-body card-block">
+                                      <div class="table-responsive">
+                                              <table class="table custom-table table-bordered table-dashboard mg-b-0">
+                                              <thead>
+                                                  <tr>
+                                                      <th class="">Item</th>
+                                                      <th class="" style="min-width:80px;">Date</th>
+                                                      <th class="">Quantity</th>
+                                                      <th class="">Send</th>
+                                                      <th class="">Unit</th>
+                                                      <th class="">Amount</th>
+                                                      <th class="">Received</th>
+                                                      <th class="">Accept</th>
+                                                      <th class="">Rework</th>
+                                                      <th class="">Reject</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody v-for="ord_detail in update_order.exact_details">
+                                                      
+                                                  <tr v-for="ord in ord_detail.completed_reciept" >
+                                                      <td class="tx-medium ">@{{ord_detail.item}}</td>
+                                                      <td class="tx-medium " style="min-width:80px;">
+                                                          <span ><small>@{{ord.delivery_date}}</small></span>
+                                                      </td>
+                                                      <td class="tx-medium ">@{{ord_detail.quantity}}</td>
+                                                      <td class="tx-medium ">@{{ord.recieved_quantity}}</td>
+                                                      <td class="tx-medium ">@{{ord_detail.purchase_unit_id}}</td>
+                                                      <td class="tx-medium ">@{{ord_detail.rate}}  </td>
+                                                      <td class="tx-medium ">@{{ord_detail.recieved_quantity}}  </td>
+                                                      <td class="tx-medium ">@{{ord_detail.accepted_quantity}}  </td>
+                                                      <td class="tx-medium ">@{{ord_detail.rework_quantity}}  </td>
+                                                      <td class="tx-medium ">@{{ord_detail.rejected_quantity}}  </td>
+                                                      
+                                                  </tr>
+                                                  
+                                              </tbody>
+                                              </table>
+                                          </div><!-- table-responsive -->
+                                  
+                              </div> <!-- /card body -->
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn btn-outline-success tx-13" @click.prevent="update_warehouse()" >Update to warehouse</button>
+                          </div>
+                      </div>
+                  </div>
+                  </div><!-- stock update modal end -->
 @endsection
 @section('script')
 <script src="{{asset('assets/js/lib/data-table/datatables.min.js')}}"></script>
@@ -416,6 +543,7 @@
     data: {
       items:[],
       item:{},
+      update_order : {},
       order : {},
       customers : [],
       company_id : {{$company_id}},
@@ -541,6 +669,44 @@
                 return true;
             }
         },
+
+        /*
+        approve accepted
+        **/
+        approve_accept_order : function(id){
+
+            var vm = this;
+            axios.get('/company/reciept/update/'+id+'?json=true').then((response) => {
+            vm.update_order = response.data;
+            // vm.reciept = vm.order.details.reciept;
+            console.log(vm.update_order.details)
+            $("#stock_update").modal('toggle');
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+            
+
+        },
+
+        /*
+        update wharehouse
+        **/
+        update_warehouse : function(){
+            var vm = this;
+
+            axios.post('/company/reciept/update',vm.update_order)
+            .then(response => {
+                vm.update_order = {};
+                $("#stock_update").modal('toggle');
+                alert('successfully updated!');
+                location.reload();
+            
+            })
+            .catch((err) =>{
+                this.errors = err.response.data.errors;
+                console.log(this.errors)
+            });
+        }
 
 
       },

@@ -16,6 +16,7 @@ class CreateProcessesTable extends Migration
         Schema::create('processes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('item_id')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
             $table->string('operation_no')->unique()->nullable();
             $table->string('process_code')->nullable();
             $table->string('process_description')->nullable();

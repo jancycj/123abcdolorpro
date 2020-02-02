@@ -83,15 +83,18 @@ class OrderController extends Controller
 
         foreach($order_details_ob as $od){
 
-            $order_details = new OrderDetails;
-            $order_details->order_id = $order_id;
-            $order_details->item_id = $od['item_id'];
-            $order_details->rate  = $od['rate'];
-            $order_details->quantity = $od['quantity'];
-            $order_details->primary_unit_id = $od['primary_unit'];
-            $order_details->purchase_unit_id = $od['purchase_unit'];
-            $order_details->conversion_factor = $od['conversion_factor'];
-            $order_details->delivery_date = $od['date'];
+            $order_details                      = new OrderDetails;
+            $order_details->order_id            = $order_id;
+            $order_details->item_id             = $od['item_id'];
+            $order_details->rate                = $od['rate'];
+            $order_details->quantity            = $od['quantity'];
+            $order_details->discount            = $od['discount'];
+            $order_details->grant_total            = $od['grant_total'];
+            $order_details->sub_total            = $od['sub_total'];
+            $order_details->primary_unit_id     = $od['primary_unit'];
+            $order_details->purchase_unit_id    = $od['purchase_unit'];
+            $order_details->conversion_factor   = $od['conversion_factor'];
+            $order_details->delivery_date       = isset($od['date'])?$od['date']:null;
             $order_details->status              = 'pending';
             $order_details->save();
 
@@ -99,13 +102,16 @@ class OrderController extends Controller
             if(isset($od['schedule'])){
 
                 foreach($od['schedule'] as $sched){
-                    $ord_sched = new OrderSchedules;
+                    $ord_sched                   = new OrderSchedules;
                     $ord_sched->order_details_id = $order_details_id;
-                    $ord_sched->quantity = $sched['quantity'];
-                    $ord_sched->date = $sched['date'];
+                    $ord_sched->quantity         = $sched['quantity'];
+                    $ord_sched->delivery_date    = $sched['date'];
                     $ord_sched->save();
                     
                 }
+                $order_details->delivery_date    = $ord_sched->date;
+                $order_details->save();
+
             }
             
 

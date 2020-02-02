@@ -36,6 +36,11 @@ class OrderDetails extends Model
         return $this->hasMany('App\OrderReceiptDetails','order_details_id')->whereIn('status',['pending','processing']);
     }
     /*Schedule relation*/
+    // public function stock_update()
+    // {
+    //     return $this->hasMany('App\OrderReceiptDetails','order_details_id')->where('status','completed');
+    // }
+    /*Schedule relation*/
     public function completed_reciept()
     {
         return $this->hasMany('App\OrderReceiptDetails','order_details_id')->where('status','completed');

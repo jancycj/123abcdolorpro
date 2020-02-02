@@ -58,8 +58,12 @@ class ItemController extends Controller
         $item->unit_id = $request->unit;
         $item->catelog_drwaing_no = $request->catelog_drwaing_no;
         $item->hsn_code = $request->hsn_code;
+        $item->rol = $request->rol;
         $item->part_type = $request->part_type;
         $item->sourcing_code = $request->sourcing_code;
+        $item->created_by = Auth::id();
+        $item->updated_by = Auth::id();
+
         $item->save();
 
         $stock = new Stock;
@@ -67,6 +71,7 @@ class ItemController extends Controller
         $stock->item_id     = $item->id;
         $stock->unit_id     = $item->unit_id;
         $stock->created_by  = Auth::id();
+        
         $stock->save();
 
         // return redirect('/admin/items')->with(['message' => 'successfully added']);
@@ -80,7 +85,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        return $item;
     }
 
     /**
@@ -91,7 +96,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+
     }
 
     /**
@@ -103,7 +108,18 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        $item->name = $request->name;
+        $item->catelog_drwaing_no = $request->catelog_drwaing_no;
+        $item->hsn_code = $request->hsn_code;
+        $item->part_type = $request->part_type;
+        $item->sourcing_code = $request->sourcing_code;
+        $item->category_id = $request->category_id;
+        $item->rol = $request->rol;
+        $item->updated_by = Auth::id();
+        $item->status = $request->status;
+        $item->save();
+        return 'True';
+
     }
 
     /**

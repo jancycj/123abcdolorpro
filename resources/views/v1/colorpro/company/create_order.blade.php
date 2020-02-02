@@ -16,53 +16,72 @@
         input#inputAddress {
             max-width: 145px !important;
         }
-        .order-ft {
+        /* .order-ft {
             border: 1px solid #dcd7d7;
             padding: 5px;
             margin: 5px;
+        } */
+        .order-ft {
+            border: none;
+            border-bottom: 1px solid #dcd7d7;
         }
         .order-cap{
             justify-content: center;
             text-align: center;
             background: #f7f7fd !important;
-            padding: 10px !important;
+            padding: 2px !important;
             border-radius: 10px !important ;
+        }
+        .hd{
+            color: #19a1bf;
+
+        }
+        .import-sec-white {
+            padding: 0px 13px !important;
+        }
+        .form-group {
+            margin-bottom: 2px !important;
+        }
+        input {
+            max-height: 28px !important;
+        }
+        select {
+            max-height: 28px !important;
+            padding: 5px !important;
+        }
+        label {
+            color: #6b6666 !important;
+            font-size: 12px !important;
+            margin-bottom: 0px !important;
+        }
+        .custom-body {
+            padding: 0 !important;
+        }
+        .table th, .table td {
+            padding: 3px 5px !important;
+            line-height: 1.2 !important;
         }
     </style>
 @endsection
 @section('content')
 <div class="content content-fixed">
-    <div class="container pd-20">
-        <div class="import-sec-white">
+    <div class="container pd-5">
+        <div class="import-sec-white mg-b-5">
             <div class="d-sm-flex align-items-center justify-content-between ">
                 <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-style1 mg-b-10">
-                    <li class="breadcrumb-item"><a href="#" >Company</a></li>
-                    <li class="breadcrumb-item"><a href="#" >Orders</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create</li>
-                    </ol>
-                </nav>
-                <h4 class="mg-b-0 tx-spacing--1">Create New Order</h4>
+                
+                <div >
+                        <h5 class="hd">#Purchase order</h5> 
+                    </div> 
                 </div>
                 
             </div>
         </div>
       <div class="row row-xs">
        
-        <div class="col-lg-12 col-md-12 mg-t-10">
-            <div class="card mg-b-10">
+        <div class="col-lg-12 col-md-12 ">
+            <div class="card mg-b-2">
                 <div class="card-header ">
-                    <div class="row">
-                        <div class="col-4 offset-4">
-                                <div class="pd-t-20    bd-b-0 pd-b-0">
-                                    <div class="order-cap">
-                                        <h3 class=" tx-teal mg-b-10">#Purchase order</h3> 
-                                    </div> 
-                                    
-                                </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
@@ -70,19 +89,8 @@
                                 <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" disabled>
                             </div>
                         </div>
-                        <div class="col-2 offset-8" v-if="order_flag">
-                            <div class="form-group">
-                                <label for="inputAddress">Currency:</label>
-                                <select class="custom-select form-control"  v-model="order.currency">
-                                    <option value="" disabled="" selected="">select Type</option>
-                                    <option v-for="cur in currencies" :value="cur" >@{{cur.lookup_value}}</option>
-                                   
-                                </select>
-                            </div>
-                        </div>
                         
-                    </div>
-                    <div class="row">
+                        
                         <div class="col-2 ">
                             <div class="form-group">
                                 <label for="inputAddress">PO type</label>
@@ -99,6 +107,16 @@
                                 <label for="inputAddress">Quotation No:</label>
                                 <input type="text" class="form-control" id="inputAddress" placeholder="Quotation no" v-model="order.quotation_no" >
                             </div>   
+                        </div>
+                        <div class="col-2 " v-if="order_flag">
+                            <div class="form-group">
+                                <label for="inputAddress">Currency:</label>
+                                <select class="custom-select form-control"  v-model="order.currency">
+                                    <option value="" disabled="" selected="">select Type</option>
+                                    <option v-for="cur in currencies" :value="cur" >@{{cur.lookup_value}}</option>
+                                    
+                                </select>
+                            </div>
                         </div>
                         
                     </div>
@@ -135,7 +153,7 @@
                     </div>
                     
                 </div><!-- card-header -->
-                <div class="card-body pd-y-30">
+                <div class="card-body custom-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-dashboard mg-b-0">
                         <thead>
@@ -152,7 +170,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="ord in order_detail_array">
+                            <tr v-for="(ord,index) in order_detail_array">
                                 <td class="tx-medium ">@{{ord.item}}</td>
                                 <td class="tx-medium ">
                                     <span v-if="ord.schedule"> <small class="tx-teal"> Scheduled</small></span> <span v-if="!ord.schedule">@{{ord.date}}</span>
@@ -166,7 +184,7 @@
                                 <td class="tx-medium tx-primary">@{{ord.rate}}</td>
                                 <td class=" tx-teal">- @{{ord.discount}}%</td>
                                 <td class=" tx-pink">@{{ord.sub_total}}</td>
-                                <td class="tx-medium ">@{{ord.grant_total}}  <span class=" order-b mg-l-5 tx-15 tx-normal tx-danger"><i class="icon fa fa-minus"></i> </span></td> 
+                                <td class="tx-medium ">@{{ord.grant_total}}  <span class=" order-b mg-l-5 tx-15 tx-normal tx-danger" @click="remove_row(index)"><i class="icon fa fa-minus"></i> </span></td> 
                             </tr>
                             <tr>
                                 <td class="tx-medium ">
@@ -219,11 +237,12 @@
                         </table>
                     </div><!-- table-responsive -->
                 </div><!-- card-body -->
-                <div class="card-footer pd-y-30">
+                <div class="card-footer ">
                     <div class="row order-ft">
+                        
                         <div class="col-3 offset-10">
                             <div class="form-group">
-                                <label for="inputAddress">Basic total:</label>
+                                    <label for="inputAddress">Basic total:</label>
                                 <input type="text" class="form-control" id="inputAddress" placeholder="1222" :value="calculate_basic_total()" disabled>
                             </div>   
                         </div>
@@ -262,7 +281,7 @@
                                 <label for="inputAddress">Tax</label>
                                 <select class="custom-select form-control"  v-model="tax_object" @change="get_tax(tax_object)" :disabled="final_sub_total == 0">
                                     <option value="" disabled="" selected="" >select Tax</option>
-                                <option v-for="tax in taxes" :value="tax">@{{tax.lookup_value}}-@{{tax.lookup_description}}</option>
+                                <option v-for="tax in taxes" :value="tax">@{{tax.lookup_value}}</option>
                                 </select>
                             </div>
                         </div>
@@ -575,10 +594,15 @@
                 alert('please select a date or make scheduled')
                 return;
             }
+            if(!this.order_detail_ob.quantity){
+                alert('please specify the quantity')
+                return;
+            }
             if(this.check_item_in_order_details(this.order_detail_ob.item_id)){
                 alert('Item already selected');
                 return;
             }
+            
             this.order_detail_ob.grant_total = this.grant_total;
             this.order_detail_ob.sub_total = this.sub_total;
             this.order_detail_array.push(this.order_detail_ob);
@@ -618,6 +642,14 @@
                  alert('please add atleast one item');
                  return;
              }
+             if(this.scheduled_array){
+                var shedule_total = 0;
+                this.scheduled_array.forEach(function(obj){
+                    shedule_total = parseFloat(shedule_total)+parseFloat(obj.quantity);
+                });
+                this.order_detail_ob.quantity = shedule_total;
+
+            }
             this.order_detail_ob.schedule = this.scheduled_array;
             alert('schedule created successfully!..');
             $("#shcedule").modal('toggle');
@@ -767,6 +799,12 @@
                 this.errors = err.response.data.errors;
                 console.log(this.errors)
             });
+         },
+
+         /* remove row of the table 
+         **/
+         remove_row(ind){
+            this.$delete(this.order_detail_array, ind);
          }
          
          

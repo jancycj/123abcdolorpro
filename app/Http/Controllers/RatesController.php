@@ -56,7 +56,12 @@ class RatesController extends Controller
             'pm_unit'           => 'required',
             'pr_unit'           => 'required',
         ]);
-
+        if(Rates::where('item_id',$request->item)->where('customer_id',$request->customer)->first()){
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'customer' => 'A Rate is already exist on this Supplier..!',
+            ]);
+            throw $error;
+        }
         $rate = new Rates;
         $rate->company_id = CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first();
         $rate->item_id = $request->item;
@@ -69,6 +74,12 @@ class RatesController extends Controller
         $rate->specifications = $request->specifications;
         $rate->created_by = Auth::id();
         $rate->save();
+
+        if(isset($request->default)){
+            $item = Item::find(Stock::find($rate->item_id)->item_id);
+            $item->list_price = $rate->rate;
+            $item->save();
+        }
         return 'saved!';
 
 
@@ -103,9 +114,23 @@ class RatesController extends Controller
      * @param  \App\Rates  $rates
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rates $rates)
+    public function update(Request $request, $id)
     {
-        //
+        $rates = Rates::find($id);
+        $rates->customer_id = $request->customer_id;
+        $rates->purchase_unit = $request->purchase_unit;
+        $rates->rate = $request->rate;
+        $rates->conversion_factor = $request->conversion_factor;
+        $rates->discount = $request->discount;
+        $rates->specifications = $request->specifications;
+        $rates->updated_by = Auth::id();
+        $rates->save();
+        if(isset($request->default)){
+            $item = Item::find(Stock::find($rates->item_id)->item_id);
+            $item->list_price = $rates->rate;
+            $item->save();
+        }
+        return 'True';
     }
 
     /**

@@ -24,7 +24,7 @@ class CreateOrderReceiptDetailsTable extends Migration
             $table->text('rework_reason')->nullable();
             $table->text('reject_reason')->nullable();
             $table->unsignedInteger('created_by')->nullable();
-            $table->enum('status',['pending','active','inactive', 'blocked','completed']);
+            $table->enum('status',['pending','active','inactive', 'blocked','completed','stocked']);
             $table->timestamps();
         });
     }

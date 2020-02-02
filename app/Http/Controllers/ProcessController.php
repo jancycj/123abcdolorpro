@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CompanyUser;
 use App\Item;
 use App\Process;
 use App\User;
@@ -17,10 +18,11 @@ class ProcessController extends Controller
      */
     public function index()
     {
-        $items =  Item::all();
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+        $items =  Item::where('company_id',$company_id)->get();
         $user = User::where('id',Auth::id())->with('company')->first();
-        $process = Process::all();
-        return view('v1.colorpro.admin.process',compact('process','user','items'));//
+        $process = Process::where('company_id',$company_id)->get();
+        return view('v1.colorpro.company.process',compact('process','user','items'));//
 
 
     }
@@ -47,6 +49,7 @@ class ProcessController extends Controller
     {
         $process = new Process;
         $process->item_id = $request->item;
+        $process->company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $process->process_code=$request->process_code;
         $process->process_description =$request->process_description;
         $process->process_mode =$request->process_mode;

@@ -20,6 +20,31 @@
     input.form-control.err {
         border: 1px solid red !important;
     }
+    .form-group {
+            margin-bottom: 2px !important;
+        }
+        input {
+            max-height: 28px !important;
+        }
+        select {
+            max-height: 28px !important;
+            padding: 5px !important;
+        }
+        label {
+            color: #6b6666 !important;
+            font-size: 12px !important;
+            margin-bottom: 0px !important;
+        }
+        .custom-body {
+            padding: 0 !important;
+        }
+        .custom-table th, .custom-table td {
+            padding: 3px 5px !important;
+            line-height: 1.2 !important;
+        }
+        .acc {
+            max-width: 65px !important;
+        }
 </style>
 @endsection
 @section('content')
@@ -30,7 +55,7 @@
         <div>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-style1 mg-b-10">
-              <li class="breadcrumb-item"><a href="#" >Customer</a></li>
+              <li class="breadcrumb-item"><a href="#" >Supplier</a></li>
               <li class="breadcrumb-item active" aria-current="page">Orders</li>
             </ol>
           </nav>
@@ -120,7 +145,7 @@
                             <div class="col-4 offset-4">
                                     <div class="pd-t-20    bd-b-0 pd-b-0">
                                         <div class="order-cap">
-                                        <h3 class=" tx-teal mg-b-10">#@{{order.order_number}}</h3> 
+                                        <h3 class=" tx-teal mg-b-10">Quality checking</h3> 
                                         </div> 
                                         
                                     </div>
@@ -133,15 +158,8 @@
                                     <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" v-model="order.order_number" disabled>
                                 </div>
                             </div>
-                            <div class="col-2 offset-8" >
-                                <div class="form-group">
-                                    <label for="inputAddress">Currency:</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" disabled>
-                                </div>
-                            </div>
                             
-                        </div>
-                        <div class="row">
+                            
                             <div class="col-2 ">
                                 <div class="form-group">
                                     <label for="inputAddress">PO type</label>
@@ -151,23 +169,22 @@
                             <div class="col-2">
                                 <div class="form-group">
                                     <label for="inputAddress">Quotation No:</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="Quotation no" v-model="order.quote_ref_no" >
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Quotation no" v-model="order.quote_ref_no" disabled>
                                 </div>   
                             </div>
-                            {{-- <div class="col-2 offset-6">
+                            <div class="col-2 float-right" >
                                 <div class="form-group">
-                                    <label for="inputAddress">Quotation No:</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" >
-                                </div> 
-                            </div> --}}
+                                    <label for="inputAddress">Currency:</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" disabled>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="row">
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="inputAddress">Ship To:</label>
-                                    <select class="custom-select form-control" v-model="order.shipto_customer_id">
-                                        <option value="" disabled="" selected="">select supplier</option>
-                                    <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" v-model="order.ship_to_company_name" disabled>
                                         
                                     </select>
                                 </div>
@@ -175,11 +192,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="inputAddress">Bill To:</label>
-                                    <select class="custom-select form-control" v-model="order.billto_customer_id">
-                                        <option value="" disabled="" selected="">select supplier</option>
-                                        <option v-for="cst in customers" :value="cst.id">@{{cst.name}}</option>
-                                                
-                                    </select>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" v-model="order.bill_to_company_name" disabled>
                                 </div>
                             </div>
                         </div>
@@ -187,7 +200,7 @@
                     </div><!-- card-header -->
                     <div class="card-body card-block">
                             <div class="table-responsive">
-                                    <table class="table table-bordered table-dashboard mg-b-0">
+                                    <table class="table table-bordered table-dashboard mg-b-0 custom-table">
                                     <thead>
                                         <tr>
                                             <th class="">Item</th>
@@ -196,11 +209,11 @@
                                             <th class="">Unit</th>
                                             <th class="">Sched</th>
                                             <th class="">Rate</th>
-                                            <th class="">Disc.</th>
                                             <th class="">Net Rate</th>
+                                            <th class="" >Disc.</th>
                                             <th class="">Amount</th>
-                                            <th class="">Completed</th>
-                                            <th class="">QC entry</th>
+                                            <th class="" style="width:70px;">Completed</th>
+                                            <th class="" style="width:70px;">QC entry</th>
                                             <th class="">remarks</th>
                                         </tr>
                                     </thead>
@@ -218,16 +231,17 @@
                                                 <span v-if="ord.schedule"> <a href="#" ><i class="fa fa-calendar"></i></a></span> <span v-if="!ord.schedule">--</span>
                                             </td>
                                             <td class="tx-medium tx-primary">@{{ord.rate}}</td>
-                                            <td class=" tx-teal">- @{{ord.rate}}%</td>
-                                            <td class=" tx-pink">@{{ord.rate}}</td>
-                                            <td class="tx-medium ">@{{ord.rate}}  </td>
+                                            <td class=" tx-pink">@{{ord.sub_total}}</td>
+                                            <td class=" tx-teal">- @{{ord.discount}}%</td>
+                                            
+                                            <td class="tx-medium " >@{{ord.grant_total}}  </td>
                                             
                                             
-                                            <td>
-                                                <input class="form-control" name="quantity"  v-model="ord.recieved" @input="check_balance(ord.balance,ord.recieved)">
+                                            <td style="width:70px;">
+                                                <input class="form-control max-width: 65px;" name="quantity"  v-model="ord.recieved" @input="check_balance(ord.balance,ord.recieved)">
                                             </td> 
-                                            <td class="tx-medium "> 
-                                                <span > <button class="btn btn-sm btn-success" @click="add_qc(ord.item_id)" >QC </button></span> 
+                                            <td class="tx-medium " style="width:70px;"> 
+                                                <span > <button class="btn btn-xs btn-success" @click="add_qc(ord.item_id)" :disabled="!ord.recieved">QC </button></span> 
                                             </td>
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.remarks">

@@ -19,6 +19,9 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedInteger('item_id')->nullable();
             $table->float('rate')->nullable();
             $table->float('quantity')->nullable();
+            $table->float('discount')->nullable();
+            $table->float('sub_total')->nullable();
+            $table->float('grant_total')->nullable();
             $table->float('recieved_quantity')->nullable();
             $table->float('accepted_quantity')->nullable();
             $table->float('rework_quantity')->nullable();

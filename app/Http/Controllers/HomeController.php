@@ -46,7 +46,7 @@ class HomeController extends Controller
                 return view('v1.colorpro.company.home',compact('user','items','stock','customers'));
             break;
             case 'costomer':
-                // return redirect('')
+                return redirect('/customer/order');
                 return view('v1.colorpro.customer.home');
             break;
             case 'employee':

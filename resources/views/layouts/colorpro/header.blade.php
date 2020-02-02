@@ -36,21 +36,26 @@
            <li class="nav-item  ">
            <a href="{{url('/home')}}" class="nav-link"><i data-feather="pie-chart"></i> Home</a>
            </li>
-           {{-- <li class="nav-item with-sub">
-             <a href="#" class="nav-link"><i data-feather="package"></i> Catelog</a>
-             <ul class="navbar-menu-sub">
-               <li class="nav-sub-item"><a href="app-chat.html" class="nav-sub-link"><i data-feather="message-square"></i>Shades</a></li>
-               <li class="nav-sub-item"><a href="app-contacts.html" class="nav-sub-link"><i data-feather="users"></i>Country</a></li>
-               <li class="nav-sub-item"><a href="app-file-manager.html" class="nav-sub-link"><i data-feather="file-text"></i>States</a></li>
-               <li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Districts</a></li>
-               <li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Departments</a></li>
-             </ul>
-           </li> --}}
            
-           <li class="nav-item"><a href="{{url('company/lookup')}}" class="nav-link"><i data-feather="box"></i> Masters</a></li>
+           
+           {{-- <li class="nav-item"><a href="{{url('company/lookup')}}" class="nav-link"><i data-feather="box"></i> Masters</a></li>
            <li class="nav-item"><a href="{{url('company/item')}}" class="nav-link"><i data-feather="box"></i> Items</a></li>
            <li class="nav-item"><a href="{{url('company/stocks')}}" class="nav-link"><i data-feather="box"></i> Inventory</a></li>
            <li class="nav-item"><a href="{{url('company/rates')}}" class="nav-link"><i data-feather="box"></i> Rates</a></li>
+           <li class="nav-item"><a href="{{url('/admin/process')}}" class="nav-link"><i data-feather="box"></i> Process</a></li> --}}
+
+           <li class="nav-item with-sub">
+            <a href="#" class="nav-link"><i data-feather="package"></i> Masters</a>
+            <ul class="navbar-menu-sub">
+            <li class="nav-sub-item"><a href="{{url('company/lookup')}}" class="nav-sub-link"><i data-feather="message-square"></i>Lookup</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/item')}}" class="nav-sub-link"><i data-feather="message-square"></i> Items</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/qc')}}" class="nav-sub-link"><i data-feather="message-square"></i>QC plans</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/stocks')}}" class="nav-sub-link"><i data-feather="message-square"></i> Inventory</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/rates')}}" class="nav-sub-link"><i data-feather="message-square"></i> Rates</a></li>
+            <li class="nav-sub-item"><a href="{{url('/company/process')}}" class="nav-sub-link"><i data-feather="message-square"></i> Process</a></li>
+
+            </ul>
+          </li>
            
            <li class="nav-item with-sub">
               <a href="#" class="nav-link"><i data-feather="package"></i> Transactions</a>

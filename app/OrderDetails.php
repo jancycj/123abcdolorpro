@@ -13,7 +13,7 @@ class OrderDetails extends Model
      */
     public function getItemAttribute() {
        
-        return Item::where('id',Stock::where('id',$this->tem_id)->pluck('item_id')->first())->pluck('name')->first();
+        return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('name')->first();
 
     }
     

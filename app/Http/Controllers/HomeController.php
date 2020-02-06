@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\CompanyUser;
 use App\Costomers;
 use App\Stock;
@@ -39,11 +40,10 @@ class HomeController extends Controller
                 return view('v1.colorpro.admin.home',compact('user'));
             break;
             case 'admin':
-                $stock= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->where('quantity','!=',0)->get();
-                $items= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
-                $customers =  Costomers::where('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->get();
+                
                 $user = User::where('id',Auth::id())->with('company')->first();
-                return view('v1.colorpro.company.home',compact('user','items','stock','customers'));
+                 $company = CompanyUser::where('user_id',Auth::id())->first();
+                return view('v1.colorpro.company.home',compact('user','company'));
             break;
             case 'costomer':
                 return redirect('/customer/order');

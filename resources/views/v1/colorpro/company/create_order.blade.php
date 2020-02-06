@@ -575,8 +575,11 @@
 
                 return parseFloat(amount) - disc_amount;
 
+            }else{
+                this.grant_total = parseFloat(amount);
+
             }
-            return 0.00;
+            return parseFloat(amount);
 
 
         },

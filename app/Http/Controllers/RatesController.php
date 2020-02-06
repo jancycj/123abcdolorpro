@@ -52,7 +52,7 @@ class RatesController extends Controller
             'item'              => 'required|numeric',
             'customer'          => 'required|numeric',
             'rate'              => 'required|numeric',
-            'discount'          => 'numeric',
+            // 'discount'          => 'numeric',
             'pm_unit'           => 'required',
             'pr_unit'           => 'required',
         ]);

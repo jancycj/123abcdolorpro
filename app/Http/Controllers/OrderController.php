@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\CompanyUser;
+use App\CustomerUser;
+use App\Mail\OrderCreated;
 use App\Order;
 use App\OrderDetails;
 use App\OrderSchedules;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -117,6 +120,13 @@ class OrderController extends Controller
 
         }
 
+
+        $customer = CustomerUser::where('customer_id',$order->suppier_id)->first();
+
+        $order_new = Order::where('id',$order->id)->with('exact_details')->first();
+
+        Mail::to($customer->user->email)->send(new OrderCreated($order_new));
+
         return 'order created successfully!';
         
         
@@ -129,9 +139,12 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $order = Order::where('id',$id)->with('exact_details')->first();
+
+        Mail::to('sajeervasaleem@gmail.com')->send(new OrderCreated($order));
+        return view('Mail.po_order',compact('order'));
     }
 
     /**
@@ -140,9 +153,9 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
-        //
+        
     }
 
     /**

@@ -11,7 +11,12 @@
 */
 
 
-
+Route::get('/dash', function () {
+    return view('v1.colorpro.customers');
+});
+Route::get('/', function () {
+    return view('auth.login');
+});
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -26,7 +31,7 @@ Route::prefix('admin')->group(function() {
 	Route::group(['middleware' => ['auth']],function() {
       Route::resource('companies', 'CompanyController');
       Route::resource('items', 'ItemController');
-      // Route::resource('process', 'ProcessController');
+      Route::resource('process', 'ProcessController');
       Route::resource('customers', 'CostomersController');
       Route::resource('lookup', 'LookupMasterController');
       
@@ -42,7 +47,6 @@ Route::prefix('company')->group(function() {
       Route::resource('orders', 'OrderController');
       Route::resource('rates', 'RatesController');
       Route::resource('qc', 'QCPlanController');
-      Route::resource('process', 'ProcessController');
       Route::get('/item', 'ItemController@company_item')->name('company.item');
       Route::get('/customer', 'CostomersController@company_customer_index')->name('company.customer');
       Route::post('/customer', 'CostomersController@create_company_customer')->name('company.customer.save');
@@ -54,9 +58,6 @@ Route::prefix('company')->group(function() {
       Route::get('/order/reciept','CompanyController@get_order_reciept')->name('order.reciept');
       Route::get('/reciept/{id}', 'CompanyController@get_order')->name('company.reciept');
       Route::post('/accept_order', 'CompanyController@accept_order')->name('company.accept_order');
-      Route::get('po/pdf/{id}', 'CompanyController@get_pdf')->name('company.pdf');
-      Route::get('/reciept/update/{id}', 'CompanyController@get_order_update')->name('company.reciept.update');
-      Route::post('/reciept/update', 'CompanyController@post_order_update')->name('company.reciept.update.post');
 
       
 	});

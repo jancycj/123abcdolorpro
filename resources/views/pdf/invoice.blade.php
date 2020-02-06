@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="format-detection" content="telephone=no" />
 <meta name="csrf-token" content="{{ csrf_token() }}"> 
-<title>Invoices pdf</title>
+<title>Report pdf</title>
 <style type="text/css">
   body{
   font-family: "IBM Plex Sans", sans-serif;

@@ -12,7 +12,7 @@
               <li class="breadcrumb-item active" aria-current="page">Company</li>
             </ol>
           </nav>
-          <h4 class="mg-b-0 tx-spacing--1">Customer section</h4>
+          <h4 class="mg-b-0 tx-spacing--1">Supplier section</h4>
         </div>
         <div class="d-none d-md-block">
           <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save" class="wd-10 mg-r-5"></i> Save</button>
@@ -28,7 +28,7 @@
         <div class="col-lg-12 col-md-12 mg-t-10">
           <div class="card">
               <div class="card-header">
-                  <strong class="card-title">Customer List</strong>
+                  <strong class="card-title">Supplier List</strong>
                   <a href="{{url('company/customer/create')}}" class="btn btn-sm btn-outline-secondary float-right"><i class="fa fa-plus"></i>create</a>
               </div>
               <div class="card-body">

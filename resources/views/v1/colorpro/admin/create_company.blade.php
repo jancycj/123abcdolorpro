@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class=" form-control-label">Email</label>
+                                    <label class=" form-control-label"> Email (user name)</label>
                                     <div class="input-group">
                                         <input type="email" class="form-control" name="email">
                                     </div>
@@ -79,6 +79,12 @@
                                     <label class=" form-control-label">Phone number</label>
                                     <div class="input-group">
                                         <input class="form-control" name="phone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label"> Company Email</label>
+                                    <div class="input-group">
+                                        <input type="email" class="form-control" name="company_email">
                                     </div>
                                 </div>
                                 <div class="form-group">

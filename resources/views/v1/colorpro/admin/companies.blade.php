@@ -33,9 +33,10 @@
                       <thead>
                           <tr>
                               <th>Name</th>
+                              <th>email</th>
                               <th>Code</th>
                               <th>Address</th>
-                              <th>Place</th>
+                              <th>Phone</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -43,9 +44,10 @@
                           @foreach ($companies as $company)
                           <tr>
                               <td>{{$company->name}}</td>
+                              <td>{{$company->email}}</td>
                               <td>{{$company->company_code}}</td>
                               <td>{{$company->address_line1}}</td>
-                              <td>{{$company->address_line2}}</td>
+                              <td>{{$company->phone_number}}</td>
                           </tr>
                           @endforeach
                           

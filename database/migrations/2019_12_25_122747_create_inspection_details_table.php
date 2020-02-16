@@ -19,7 +19,9 @@ class CreateInspectionDetailsTable extends Migration
             $table->unsignedInteger('material_transfers_id')->nullable();
             $table->integer('accepted_quantity')->nullable();
             $table->integer('reworked_quantity')->nullable();
+            $table->float('rejected_quantity')->nullable();
             $table->enum('status', ['active', 'inactive']);
+            $table->enum('type', ['mt', 'oa']);
             $table->date('inspection_date')->nullable();
             $table->unsignedInteger('inspected_by')->nullable();
             $table->text('reason')->nullable();

@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\CompanyUser;
 use App\CustomerUser;
+use App\InspectionDetails;
 use App\Mail\OrderCreated;
 use App\Order;
 use App\OrderDetails;
+use App\OrderReceiptDetails;
 use App\OrderSchedules;
+use App\Stock;
+use App\Traits\OrderTrait;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
+
+    use OrderTrait;
     /**
      * Display a listing of the resource.
      *
@@ -179,5 +185,117 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+   
+    /**
+     * @param Request $request
+     * @param mixed $id
+     * 
+     * @return void
+     */
+    public function get_order_reciept(Request $request , $id)
+    {
+
+        
+       if($request->has('json')){
+            // return OrderReceiptDetails::all();
+            return Order::where('id',$id)->whereIn('status',['pending','processing'])->with('details')->with('details.schedules')->with('details.reciept')->with('details.qc_details')->first();
+       }
+    }
+
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
+    public function accept_order(Request $request)
+    {
+       $data            = $request->all();
+       $order_details   = $data['details'];
+       foreach($order_details as $detail){
+           $reciepts    = $detail['reciept'];
+           foreach($reciepts as $reciept){
+                
+                $inspection_details = new InspectionDetails;
+                $inspection_details->accepted_quantity = isset($reciept['accepted_quantity'])?$reciept['accepted_quantity']:0;
+                $inspection_details->reworked_quantity = isset($reciept['reworked_quantity'])?$reciept['reworked_quantity']:0;
+                $inspection_details->rejected_quantity = isset($reciept['rejected_quantity'])?$reciept['rejected_quantity']:0;
+                $inspection_details->inspection_date   = Carbon::now();
+                $inspection_details->inspected_by   = Auth::id();
+                $inspection_details->type   = 'oa';
+                $inspection_details->material_transfers_id   = $reciept['id'];
+
+
+                // OrderReceiptDetails::save_recieved_qty($reciept['id'],$reciept['recieved_quantity']);
+                OrderReceiptDetails::save_accepted_qty($reciept['id'],$reciept['accepted_quantity']);
+                OrderReceiptDetails::save_rejected_qty($reciept['id'],$reciept['rejected_quantity']);
+                OrderReceiptDetails::save_rework_qty($reciept['id'],$reciept['rework_quantity']);
+
+                OrderReceiptDetails::check_completed($reciept['id']);
+                
+           }
+
+        //    OrderDetails::save_recieved_qty($detail['id'],$reciept['recieved_quantity']);
+           OrderDetails::save_accepted_qty($detail['id'],$reciept['accepted_quantity']);
+           OrderDetails::save_rejected_qty($detail['id'],$reciept['rejected_quantity']);
+           OrderDetails::save_rework_qty($detail['id'],$reciept['rework_quantity']);
+
+        $finish_details = $this->is_order_details_finished($detail['id']);
+
+       }
+       $finish = $this->is_order_finished($data['id']);
+       if($finish == 1){
+            $ordr = Order::find($data['id']);
+            $ordr->status = 'completed';
+            $ordr->save();
+       }
+       return $finish_details;
+    }
+
+    /**
+     * @param Request $request
+     * @param mixed $id
+     * 
+     * @return void
+     */
+    public function get_order_update(Request $request , $id)
+    {
+
+        
+       if($request->has('json')){
+            // return OrderReceiptDetails::all();
+            return Order::where('id',$id)->with('exact_details.completed_reciept')->first();
+       }
+    }
+
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
+    public function post_order_update(Request $request )
+    {
+
+        
+        $data            = $request->all();
+        $order_details   = $data['exact_details'];
+        foreach($order_details as $detail){
+            $reciepts    = $detail['completed_reciept'];
+            foreach($reciepts as $reciept){
+                 $ord_reciept                    = OrderReceiptDetails::find( $reciept['id']);
+                 $ord_reciept->status            = 'stocked';
+                 $ord_reciept->save();
+            }
+            
+            $order_detail = OrderDetails::find($detail['id']);
+            $stock = Stock::where('id',$detail['item_id'])->first();
+            $stock->quantity = $stock->quantity + $order_detail->accepted_quantity;
+            $stock->save();
+ 
+ 
+        }
+        
+        return 'True';
     }
 }

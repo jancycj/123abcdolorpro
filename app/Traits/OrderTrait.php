@@ -29,7 +29,7 @@ trait OrderTrait {
             $qt = isset($order_detail->quantity)? $order_detail->quantity:0;
             $total = $acc+$rew +$rej;
 
-            if($qt <= $total){
+            if($qt == $total){
                 return $finished = 1;
 
             }
@@ -48,7 +48,7 @@ trait OrderTrait {
         $rej            = isset($order_detail->rejected_quantity)?$order_detail->rejected_quantity:0;
         $qt             = isset($order_detail->quantity)?$order_detail->quantity:0;
         $total          = $acc+$rew +$rej;
-        if($qt <= $total){
+        if($qt == $total){
             $order_detail->status   = 'completed';
             $order_detail->save();
             $finished               = 1;

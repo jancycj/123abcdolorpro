@@ -56,11 +56,11 @@
         <div>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-style1 mg-b-10">
-              <li class="breadcrumb-item"><a href="#" >Customer</a></li>
+              <li class="breadcrumb-item"><a href="#" >Company</a></li>
               <li class="breadcrumb-item active" aria-current="page">Orders</li>
             </ol>
           </nav>
-          <h4 class="mg-b-0 tx-spacing--1">Order List</h4>
+          <h4 class="mg-b-0 tx-spacing--1">Purchase Order Details</h4>
         </div>
         <div class="d-none d-md-block">
           <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save" class="wd-10 mg-r-5"></i> Save</button>
@@ -81,8 +81,8 @@
 
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                        <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Pending Orders</a>
-                                        <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Inspection</a>
+                                        <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Quality inspection</a>
+                                        {{-- <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Inspection</a> --}}
                                         <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Stock update</a>
                                     </div>
                                 </nav>
@@ -227,7 +227,7 @@ overflow-y: auto;">
                             <div class="col-4 offset-4">
                                     <div class="pd-t-20    bd-b-0 pd-b-0">
                                         <div class="order-cap">
-                                        <h3 class=" tx-teal mg-b-10">Goods Receiving</h3> 
+                                        <h3 class=" tx-teal mg-b-10">#Goods Quality inspection</h3> 
                                         </div> 
                                         
                                     </div>
@@ -279,7 +279,7 @@ overflow-y: auto;">
                                             <th class="">Item</th>
                                             <th class="" style="min-width:80px;">Date</th>
                                             <th class="">Quantity</th>
-                                            <th class="">Send</th>
+                                            {{-- <th class="">Send</th> --}}
                                             <th class="">Unit</th>
                                             <th class="">Amount</th>
                                             <th class="">QC</th>
@@ -292,37 +292,39 @@ overflow-y: auto;">
                                     </thead>
                                     <tbody v-for="ord_detail in order.details">
                                             
-                                        <tr v-for="ord in ord_detail.reciept" >
+                                        <tr v-for="ord in ord_detail.reciept" v-if="ord.balance != 0">
                                             <td class="tx-medium ">@{{ord_detail.item}}</td>
                                             <td class="tx-medium " style="min-width:80px;">
                                                 <span ><small>@{{ord.delivery_date}}</small></span>
                                             </td>
                                             <td class="tx-medium ">@{{ord_detail.quantity}}</td>
-                                            <td class="tx-medium ">@{{ord.recieved_quantity}}</td>
+                                            {{-- <td class="tx-medium ">@{{ord_detail.recieved_balance}}</td> --}}
                                             <td class="tx-medium ">@{{ord_detail.purchase_unit_id}}</td>
                                             <td class="tx-medium ">@{{ord_detail.rate}}  </td>
                                             
                                             <td class="tx-medium "> 
                                                 <span > <button class="btn btn-sm btn-success" @click="add_qc(ord.item_id)" >QC </button></span> 
                                             </td>
-                                            <td>
-                                                <input class="form-control" name="quantity"  v-model="ord.recieved_quantity" @input="check_balance(ord.balance,ord.recieved)"
-                                                :disabled="ord.balance <= 0">
+                                            <td class="tx-medium ">
+                                                    @{{ord_detail.recieved_balance}}
                                             </td> 
                                             <td>
                                                 <input class="form-control"  
                                                 @input="check_quantity(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)"
-                                                :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''" name="quantity"  v-model="ord.accepted_quantity">
+                                                {{-- :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''"  --}}
+                                                name="quantity"  v-model="ord.accepted_quantity">
                                             </td> 
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.rework_quantity" 
                                                 @input="check_quantity(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)"
-                                                :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''">
+                                                {{-- :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''" --}}
+                                                >
                                             </td> 
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.rejected_quantity" 
                                                 @input="check_quantity(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)"  
-                                                :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''" name="quantity"  v-model="ord.accepted_quantity" >
+                                                {{-- :class="is_equal(ord.accepted_quantity,ord.rework_quantity,ord.rejected_quantity,ord.recieved_quantity)?'err':''"  --}}
+                                                name="quantity"  v-model="ord.accepted_quantity" >
                                             </td>   
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.remarks">
@@ -625,6 +627,7 @@ overflow-y: auto;">
             .then(response => {
                 vm.order = {};
                 $("#view_order").modal('toggle');
+                location.reload();
                
             })
             .catch((err) =>{
@@ -665,7 +668,8 @@ overflow-y: auto;">
             }else if(total == 0){
                 this.quantity_accept_flag = true;
                 return true;
-            }else{
+            }
+            else{
                 this.quantity_accept_flag = true;
                 return true;
             }
@@ -677,7 +681,7 @@ overflow-y: auto;">
         approve_accept_order : function(id){
 
             var vm = this;
-            axios.get('/company/reciept/update/'+id+'?json=true').then((response) => {
+            axios.get('/company/order/completed/'+id+'?json=true').then((response) => {
             vm.update_order = response.data;
             // vm.reciept = vm.order.details.reciept;
             console.log(vm.update_order.details)
@@ -695,7 +699,7 @@ overflow-y: auto;">
         update_warehouse : function(){
             var vm = this;
 
-            axios.post('/company/reciept/update',vm.update_order)
+            axios.post('/company/order/completed',vm.update_order)
             .then(response => {
                 vm.update_order = {};
                 $("#stock_update").modal('toggle');

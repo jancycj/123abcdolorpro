@@ -27,7 +27,7 @@
                     <div class="col-xs-6 col-sm-6">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Customer Basic Details</strong> <small> Please choose valid email</small>
+                                <strong>Supplier Basic Details</strong> <small> Please choose valid email</small>
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
@@ -52,11 +52,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class=" form-control-label">Email</label>
+                                    <label class=" form-control-label">Email (user name)</label>
                                     <div class="input-group">
                                         <input type="email" class="form-control" name="email">
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label class=" form-control-label">password</label>
                                     <div class="input-group">
@@ -80,6 +81,12 @@
                                     <label class=" form-control-label">Phone number</label>
                                     <div class="input-group">
                                         <input class="form-control" name="phone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label">Supplier Email</label>
+                                    <div class="input-group">
+                                        <input type="email" class="form-control" name="company_email">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -111,9 +118,7 @@
                                   <div class="input-group">
                                       <select data-placeholder="Choose a company..." class="standardSelect form-control" tabindex="1" name="type">
                                           <option value="1">Vendor</option>
-                                          <option value="2">Reseller</option>
-                                          <option value="3">Suplier</option>
-                                          <option value="4">Other</option>
+                                          <option value="2">Suplier</option>
                                       </select>
                                   </div>
                               </div>

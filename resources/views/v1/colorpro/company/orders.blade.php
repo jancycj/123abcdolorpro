@@ -37,7 +37,7 @@
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Shipped</a>
-                                        <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Recieved</a>
+                                        {{-- <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">Recieved</a> --}}
                                         
                                     </div>
                                 </nav>
@@ -134,7 +134,7 @@
                             <div class="col-4 offset-4">
                                     <div class="pd-t-20    bd-b-0 pd-b-0">
                                         <div class="order-cap">
-                                        <h3 class=" tx-teal mg-b-10">Quality checking</h3> 
+                                        <h3 class=" tx-teal mg-b-10">#Goods recieved note</h3> 
                                         </div> 
                                         
                                     </div>
@@ -202,7 +202,6 @@
                                             <th class="" >Disc.</th>
                                             <th class="">Amount</th>
                                             <th class="" style="width:70px;">Completed</th>
-                                            <th class="" style="width:70px;">QC entry</th>
                                             <th class="">remarks</th>
                                         </tr>
                                     </thead>
@@ -229,9 +228,6 @@
                                             <td style="width:70px;">
                                                 <input class="form-control max-width: 65px;" name="quantity"  v-model="ord.recieved" @input="check_balance(ord.balance,ord.recieved)">
                                             </td> 
-                                            <td class="tx-medium " style="width:70px;"> 
-                                                <span > <button class="btn btn-xs btn-success" @click="add_qc(ord.item_id)" :disabled="!ord.recieved">QC </button></span> 
-                                            </td>
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.remarks">
                                             </td> 

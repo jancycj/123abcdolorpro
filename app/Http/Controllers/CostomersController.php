@@ -65,7 +65,7 @@ class CostomersController extends Controller
         $customer->autherized_person = $request->autherized_person;
         $customer->autherized_person_phone = $request->autherized_person_phone;
         $customer->phone_number = $request->phone;
-        $customer->email = $request->email;
+        $customer->email = $request->company_email;
         $customer->address_line1 = $request->address1;
         $customer->address_line2 = $request->address2;
         $customer->district_id = $request->district;

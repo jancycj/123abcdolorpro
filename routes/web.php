@@ -56,9 +56,11 @@ Route::prefix('company')->group(function() {
       Route::get('/get_items', 'CompanyController@get_items')->name('company.get_item');
       Route::get('/get_rate/{id}', 'CompanyController@get_rate')->name('company.get_rate');
       Route::get('/order/reciept','CompanyController@get_order_reciept')->name('order.reciept');
-      Route::get('/reciept/{id}', 'CompanyController@get_order')->name('company.reciept');
+      Route::get('/reciept/{id}', 'OrderController@get_order_reciept')->name('company.reciept');
+      Route::get('/order/completed/{id}', 'OrderController@get_order_update')->name('company.reciept');
+      Route::post('/order/completed/', 'OrderController@post_order_update')->name('company.reciept');
       Route::post('/reciept/update', 'OrderReceiptDetailsController@get_order')->name('order.reciept_update');
-      Route::post('/accept_order', 'CompanyController@accept_order')->name('company.accept_order');
+      Route::post('/accept_order', 'OrderController@accept_order')->name('company.accept_order');
 
       
 	});

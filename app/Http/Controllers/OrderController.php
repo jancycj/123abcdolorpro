@@ -131,7 +131,7 @@ class OrderController extends Controller
 
         $order_new = Order::where('id',$order->id)->with('exact_details')->first();
 
-        Mail::to($customer->user->email)->send(new OrderCreated($order_new));
+        Mail::to($customer->email)->send(new OrderCreated($order_new));
 
         return 'order created successfully!';
         

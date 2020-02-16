@@ -36,6 +36,7 @@
                       <thead>
                           <tr>
                               <th>Name</th>
+                              <th>Email</th>
                               <th>Code</th>
                               <th>Address</th>
                               <th>Place</th>
@@ -46,6 +47,7 @@
                           @foreach ($customers as $customer)
                           <tr>
                               <td>{{$customer->name}}</td>
+                              <td>{{$customer->email}}</td>
                               <td>{{$customer->customer_code}}</td>
                               <td>{{$customer->address_line1}}</td>
                               <td>{{$customer->address_line2}}</td>

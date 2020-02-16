@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CompanyUser;
+use App\Costomers;
 use App\CustomerUser;
 use App\InspectionDetails;
 use App\Mail\OrderCreated;
@@ -127,7 +128,7 @@ class OrderController extends Controller
         }
 
 
-        $customer = CustomerUser::where('customer_id',$order->suppier_id)->first();
+        $customer = Costomers::where('id',$order->suppier_id)->first();
 
         $order_new = Order::where('id',$order->id)->with('exact_details')->first();
 

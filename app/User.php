@@ -53,4 +53,13 @@ class User extends Authenticatable
     public function company() {
         return $this->belongsToMany('App\Company', 'company_users', 'user_id', 'company_id');
     } 
+
+    /**
+     * Roles
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function supplier() {
+        return $this->belongsToMany('App\Costomers', 'customer_users', 'user_id', 'customer_id');
+    } 
 }

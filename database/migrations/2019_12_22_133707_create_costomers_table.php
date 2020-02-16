@@ -56,6 +56,7 @@ class CreateCostomersTable extends Migration
             $table->string('leagel_meterology_service')->nullable();
             $table->date('leagel_meterology_service_date')->nullable();
             $table->string('cash_cr_bank')->nullable();
+            $table->string('cash_cr_bank_ifsc')->nullable();
             $table->string('cash_cr_acc_no')->nullable();
             $table->string('cur_acc_bank')->nullable();
             $table->string('cur_acc_no')->nullable();
@@ -77,6 +78,7 @@ class CreateCostomersTable extends Migration
             $table->string('company_id_no')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('type',['vendor','reseller', 'suplier', 'other']);
+            $table->text('terms_n_condition')->nullable();
             $table->enum('status',['active','inactive', 'blocked']);
             $table->boolean('is_available')->default(0);
             $table->boolean('is_deleted')->default(0);

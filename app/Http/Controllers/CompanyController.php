@@ -102,9 +102,9 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company)
+    public function show($id)
     {
-        //
+        return Company::find($id);
     }
 
     /**
@@ -113,7 +113,7 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit( $id)
     {
         //
     }
@@ -125,9 +125,39 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name'          => 'required',
+            'email'         => 'required|email',
+            'short_name'    => 'required',
+            'address_line1'      => 'required',
+        ]);
+
+        $company                        = Company::find($id);
+        $company->name                  = $request->name;
+        $company->short_name            = $request->short_name;
+        $company->autherized_person     = $request->autherized_person;
+        $company->autherized_person_phone = $request->autherized_person_phone;
+        $company->address_line1         = $request->address_line1;
+        $company->address_line2         = $request->address_line2;
+        $company->district_id           = $request->district_id;
+        $company->state_id              = $request->state_id;
+        $company->country_id            = $request->country_id;
+        $company->post_code             = $request->post_code;
+        $company->place                 = $request->place;
+        $company->mobile_number         = $request->mobile_number;
+        $company->phone_number          = $request->phone_number;
+        $company->email                 = $request->email;
+        $company->website               = $request->website;
+        $company->gst_no                = $request->gst_no;
+        $company->gst_date              = $request->gst_date;
+        $company->cash_cr_bank          = $request->cash_cr_bank;
+        $company->cash_cr_bank_ifsc     = $request->cash_cr_bank_ifsc;
+        $company->cash_cr_acc_no        = $request->cash_cr_acc_no;
+        $company->pan_gir_no            = $request->pan_gir_no;
+        $company->save();
+        return 'true';
     }
 
     /**
@@ -273,4 +303,10 @@ class CompanyController extends Controller
         
         return 'True';
     }
+
+    // public function get_auth_company()
+    // {
+    //     $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+
+    // }
 }

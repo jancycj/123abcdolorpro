@@ -208,7 +208,8 @@
       </div><!-- row -->
 
       <div class="modal fade" id="view_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true">
+  aria-hidden="true" style="overflow-x: hidden;
+overflow-y: auto;">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 
             <div class="modal-content tx-14 card">

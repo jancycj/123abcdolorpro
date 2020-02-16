@@ -141,7 +141,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::where('id',$id)->with('exact_details')->first();
+        return $order = Order::where('id',$id)->with('exact_details')->first();
 
         Mail::to('sajeervasaleem@gmail.com')->send(new OrderCreated($order));
         return view('Mail.po_order',compact('order'));

@@ -795,7 +795,7 @@
                  order_details:this.order_detail_array,
              })
             .then(response => {
-               
+                location.reload();
                 alert('successfully created!');
             })
             .catch((err) =>{

@@ -5,7 +5,7 @@
      <a href="" id="mainMenuOpen" class="burger-menu d-none"><i data-feather="menu"></i></a>
      <div class="navbar-brand">
        <!-- <a href="/" class="df-logo">Log<span>ezy</span></a> -->
-       <a href="#"><h2 class="logo-new ">Color-Pro</h2></a>
+       <a href="#"><h2 class="logo-new ">Tech-Pro</h2></a>
        
        @if(Session::has('agencies'))
         <ul class="nav navbar-menu ">

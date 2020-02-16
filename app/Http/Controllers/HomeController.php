@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CompanyUser;
 use App\Costomers;
+use App\CustomerUser;
 use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
@@ -46,8 +47,10 @@ class HomeController extends Controller
                 return view('v1.colorpro.company.home',compact('user','company'));
             break;
             case 'costomer':
-                return redirect('/customer/order');
-                return view('v1.colorpro.customer.home');
+                $user = User::where('id',Auth::id())->with('company')->first();
+                $company = CustomerUser::where('user_id',Auth::id())->first();
+                // return redirect('/customer/order');
+                return view('v1.colorpro.customer.home',compact('user','company'));
             break;
             case 'employee':
                 return view('v1.company.home');

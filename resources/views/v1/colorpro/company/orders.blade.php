@@ -115,7 +115,212 @@
       
     </div><!-- container -->
   </div><!-- content -->
+  <div class="modal fade" id="view_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
+  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 
+            <div class="modal-content tx-14 card">
+
+                <!-- <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel4">Add new Item</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>  -->
+
+                <div class="modal-body">
+                    <div class="card-header ">
+                        <div class="row">
+                            <div class="col-4 offset-4">
+                                    <div class="pd-t-20    bd-b-0 pd-b-0">
+                                        <div class="order-cap">
+                                        <h3 class=" tx-teal mg-b-10">Quality checking</h3> 
+                                        </div> 
+                                        
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="inputAddress">Order No:</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" v-model="order.order_number" disabled>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-2 ">
+                                <div class="form-group">
+                                    <label for="inputAddress">PO type</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" v-model="order.order_type" disabled>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="inputAddress">Quotation No:</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Quotation no" v-model="order.quote_ref_no" disabled>
+                                </div>   
+                            </div>
+                            <div class="col-2 float-right" >
+                                <div class="form-group">
+                                    <label for="inputAddress">Currency:</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" disabled>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="inputAddress">Ship To:</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" v-model="order.ship_to_company_name" disabled>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="inputAddress">Bill To:</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" v-model="order.bill_to_company_name" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div><!-- card-header -->
+                    <div class="card-body card-block">
+                            <div class="table-responsive">
+                                    <table class="table table-bordered table-dashboard mg-b-0 custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="">Item</th>
+                                            <th class="">Date</th>
+                                            <th class="">Quantity</th>
+                                            <th class="">Unit</th>
+                                            <th class="">Sched</th>
+                                            <th class="">Rate</th>
+                                            <th class="">Net Rate</th>
+                                            <th class="" >Disc.</th>
+                                            <th class="">Amount</th>
+                                            <th class="" style="width:70px;">Completed</th>
+                                            <th class="" style="width:70px;">QC entry</th>
+                                            <th class="">remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                        <tr v-for="ord in order.details" v-if="ord.balance > 0 ">
+                                            <td class="tx-medium ">@{{ord.item}}</td>
+                                            <td class="tx-medium ">
+                                                <span v-if="ord.schedules.length > 0"> <small class="tx-teal"> Scheduled</small></span> <span v-if="ord.schedules.length <= 0">@{{ord.delivery_date}}</span>
+                                            </td>
+                                            <td class="tx-medium ">@{{ord.balance}}</td>
+                                            <td class="tx-medium ">@{{ord.purchase_unit_id}}</td>
+                                            <td class="tx-medium "> 
+                                                
+                                                <span v-if="ord.schedule"> <a href="#" ><i class="fa fa-calendar"></i></a></span> <span v-if="!ord.schedule">--</span>
+                                            </td>
+                                            <td class="tx-medium tx-primary">@{{ord.rate}}</td>
+                                            <td class=" tx-pink">@{{ord.sub_total}}</td>
+                                            <td class=" tx-teal">- @{{ord.discount}}%</td>
+                                            
+                                            <td class="tx-medium " >@{{ord.grant_total}}  </td>
+                                            
+                                            
+                                            <td style="width:70px;">
+                                                <input class="form-control max-width: 65px;" name="quantity"  v-model="ord.recieved" @input="check_balance(ord.balance,ord.recieved)">
+                                            </td> 
+                                            <td class="tx-medium " style="width:70px;"> 
+                                                <span > <button class="btn btn-xs btn-success" @click="add_qc(ord.item_id)" :disabled="!ord.recieved">QC </button></span> 
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="quantity"  v-model="ord.remarks">
+                                            </td> 
+                                        </tr>
+                                        
+                                    </tbody>
+                                    </table>
+                                </div><!-- table-responsive -->
+                        
+                    </div> <!-- /card body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="send_order()" :disabled="disable_flag">Send Order</button>
+                </div>
+            </div>
+        </div>
+        </div><!-- modal end -->
+        <div class="modal fade " id="add_qc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
+        aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    
+                    <div class="modal-content tx-14 card ">
+    
+    
+                        <div class="modal-body">
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="col-12">
+                                                <div class="pd-t-20 d-sm-flex align-items-start justify-content-between bd-b-0 pd-b-0">
+                                                    <div>
+                                                        <h4 class=" tx-teal mg-b-10">#Inspect QC</h4> 
+                                                    </div> 
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body card-block">
+    
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered mg-b-0">
+                                                    <thead>
+                                                        <tr>
+                                                            
+                                                            <th class="">QC plans </th>
+                                                            <th class="">Qc value</th>
+                                                            <th class="">Tollarance</th>
+                                                            <th class="">Inspection</th>
+                                                            <th class="">Remarks</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="qc_ob in qc_array ">
+                                                        <td class=" tx-teal">@{{qc_ob.qc_parameter}}
+                                                        </td>
+                                                        <td class=" tx-pink">@{{qc_ob.qc_value}}
+                                                        </td>
+                                                        <td class=" tx-pink">@{{qc_ob.qc_tollarence}}
+                                                        </td>
+                                                        <td class="tx-medium "> 
+                                                            <div class="input-group">
+                                                                <input class="form-control" name="quantity"  v-model="qc_ob.inspection">
+                                                            </div>
+                                                        </td>
+                                                        <td class="tx-medium "> 
+                                                            <div class="input-group">
+                                                                <input class="form-control" name="quantity"  v-model="qc_ob.remark">
+                                                            </div>
+                                                        </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="add_qc_to_object()">Create Qc</button>
+                        </div>
+                    </div>
+                </div>
+                </div><!-- modal end -->
   
 @endsection
 @section('script')
@@ -145,8 +350,16 @@
              {role:'Admin',url:'#'},
              {role:'Candidate',url:'#'},
              {role:'User',url:'#'},
-           ]
-       },
+           ],
+           item:{},
+            order : {},
+            customers : [],
+            company_id : '',
+            qc_array: [],
+            reciept : [],
+            disable_flag : false,
+            item_detail_id : '',
+        },
    methods: {
          toggleShow: function() {
            this.showMenu = !this.showMenu;
@@ -154,7 +367,73 @@
          get_roles: function(){
                      $("#positionSelect").modal('toggle');
            
-         }
+         },
+         /*
+        view order
+        **/
+        view_order: function(id){
+            // alert(id)
+            var vm = this;
+            axios.get('/customer/order/'+id+'?json=true').then((response) => {
+            vm.order = response.data;
+            // vm.reciept = vm.order.details.reciept;
+            console.log(vm.order.details)
+             $("#view_order").modal('toggle');
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+        },
+        check_balance(balance,val){
+            this.disable_flag = false;
+            if(balance < val){
+                alert('the quantity is exeeded');
+                this.disable_flag = true;
+            }
+        },
+        add_qc : function(id){
+            // alert(id);  
+            var vm = this;
+            vm.item_detail_id = id;
+            // vm.qc_array = qc;
+            // $("#add_qc").modal('toggle');
+            axios.get('/customer/qc?item_id='+vm.item_detail_id).then((response) => {
+            vm.qc_array = response.data;
+            console.log(vm.qc_array);
+            $("#add_qc").modal('toggle');
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+        },
+        add_qc_to_object : function(){
+            var vm = this;
+
+            vm.order.details.map(function(e){
+                if(e.id === vm.item_detail_id){
+                    e.qc_details = vm.qc_array;
+                }
+            });
+             vm.qc_array = [];
+             vm.item_detail_id = '';
+             console.log(vm.order);
+            $("#add_qc").modal('toggle');
+        },
+        send_order : function(){
+            var vm = this;
+
+            axios.post('/customer/OrderReceiptDetails',vm.order)
+            .then(response => {
+                vm.order = {};
+                $("#view_order").modal('toggle');
+               
+                location.reload();
+            })
+            .catch((err) =>{
+                this.errors = err.response.data.errors;
+                console.log(this.errors)
+            });
+            
+        },
      
      },
      mounted(){

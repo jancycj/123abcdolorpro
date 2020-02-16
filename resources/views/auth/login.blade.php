@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Color-pro login</title>
+    <title>Tech-pro login</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,7 +33,7 @@
             <div class="login-content">
                 <div class="login-logo">
                     <a href="index.html">
-                        <h1>Color-pro</h1>
+                        <h1>Tech-pro</h1>
                     </a>
                 </div>
                 <div class="login-form">

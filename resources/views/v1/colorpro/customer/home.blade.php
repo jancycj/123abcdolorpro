@@ -5,6 +5,24 @@
   .fade:not(.show) {
       opacity: 5;
   }
+  .modal-body {
+      padding-bottom: 0 !important;
+  }
+  .form-group {
+            margin-bottom: 2px !important;
+        }
+        input {
+            max-height: 28px !important;
+        }
+        select {
+            max-height: 28px !important;
+            padding: 5px !important;
+        }
+        label {
+            color: #6b6666 !important;
+            font-size: 12px !important;
+            margin-bottom: 0px !important;
+        }
 </style>
 @endsection
 @section('content')
@@ -12,13 +30,13 @@
     <div class="container pd-20">
       <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
         <div>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-style1 mg-b-10">
-              <li class="breadcrumb-item"><a href="#" >Company</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Home</li>
-            </ol>
-          </nav>
-          <h4 class="mg-b-0 tx-spacing--1">Company Dashboard</h4>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-style1 mg-b-10">
+                  <li class="breadcrumb-item"><a href="#" >Supplier</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+              </nav>
+          <h4 class="mg-b-0 tx-spacing--1">Supplier Profile</h4>
         </div>
         <div class="d-none d-md-block">
           <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save" class="wd-10 mg-r-5"></i> Save</button>
@@ -28,213 +46,352 @@
         </div>
       </div>
 
-      <div class="row row-xs">
-         
-          <div class="col-lg-4 col-md-6 mg-t-10">
-            <div class="card">
-              <div class="card-body pd-y-20 pd-x-25">
-                <div class="row row-sm">
-                  <div class="col-7">
-                    <h3 class="tx-normal tx-rubik tx-spacing--1 mg-b-5">3,605</h3>
-                    <h6 class="tx-12 tx-semibold tx-uppercase tx-spacing-1 tx-primary mg-b-5">Click Through</h6>
-                    <p class="tx-11 tx-color-03 mg-b-0">No. of clicks to ad that consist of a single impression.</p>
-                  </div>
-                  <div class="col-5">
-                    <div class="chart-ten">
-                      <div id="flotChart3" class="flot-chart"></div>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          <div class="col-lg-4 col-md-6 mg-t-10">
-            <div class="card">
-              <div class="card-body pd-y-20 pd-x-25">
-                <div class="row row-sm">
-                  <div class="col-7">
-                    <h3 class="tx-normal tx-rubik tx-spacing--1 mg-b-5">3,266</h3>
-                    <h6 class="tx-12 tx-semibold tx-uppercase tx-spacing-1 tx-teal mg-b-5">View Through</h6>
-                    <p class="tx-11 tx-color-03 mg-b-0">Estimated daily unique views per visitor on the ads.</p>
-                  </div>
-                  <div class="col-5">
-                    <div class="chart-ten">
-                      <div id="flotChart4" class="flot-chart"></div>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          <div class="col-lg-4 col-md-6 mg-t-10">
-            <div class="card">
-              <div class="card-body pd-y-20 pd-x-25">
-                <div class="row row-sm">
-                  <div class="col-7">
-                    <h3 class="tx-normal tx-rubik tx-spacing--1 mg-b-5">8,765</h3>
-                    <h6 class="tx-12 tx-semibold tx-uppercase tx-spacing-1 tx-pink mg-b-5">Total Conversions</h6>
-                    <p class="tx-11 tx-color-03 mg-b-0">Estimated total conversions on ads per impressions to ads.</p>
-                  </div>
-                  <div class="col-5">
-                    <div class="chart-ten">
-                      <div id="flotChart5" class="flot-chart"></div>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          
-          <div class="col-lg-6 mg-t-10">
-            <div class="card">
-              <div class="card-header d-flex align-items-start justify-content-between">
-                <h6 class="lh-5 mg-b-0">Total Orders</h6>
-                <a href="#" class="tx-13 link-03">Mar 01 - Mar 20, 2019 <i class="icon ion-ios-arrow-down"></i></a>
-              </div><!-- card-header -->
-              <div class="card-body pd-y-15 pd-x-10">
-                <div class="table-responsive">
-                  <table class="table table-borderless table-sm tx-13 tx-nowrap mg-b-0">
-                    <thead>
-                      <tr class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase">
-                        <th class="wd-5p">Link</th>
-                        <th>Page Title</th>
-                        <th class="text-right">Percentage (%)</th>
-                        <th class="text-right">Value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="align-middle text-center"><a href="#"><i data-feather="external-link" class="wd-12 ht-12 stroke-wd-3"></i></a></td>
-                        <td class="align-middle tx-medium">Homepage</td>
-                        <td class="align-middle text-right">
-                          <div class="wd-150 d-inline-block">
-                            <div class="progress ht-4 mg-b-0">
-                              <div class="progress-bar bg-teal wd-65p" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="align-middle text-right"><span class="tx-medium">65.35%</span></td>
-                      </tr>
-                      <tr>
-                        <td class="align-middle text-center"><a href="#"><i data-feather="external-link" class="wd-12 ht-12 stroke-wd-3"></i></a></td>
-                        <td class="align-middle tx-medium">Our Services</td>
-                        <td class="align-middle text-right">
-                          <div class="wd-150 d-inline-block">
-                            <div class="progress ht-4 mg-b-0">
-                              <div class="progress-bar bg-primary wd-85p" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right"><span class="tx-medium">84.97%</span></td>
-                      </tr>
-                      <tr>
-                        <td class="align-middle text-center"><a href="#"><i data-feather="external-link" class="wd-12 ht-12 stroke-wd-3"></i></a></td>
-                        <td class="align-middle tx-medium">List of Products</td>
-                        <td class="align-middle text-right">
-                          <div class="wd-150 d-inline-block">
-                            <div class="progress ht-4 mg-b-0">
-                              <div class="progress-bar bg-warning wd-45p" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right"><span class="tx-medium">38.66%</span></td>
-                      </tr>
-                      <tr>
-                        <td class="align-middle text-center"><a href="#"><i data-feather="external-link" class="wd-12 ht-12 stroke-wd-3"></i></a></td>
-                        <td class="align-middle tx-medium">Contact Us</td>
-                        <td class="align-middle text-right">
-                          <div class="wd-150 d-inline-block">
-                            <div class="progress ht-4 mg-b-0">
-                              <div class="progress-bar bg-pink wd-15p" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right"><span class="tx-medium">16.11%</span></td>
-                      </tr>
-                      <tr>
-                        <td class="align-middle text-center"><a href="#"><i data-feather="external-link" class="wd-12 ht-12 stroke-wd-3"></i></a></td>
-                        <td class="align-middle tx-medium">Product 50% Sale</td>
-                        <td class="align-middle text-right">
-                          <div class="wd-150 d-inline-block">
-                            <div class="progress ht-4 mg-b-0">
-                              <div class="progress-bar bg-teal wd-60p" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right"><span class="tx-medium">59.34%</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-          <div class="col-lg-6 mg-t-10">
-            <div class="card">
-              <div class="card-header d-sm-flex align-items-start justify-content-between">
-                <h6 class="lh-5 mg-b-0">User Consumption</h6>
-                <a href="#" class="tx-13 link-03">Mar 01 - Mar 20, 2019 <i class="icon ion-ios-arrow-down"></i></a>
-              </div><!-- card-header -->
-              <div class="card-body pd-y-15 pd-x-10">
-                <div class="table-responsive">
-                  <table class="table table-borderless table-sm tx-13 tx-nowrap mg-b-0">
-                    <thead>
-                      <tr class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase">
-                        <th class="wd-5p">&nbsp;</th>
-                        <th>Browser</th>
-                        <th class="text-right">Sessions</th>
-                        <th class="text-right">Bounce Rate</th>
-                        <th class="text-right">Conversion Rate</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><i class="fab fa-chrome tx-primary op-6"></i></td>
-                        <td class="tx-medium">Google Chrome</td>
-                        <td class="text-right">13,410</td>
-                        <td class="text-right">40.95%</td>
-                        <td class="text-right">19.45%</td>
-                      </tr>
-                      <tr>
-                        <td><i class="fab fa-firefox tx-orange"></i></td>
-                        <td class="tx-medium">Mozilla Firefox</td>
-                        <td class="text-right">1,710</td>
-                        <td class="text-right">47.58%</td>
-                        <td class="text-right">19.99%</td>
-                      </tr>
-                      <tr>
-                        <td><i class="fab fa-safari tx-primary"></i></td>
-                        <td class="tx-medium">Apple Safari</td>
-                        <td class="text-right">1,340</td>
-                        <td class="text-right">56.50%</td>
-                        <td class="text-right">11.00%</td>
-                      </tr>
-                      <tr>
-                        <td><i class="fab fa-edge tx-primary"></i></td>
-                        <td class="tx-medium">Microsoft Edge</td>
-                        <td class="text-right">713</td>
-                        <td class="text-right">59.62%</td>
-                        <td class="text-right">4.69%</td>
-                      </tr>
-                      <tr>
-                        <td><i class="fab fa-opera tx-danger"></i></td>
-                        <td class="tx-medium">Opera</td>
-                        <td class="text-right">380</td>
-                        <td class="text-right">52.50%</td>
-                        <td class="text-right">8.75%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div><!-- table-responsive -->
-              </div><!-- card-body -->
-            </div><!-- card -->
-          </div><!-- col -->
-        </div><!-- row -->
-
       
+
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-7">
+            <div class="row no-gutters mg-t-10">
+                <div class="col-3 col-sm-5 col-md-6 col-lg-5 bg-primary rounded-left">
+                  <div class="wd-150p ht-100p">
+                    <img src="{{asset('new_assets/assets/img/cmpny.jpeg')}}" class="wd-100p img-fit-cover img-object-top rounded-left" alt="">
+                  </div>
+                </div><!-- col -->
+                <div class="col-9 col-sm-7 col-md-6 col-lg-7 bg-white rounded-right">
+                  <div class="ht-100p d-flex flex-column justify-content-center pd-20 pd-sm-30 pd-md-40">
+                    <span class="tx-color-04"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 wd-40 ht-40 stroke-wd-3 mg-b-20"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
+                    <h3 class="tx-16 tx-sm-20 tx-md-24 mg-b-15 mg-md-b-20">Supplier Profile</h3>
+                    <h5 class="tx-16 tx-sm-17 tx-md-17 mg-b-10 mg-md-b-10">{{$company->customer->name}}</h5>
+                    <p class="tx-12 tx-md-13 tx-color-03 mg-b-25">{{$company->customer->email}}</p>
+                  <p class="tx-14 tx-md-16 tx-color-02">{{$company->customer->address_line1}}</p>
+                    <p class="tx-12 tx-md-13 tx-color-03 mg-b-25">{{$company->customer->address_line2}}</p>
+                    <p class="tx-12 tx-md-13 tx-color-03 mg-b-25">{{$company->customer->address_line3}}</p>
+                    @if($company->customer->website)
+                      <p><a href="{{$company->customer->website}}" target="_blank" >Website</a></p>
+                    @endif
+                    <a href="#" class="btn btn-primary btn-block btn-uppercase" @click="get_company_profile({{$company->customer->id}})">Edit</a>
+                  </div>
+                </div><!-- col -->
+              </div>
+        </div>
+      </div>
     </div><!-- container -->
   </div><!-- content -->
+  
+  <!-- company edit -->
+  <div class="modal fade " id="company_edit" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content card">
+            <div class="card-header ">
+                    <div class="row">
+                        <div class="col-8">
+                                <div class="pd-t-20 d-sm-flex align-items-start justify-content-between bd-b-0 pd-b-0">
+                                    <div>
+                                        <h4 class=" tx-teal mg-b-10">#Profile</h4> 
+                                    </div> 
+                                </div>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    
 
+            </div>
+            <div class="modal-body">
+                    <div class="default-tab" >
+                            <ul class="nav nav-line" id="myTab5" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab5" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Basic Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab5" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Address</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" id="profile-tab5" data-toggle="tab" href="#nav-media" role="tab" aria-controls="nav-profile" aria-selected="false">Media</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" id="profile-terms" data-toggle="tab" href="#nav-terms" role="tab" aria-controls="nav-profile" aria-selected="false">Terms&conditions</a>
+                              </li>
+                                
+                            </ul>
+                            <div class="tab-content  pt-2" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="row">
+                    
+                                        <div class="col-xs-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Company name</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="item" v-model="profile.name" >
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">short_name</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="quantity"
+                                                            v-model="profile.short_name" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">autherized_person</label>
+                                                        <div class="input-group">
+                                                          <input class="form-control" name="quantity"
+                                                          v-model="profile.autherized_person" >
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">autherized_person_phone</label>
+                                                        <div class="input-group">
+                                                          <input class="form-control" name="quantity"
+                                                          v-model="profile.autherized_person_phone" >
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                            </div>
+
+                                            <div class="row">
+                                                
+                                                <div class="col-6">
+                                                  <div class="form-group">
+                                                      <label class=" form-control-label">cash_cr_bank</label>
+                                                      <div class="input-group">
+                                                        <input class="form-control" name="quantity"
+                                                        v-model="profile.cash_cr_bank" >
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">cash_cr_bank_ifsc</label>
+                                                        <div class="input-group">
+                                                          <input class="form-control" name="quantity"
+                                                          v-model="profile.cash_cr_bank_ifsc" >
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                               
+                                            </div>
+
+                                            <div class="row">
+                                              <div class="col-6">
+                                                <div class="form-group">
+                                                    <label class=" form-control-label">cash_cr_acc_no</label>
+                                                    <div class="input-group">
+                                                      <input class="form-control" name="quantity"
+                                                      v-model="profile.cash_cr_acc_no" >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="col-6">
+                                                <div class="form-group">
+                                                    <label class=" form-control-label">pan_gir_no</label>
+                                                    <div class="input-group">
+                                                      <input class="form-control" name="quantity"
+                                                      v-model="profile.pan_gir_no" >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <div class="row">
+                                              <div class="col-6">
+                                                <div class="form-group">
+                                                    <label class=" form-control-label">gst_no</label>
+                                                    <div class="input-group">
+                                                      <input class="form-control" name="quantity"
+                                                      v-model="profile.gst_no" >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="col-6">
+                                                <div class="form-group">
+                                                    <label class=" form-control-label">gst_date</label>
+                                                    <div class="input-group">
+                                                      <input type="date" class="form-control" name="quantity"
+                                                      v-model="profile.gst_date" >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                                    
+                                        </div>
+                    
+                                    </div><!-- /div row -->
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="row">
+                        
+                                        <div class="col-xs-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-6" >
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Addres 1</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="location" v-model="profile.address_line1" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Address 2</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="hsn" v-model="profile.hsn_code" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">place</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="hsn" v-model="profile.place" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Post code</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" name="hsn" v-model="profile.post_code" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                        <div class="form-group">
+                                                              <label class=" form-control-label">District</label>
+                                                                <div class="input-group">
+                                                                  <select data-placeholder="Select unit" class="standardSelect form-control" tabindex="1" name="unit" v-model="profile.district_id" >
+                                                                  <option  v-for="district in districts" :value="district.id">@{{district.lookup_value}}</option>
+                                                                      
+                                                                  </select>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">State </label>
+                                                          <div class="input-group">
+                                                              <select data-placeholder="Select unit" class="form-control" tabindex="1" name="unit" v-model="profile.state_id" >
+                                                              <option  v-for="state in states" :value="state.id">@{{state.lookup_value}}</option>
+                                                                  
+                                                              </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label"> Country</label>
+                                                        <div class="input-group">
+                                                            <select data-placeholder="Select unit" class=" form-control" tabindex="1" name="unit" v-model="profile.country_id" >
+                                                              <option  v-for="country in countries" :value="country.id">@{{country.lookup_value}}</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                    </div><!-- /div row -->
+                                </div>
+                                <div class="tab-pane fade" id="nav-media" role="tabpanel" aria-labelledby="nav-media-tab">
+                                  <div class="row">
+                      
+                                      <div class="col-xs-12 col-sm-12">
+                                          <div class="row">
+                                              <div class="col-6" >
+                                                  <div class="form-group">
+                                                      <label class=" form-control-label">Phone Number</label>
+                                                      <div class="input-group">
+                                                          <input class="form-control" name="location" v-model="profile.phone_number" >
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-6">
+                                                  <div class="form-group">
+                                                      <label class=" form-control-label"> Mobile Number</label>
+                                                      <div class="input-group">
+                                                          <input class="form-control" name="hsn" v-model="profile.mobile_number" >
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="row">
+                                              <div class="col-6">
+                                                  <div class="form-group">
+                                                      <label class=" form-control-label">Company Email</label>
+                                                      <div class="input-group">
+                                                          <input class="form-control" name="hsn" v-model="profile.email" >
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-6">
+                                                  <div class="form-group">
+                                                      <label class=" form-control-label">Website</label>
+                                                      <div class="input-group">
+                                                          <input class="form-control" name="hsn" v-model="profile.website" >
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          
+                                      </div>
+                  
+                                  </div><!-- /div row -->
+                              </div>
+                              <div class="tab-pane fade" id="nav-terms" role="tabpanel" aria-labelledby="nav-media-tab">
+                                  <div class="row">
+                      
+                                      <div class="col-xs-12 col-sm-12">
+                                          <div class="row">
+                                              <div class="col-12" >
+                                                  <div class="form-group">
+                                                      <label class=" form-control-label">terms & conditions</label>
+                                                      <div class="input-group">
+                                                          <textarea id="w3mission" rows="4" class="form-control" v-model="profile.terms_n_condition">
+                                                              
+                                                          </textarea>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              
+                                          </div>
+                                          
+                                      </div>
+                  
+                                  </div><!-- /div row -->
+                              </div>
+                            </div>
+
+                        </div><!-- /tab default -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" @click="update_profile()">Update Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
   
 @endsection
 @section('script')
@@ -261,16 +418,20 @@
     data: {
       items:[],
       item:{},
+      profile : {},
+      countries : [],
+      districts : [],
+      states    : [],
     },
     methods: {
 
-        get_item_by:function(id){
+      get_company_profile:function(id){
 
             var vm = this;
-            axios.get('/company/stocks/'+id).then((response) => {
-            vm.item = response.data;
-            console.log(vm.items);
-             $("#itemModal").modal('toggle');
+            axios.get('/admin/customers/'+id).then((response) => {
+            vm.profile = response.data;
+            console.log(vm.profile);
+             $("#company_edit").modal('toggle');
             }, (error) => {
             // vm.errors = error.errors;
             });
@@ -281,11 +442,12 @@
        * [get_candidates availability]
        * @return {[type]} [description]
        */
-       get_items: function() {
+       update_profile: function() {
         var vm = this;
-        axios.get('/company/stocks'+'?json=true').then((response) => {
-          vm.items = response.data;
-          console.log(vm.items);
+        axios.put('/admin/customers/'+vm.profile.id,vm.profile).then((response) => {
+          $("#company_edit").modal('toggle');
+          alert('profile updated successfully..!');
+          location.reload();
         }, (error) => {
           // vm.errors = error.errors;
         }); 
@@ -307,8 +469,6 @@
       },
       mounted() {
 
-        this.get_items();
-        $('#neww').DataTable();
         $('.collapse').collapse();
         $('.dropdown-toggle').dropdown();
         // this.getWeekStartAndEnd();

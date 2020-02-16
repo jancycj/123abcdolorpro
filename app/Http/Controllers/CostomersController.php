@@ -94,9 +94,9 @@ class CostomersController extends Controller
      * @param  \App\Costomers  $costomers
      * @return \Illuminate\Http\Response
      */
-    public function show(Costomers $costomers)
+    public function show($id)
     {
-        //
+       return Costomers::find($id);
     }
 
     /**
@@ -117,9 +117,40 @@ class CostomersController extends Controller
      * @param  \App\Costomers  $costomers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Costomers $costomers)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name'          => 'required',
+            'email'         => 'required|email',
+            'short_name'    => 'required',
+            'address_line1'      => 'required',
+        ]);
+
+        $company                        = Costomers::find($id);
+        $company->name                  = $request->name;
+        $company->short_name            = $request->short_name;
+        $company->autherized_person     = $request->autherized_person;
+        $company->autherized_person_phone = $request->autherized_person_phone;
+        $company->address_line1         = $request->address_line1;
+        $company->address_line2         = $request->address_line2;
+        $company->district_id           = $request->district_id;
+        $company->state_id              = $request->state_id;
+        $company->country_id            = $request->country_id;
+        $company->post_code             = $request->post_code;
+        $company->place                 = $request->place;
+        $company->mobile_number         = $request->mobile_number;
+        $company->phone_number          = $request->phone_number;
+        $company->email                 = $request->email;
+        $company->website               = $request->website;
+        $company->gst_no                = $request->gst_no;
+        $company->gst_date              = $request->gst_date;
+        $company->cash_cr_bank          = $request->cash_cr_bank;
+        $company->cash_cr_bank_ifsc     = $request->cash_cr_bank_ifsc;
+        $company->cash_cr_acc_no        = $request->cash_cr_acc_no;
+        $company->pan_gir_no            = $request->pan_gir_no;
+        $company->terms_n_condition     = $request->terms_n_condition;
+        $company->save();
+        return 'true';
     }
 
     /**

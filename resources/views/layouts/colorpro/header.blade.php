@@ -75,7 +75,7 @@
             <li class="nav-sub-item"><a href="{{url('company/report/register')}}" class="nav-sub-link"><i data-feather="message-square"></i> Purchase orders</a></li>
             <li class="nav-sub-item"><a href="{{url('company/report/po')}}" class="nav-sub-link"><i data-feather="message-square"></i> Pending orders</a></li>
             <li class="nav-sub-item"><a href="{{url('company/orders')}}" class="nav-sub-link"><i data-feather="message-square"></i> Goods recieved/Inspection note</a></li>
-            <li class="nav-sub-item"><a href="{{url('company/order/reciept')}}" class="nav-sub-link"><i data-feather="message-square"></i> MIR register-bought out</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/report/mir')}}" class="nav-sub-link"><i data-feather="message-square"></i> MIR register-bought out</a></li>
             
 
             </ul>

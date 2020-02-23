@@ -44,6 +44,8 @@ class OrderReceiptDetailsController extends Controller
         $order = $request->all();
         $order_details =  $order['details'];
         
+        $dc_no = $order['dc_no'];
+        $dc_date = $order['dc_date'];
         $order_ob = Order::find($request->id);
         $order_ob->status = 'processing';
         $order_ob->save();
@@ -55,6 +57,8 @@ class OrderReceiptDetailsController extends Controller
             $ord_entry->order_details_id = $ord['id'];
             $ord_entry->recieved_quantity = $ord['recieved'];
             $ord_entry->delivery_date = Carbon::now();
+            $ord_entry->dc_no = $dc_no;
+            $ord_entry->dc_date = $dc_date;
             $ord_entry->created_by = Auth::id();
             $ord_entry ->save();
             $order_qc =  isset($ord['qc_details'])?$ord['qc_details']:[];

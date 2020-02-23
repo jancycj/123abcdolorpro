@@ -208,4 +208,86 @@ class ReportController extends Controller
 
         
     }
+
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
+    public function mir(Request $request)
+    {
+
+        $vendor_id = '';
+        $from = '';
+        $to = '';
+        if($request->has('vendor_id')){
+            $vendor_id = $request->vendor_id;
+        }
+        if($request->has('from')){
+            $from = $request->from;
+        }
+        if($request->has('to')){
+            $to = $request->to;
+        }
+
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+        $orders = Order::where('comapny_id',$company_id)
+            ->where(function ($query) use ($vendor_id) {
+                if($vendor_id != ''){
+                    $query->where('suppier_id',  $vendor_id);
+                }
+            })
+            ->with('exact_details.exact_reciept')->whereHas('exact_details.exact_reciept', function($q) use($from, $to) {
+                if($from != '' && $to != ''){
+                    $q->whereBetween('delivery_date', [$from, $to]);
+                }
+            })->get();
+         $orders = $orders->groupBy('suppier_id');
+        
+        $categories = Costomers::where('company_id',$company_id)->get();
+        return view('v1.colorpro.company.reports.mir',compact('orders','categories'));
+    }
+
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
+    public function mir_pdf(Request $request)
+    {
+
+        $vendor_id = '';
+        $from = '';
+        $to = '';
+        if($request->has('vendor_id')){
+            $vendor_id = $request->vendor_id;
+        }
+        if($request->has('from')){
+            $from = $request->from;
+        }
+        if($request->has('to')){
+            $to = $request->to;
+        }
+
+        $company = CompanyUser::where('user_id',Auth::id())->first();
+        $orders = Order::where('comapny_id',$company->company_id)
+            ->where(function ($query) use ($vendor_id) {
+                if($vendor_id != ''){
+                    $query->where('suppier_id',  $vendor_id);
+                }
+            })
+            ->with('exact_details.exact_reciept')->whereHas('exact_details.exact_reciept', function($q) use($from, $to) {
+                if($from != '' && $to != ''){
+                    $q->whereBetween('delivery_date', [$from, $to]);
+                }
+            })->get();
+         $orders = $orders->groupBy('suppier_id');
+        
+        $date = Carbon::now()->format('d/m/Y');
+
+        // return $company;
+        $pdf = PDF::loadView('pdf.mir', compact('orders','company','date','from','to') );
+        $pdf->setPaper('A4', 'landscape'); 
+        return $pdf->stream('customers.pdf');
+    }
 }

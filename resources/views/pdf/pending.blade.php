@@ -21,18 +21,18 @@
   border-collapse: collapse !important;
   }
   th, td {
-  padding:8px;
+  padding:3px;
   }
   th {
   text-align: left;
   }
   .table th, .table td {
-  padding: 12px 10px;
-  line-height: 1.5;
+  padding: 3px 3px;
+  line-height: 1;
   }
   .table th, .table td {
-  padding: 11px 29px;
-  line-height: 1.2;
+  padding: 3px 3px;
+  line-height: 1;
   font-size: 15px;
   }
   .table th{
@@ -87,7 +87,7 @@
         
         @php($tt = 0)
         @foreach ($orders as $index => $item)
-        <table>
+        <table class="table table-bordered" bgcolor="#FFFFFF"  border="0" cellpadding="0" cellspacing="0"  width="100%">
             <thead></thead>
             <tbody>
                 <tr>

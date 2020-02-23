@@ -21,18 +21,18 @@
   border-collapse: collapse !important;
   }
   th, td {
-  padding:8px;
+  padding:3px;
   }
   th {
   text-align: left;
   }
   .table th, .table td {
-  padding: 12px 10px;
-  line-height: 1.5;
+  padding: 3px 3px;
+  line-height: 1;
   }
   .table th, .table td {
-  padding: 11px 29px;
-  line-height: 1.2;
+  padding: 3px 3px;
+  line-height: 1;
   font-size: 15px;
   }
   .table th{

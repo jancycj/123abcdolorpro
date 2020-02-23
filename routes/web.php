@@ -71,11 +71,10 @@ Route::prefix('company')->group(function() {
             Route::get('/po_pdf', 'ReportController@po_pdf')->name('report.po.pdf');
             Route::get('/register_pdf', 'ReportController@register_pdf')->name('report.register.pdf');
             Route::get('/register', 'ReportController@register_orders')->name('report.register');
+            Route::get('/mir', 'ReportController@mir')->name('report.mir');
+            Route::get('/mir_pdf', 'ReportController@mir_pdf')->name('report.mir.pdf');
 
-            Route::get('/customers', 'CostomersController@customers')->name('customer.order');
-            Route::get('/order/{id}', 'CostomersController@get_order')->name('customer.get_order');
-            Route::get('/qc', 'CostomersController@get_qc')->name('customer.get_qc');
-            Route::resource('/OrderReceiptDetails', 'OrderReceiptDetailsController');
+           
             
             
         });

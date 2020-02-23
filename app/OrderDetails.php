@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetails extends Model
 {
 
-    public $appends = ['item','balance','recieved_balance','order_no','pending_amount','unit'];
+    public $appends = ['item','balance','recieved_balance','order_no','pending_amount','unit','discount_rate'];
     /**
      * [Item]
      */
@@ -47,6 +47,21 @@ class OrderDetails extends Model
 
  
     }
+    /**
+     * [Item]
+     */
+    public function getDiscountRateAttribute() {
+       
+        $total = $this->rate;
+
+        if($this->discount){
+            $total = $this->rate - ($this->rate*$this->discount/100);
+
+        }
+        return $total;
+
+ 
+    }
 
     /**
      * [Item]
@@ -72,6 +87,11 @@ class OrderDetails extends Model
     public function reciept()
     {
         return $this->hasMany('App\OrderReceiptDetails','order_details_id')->whereIn('status',['pending','processing']);
+    }
+    /*Schedule relation*/
+    public function exact_reciept()
+    {
+        return $this->hasMany('App\OrderReceiptDetails','order_details_id');
     }
     /*Schedule relation*/
     // public function stock_update()

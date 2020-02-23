@@ -195,6 +195,18 @@
                                     <input type="text" class="form-control" id="inputAddress" placeholder="INR" v-model="order.bill_to_company_name" disabled>
                                 </div>
                             </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="inputAddress">Supplier DC NO:</label>
+                                    <input type="text" class="form-control" id="inputAddress"  v-model="order.dc_no" >
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="inputAddress">Supplier DC Date</label>
+                                    <input type="date" class="form-control" id="inputAddress"  v-model="order.dc_date" >
+                                </div>
+                            </div>
                         </div>
                         
                     </div><!-- card-header -->
@@ -448,7 +460,14 @@
         },
         send_order : function(){
             var vm = this;
-
+            if(!vm.order.dc_no){
+                alert('please enter dc number');
+                return;
+            }
+            if(!vm.order.dc_date){
+                alert('please enter dc date');
+                return;
+            }
             axios.post('/customer/OrderReceiptDetails',vm.order)
             .then(response => {
                 vm.order = {};

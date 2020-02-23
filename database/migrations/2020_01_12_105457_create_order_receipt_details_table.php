@@ -13,6 +13,7 @@ class CreateOrderReceiptDetailsTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('order_receipt_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('order_details_id')->nullable();
@@ -23,6 +24,8 @@ class CreateOrderReceiptDetailsTable extends Migration
             $table->date('delivery_date')->nullable();
             $table->text('rework_reason')->nullable();
             $table->text('reject_reason')->nullable();
+            $table->string('dc_no')->nullable();
+            $table->date('dc_date')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['pending','active','inactive', 'blocked','completed','stocked']);
             $table->timestamps();

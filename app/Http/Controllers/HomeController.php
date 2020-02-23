@@ -43,7 +43,9 @@ class HomeController extends Controller
             case 'admin':
                 
                 $user = User::where('id',Auth::id())->with('company')->first();
-                 $company = CompanyUser::where('user_id',Auth::id())->first();
+                $company = CompanyUser::where('user_id',Auth::id())->first();
+                session()->put('user_name',$company->company->name);
+
                 return view('v1.colorpro.company.home',compact('user','company'));
             break;
             case 'costomer':

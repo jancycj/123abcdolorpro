@@ -13,7 +13,7 @@ class CompanyUser extends Model
      */
     public function getCompanyAttribute() {
        
-        return company::where('id',$this->company_id)->first();
+        return Company::where('id',$this->company_id)->first();
 
     }
 }

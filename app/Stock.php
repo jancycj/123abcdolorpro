@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Stock extends Model
 {
     
-    public $appends = ['item','item_ob','unit', 'category'];
+    public $appends = ['item','item_ob','unit', 'category','value'];
     /**
      * [Item]
      */
@@ -21,6 +21,15 @@ class Stock extends Model
         return Item::where('id',$this->item_id)->first();
 
     }
+
+    public function getValueAttribute() {
+       
+        $item = Item::where('id',$this->item_id)->first();
+        $total = $item->list_price *  $this->quantity;
+        return $total;
+
+    }
+
      /**
      * [Item]
      */
@@ -37,5 +46,11 @@ class Stock extends Model
         // return LookupMaster::where('id',$this->category_id)->pluck('lookup_value')->first();
         return 'null';
 
+    }
+
+    /*details relation*/
+    public function item()
+    {
+        return $this->belongsTo('App\Item','item_id');
     }
 }

@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetails extends Model
 {
 
-    public $appends = ['item','balance','recieved_balance'];
+    public $appends = ['item','balance','recieved_balance','order_no','pending_amount','unit'];
     /**
      * [Item]
      */
     public function getItemAttribute() {
        
         return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('name')->first();
+
+    }
+    public function getOrderNoAttribute() {
+       
+        return Order::where('id',$this->order_id)->pluck('order_number')->first();
 
     }
     
@@ -29,13 +34,34 @@ class OrderDetails extends Model
     /**
      * [Item]
      */
+    public function getPendingAmountAttribute() {
+       
+        $qty = $this->quantity - $this->recieved_quantity;
+        $total = $qty*$this->rate;
+
+        if($this->discount){
+            $total = $total - ($total*$this->discount/100);
+
+        }
+        return $total;
+
+ 
+    }
+
+    /**
+     * [Item]
+     */
     public function getRecievedBalanceAttribute() {
        
         return $this->recieved_quantity - ($this->accepted_quantity+$this->rejected_quantity+$this->rework_quantity);
  
      }
 
-    
+    public function getUnitAttribute() {
+       
+        return LookupMaster::where('id',$this->purchase_unit_id)->pluck('lookup_value')->first();
+
+    }
     
     /*Schedule relation*/
     public function schedules()

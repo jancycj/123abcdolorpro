@@ -63,6 +63,22 @@ Route::prefix('company')->group(function() {
       Route::post('/accept_order', 'OrderController@accept_order')->name('company.accept_order');
 
       
+        Route::prefix('report')->group(function() {
+
+            Route::get('/stock', 'ReportController@stock')->name('report.stock');
+            Route::get('/stock_pdf', 'ReportController@stock_pdf')->name('report.stock.pdf');
+            Route::get('/po', 'ReportController@po_orders')->name('report.po');
+            Route::get('/po_pdf', 'ReportController@po_pdf')->name('report.po.pdf');
+            Route::get('/register_pdf', 'ReportController@register_pdf')->name('report.register.pdf');
+            Route::get('/register', 'ReportController@register_orders')->name('report.register');
+
+            Route::get('/customers', 'CostomersController@customers')->name('customer.order');
+            Route::get('/order/{id}', 'CostomersController@get_order')->name('customer.get_order');
+            Route::get('/qc', 'CostomersController@get_qc')->name('customer.get_qc');
+            Route::resource('/OrderReceiptDetails', 'OrderReceiptDetailsController');
+            
+            
+        });
 	});
 	
 });

@@ -5,7 +5,8 @@
      <a href="" id="mainMenuOpen" class="burger-menu d-none"><i data-feather="menu"></i></a>
      <div class="navbar-brand">
        <!-- <a href="/" class="df-logo">Log<span>ezy</span></a> -->
-       <a href="#"><h2 class="logo-new ">Tech-Pro</h2></a>
+       <a href="#"><h2 class="logo-new ">Tech-Pro:</h2></a>
+       <a href="#"><h5 class="logo-new ">{{ session('user_name') }}</h5></a>
        
        @if(Session::has('agencies'))
         <ul class="nav navbar-menu ">
@@ -67,7 +68,18 @@
               </ul>
             </li>
           <li class="nav-item"><a href="{{url('company/customer')}}" class="nav-link"><i data-feather="box"></i> Clients</a></li>
-          <li class="nav-item"><a href="{{url('company/reports')}}" class="nav-link"><i data-feather="archive"></i> reports</a></li>
+          <li class="nav-item with-sub">
+            <a href="#" class="nav-link"><i data-feather="package"></i> Reports</a>
+            <ul class="navbar-menu-sub">
+            <li class="nav-sub-item"><a href="{{url('company/report/stock')}}" class="nav-sub-link"><i data-feather="message-square"></i>Stock Report</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/report/register')}}" class="nav-sub-link"><i data-feather="message-square"></i> Purchase orders</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/report/po')}}" class="nav-sub-link"><i data-feather="message-square"></i> Pending orders</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/orders')}}" class="nav-sub-link"><i data-feather="message-square"></i> Goods recieved/Inspection note</a></li>
+            <li class="nav-sub-item"><a href="{{url('company/order/reciept')}}" class="nav-sub-link"><i data-feather="message-square"></i> MIR register-bought out</a></li>
+            
+
+            </ul>
+          </li>
          </ul>
        </div><!-- navbar-menu-wrapper -->
      <div class="navbar-right">

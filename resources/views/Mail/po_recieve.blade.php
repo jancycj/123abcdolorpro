@@ -212,7 +212,7 @@
               <div
          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:14px;font-weight:100;line-height:18px;text-align:left;color:#b196c9;"
       >
-      Order Recived from, #{{$order['ship_to_company_name']}}
+      Order Recived from, #{{$order['supplier_name']}} </br>
     </div>
     <div
          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:14px;font-weight:100;line-height:18px;text-align:left;color:#b196c9;"
@@ -260,6 +260,7 @@
                 <th align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #fff;padding: 10px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">Quantity</span></th>
                 <th align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #fff;padding: 10px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">Rate</span></th>
                 <th align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #fff;padding: 10px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">Pending</span></th>
+                <th align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #fff;padding: 10px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">recieved</span></th>
                 <th align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #fff;padding: 10px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">Discount</span></th>
                 <th align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #fff;padding: 10px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">Delivery Date</span></th>
               </tr>
@@ -272,7 +273,8 @@
               <td align="left" style="font-size:12px;padding: 3px 1px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['item']}}</span></td>
                 <td align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['quantity']}}</span></td>
                 <td align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['rate']}}</span></td>
-              <td align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['balance']}}</span></td>
+              <td align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['balance'] - $item['recieved']}}</span></td>
+              <td align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['recieved']}}</span></td>
                 <td align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['discount']}}</span></td>
                 <td align="left" style="font-size:12px;padding: 3px 3px;border: solid 1px #b196c9;"><span style="color: #000;padding: 20px 0px;font-family: Ubuntu, Helvetica, Arial, sans-serif;">{{$item['delivery_date']}}</span></td>
               </tr>

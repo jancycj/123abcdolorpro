@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
+use App\Mail\OrderRecieved;
 use App\Order;
 use App\OrderDetails;
 use App\OrderQCDetails;
@@ -9,6 +11,7 @@ use App\OrderReceiptDetails;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderReceiptDetailsController extends Controller
 {
@@ -74,7 +77,10 @@ class OrderReceiptDetailsController extends Controller
     
             }
         }
-
+        if($ship = Company::find($order['shipto_customer_id'])){
+            Mail::to($ship->email)->send(new OrderRecieved($order));
+        };
+        
         
         return 'Saved successfully!';
     }

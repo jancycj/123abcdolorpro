@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\CompanyUser;
 use App\Costomers;
 use App\CustomerUser;
@@ -17,6 +18,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -134,7 +136,7 @@ class OrderController extends Controller
 
         Mail::to($customer->email)->send(new OrderCreated($order_new));
 
-        return 'order created successfully!';
+        return $order->id;
         
         
         
@@ -298,5 +300,42 @@ class OrderController extends Controller
         }
         
         return 'True';
+    }
+
+    public function search_order(Request $request)
+    {
+       
+
+        return  Order::where('order_number','LIKE','%'.$request->search.'%')->with('exact_details')->with('exact_details.schedules')->first();
+    }
+    
+    public function exportPdf(Request $request)
+    {
+        $this->validate($request, [
+            'order_id'     => 'required|numeric',
+        ]);
+        $id = $request->order_id;
+        try {
+            
+            $order = Order::where('id',19)->with('exact_details')
+            ->with('exact_details.schedules')->with('exact_details.qc_details')->first();
+
+            $bill_to = Company::where('id',$order->billto_customer_id)
+            ->select('name','short_name','address_line1','address_line2','address_line3','post_code','place','phone_number','email')->first();
+
+             $ship_to = Company::where('id',$order->shipto_customer_id)
+            ->select('name','short_name','address_line1','address_line2','address_line3','post_code','place','phone_number','email')->first();
+
+            $supplier = Costomers::where('id',$order->suppier_id)
+            ->select('name','customer_code','address_line1','address_line2','address_line3','post_code','place','phone_number','email')->first();
+
+            $pdf = PDF::loadView('pdf.order',compact('order','bill_to' , 'ship_to', 'supplier'));
+            $pdf->setPaper('A4', 'landscape'); 
+            // return $pdf->stream('download.pdf');
+
+            return $pdf->download('report.pdf');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return  response()->json($ex->getMessage());
+        }
     }
 }

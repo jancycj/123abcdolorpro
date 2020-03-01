@@ -110,7 +110,7 @@
                                                     <th>Quotation ref no</th>
                                                     <th>Amount</th>
                                                     <th>Date</th>
-                                                    <th>Action</th>
+                                                    <th>Quality Inspection</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -125,11 +125,11 @@
                                                         <a href="#" @click="view_order({{$item->id}})">
                                                             <i class="fa fa-eye text-primary"></i>
                                                         </a>
-                                                    <a  target="_blank" href="{{url('company/po/pdf/'.$item->id)}}"  class="mg-l-10" >
+                                                    {{-- <a  target="_blank" href="{{url('company/po/pdf/'.$item->id)}}"  class="mg-l-10" >
                                                             <i class="fa fa-file-pdf-o text-danger"></i>
                                                         </a>
                                                         
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
                                                 @endforeach
                                                 
@@ -299,11 +299,11 @@ overflow-y: auto;">
                                             </td>
                                             <td class="tx-medium ">@{{ord_detail.quantity}}</td>
                                             {{-- <td class="tx-medium ">@{{ord_detail.recieved_balance}}</td> --}}
-                                            <td class="tx-medium ">@{{ord_detail.purchase_unit_id}}</td>
+                                            <td class="tx-medium ">@{{ord_detail.unit}}</td>
                                             <td class="tx-medium ">@{{ord_detail.rate}}  </td>
                                             
                                             <td class="tx-medium "> 
-                                                <span > <button class="btn btn-sm btn-success" @click="add_qc(ord.item_id)" >QC </button></span> 
+                                                <span > <button class="btn btn-sm btn-success" @click="add_qc(ord_detail.qc_details)" >QC </button></span> 
                                             </td>
                                             <td class="tx-medium ">
                                                     @{{ord_detail.recieved_balance}}
@@ -392,16 +392,11 @@ overflow-y: auto;">
                                                     </td>
                                                     <td class=" tx-pink">@{{qc_ob.qc_tollarence}}
                                                     </td>
-                                                    <td class="tx-medium "> 
-                                                        <div class="input-group">
-                                                            <input class="form-control" name="quantity"  v-model="qc_ob.inspection">
-                                                        </div>
+                                                    <td class=" tx-pink">@{{qc_ob.result}}
                                                     </td>
-                                                    <td class="tx-medium "> 
-                                                        <div class="input-group">
-                                                            <input class="form-control" name="quantity"  v-model="qc_ob.remark">
-                                                        </div>
+                                                    <td class=" tx-pink">@{{qc_ob.remark}}
                                                     </td>
+                                                    
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -603,8 +598,12 @@ overflow-y: auto;">
             });
 
         },
-        add_qc : function(id){
+        add_qc : function(data){
              var vm = this;
+            vm.qc_array = data;
+            console.log(data);
+            $("#add_qc").modal('toggle');
+            return;
             vm.item_detail_id = id;
             axios.get('/customer/qc?item_id='+vm.item_detail_id).then((response) => {
             vm.qc_array = response.data;

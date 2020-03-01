@@ -61,6 +61,8 @@ Route::prefix('company')->group(function() {
       Route::post('/order/completed/', 'OrderController@post_order_update')->name('company.reciept');
       Route::post('/reciept/update', 'OrderReceiptDetailsController@get_order')->name('order.reciept_update');
       Route::post('/accept_order', 'OrderController@accept_order')->name('company.accept_order');
+      Route::get('/search_order', 'OrderController@search_order')->name('order.search');
+      Route::post('/order/pdf', 'OrderController@exportPdf')->name('order.pdf');
 
       
         Route::prefix('report')->group(function() {

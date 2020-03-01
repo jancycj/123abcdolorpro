@@ -7,13 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetails extends Model
 {
 
-    public $appends = ['item','balance','recieved_balance','order_no','pending_amount','unit','discount_rate'];
+    public $appends = ['item','item_part_no','item_hsn','balance','recieved_balance','order_no','pending_amount','unit','discount_rate'];
     /**
      * [Item]
      */
     public function getItemAttribute() {
        
         return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('name')->first();
+
+    }
+    public function getItemPartNoAttribute() {
+       
+        return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('part_no')->first();
+
+    }
+    public function getItemHsnAttribute() {
+       
+        return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('hsn_code')->first();
 
     }
     public function getOrderNoAttribute() {

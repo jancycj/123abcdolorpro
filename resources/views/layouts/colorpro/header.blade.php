@@ -63,6 +63,7 @@
               <ul class="navbar-menu-sub">
               <li class="nav-sub-item"><a href="{{url('company/transaction')}}" class="nav-sub-link"><i data-feather="message-square"></i>Material transfer</a></li>
               <li class="nav-sub-item"><a href="{{url('company/orders')}}" class="nav-sub-link"><i data-feather="message-square"></i> Orders</a></li>
+              <li class="nav-sub-item"><a href="{{url('company/orders/create')}}" class="nav-sub-link"><i data-feather="message-square"></i> Create Order</a></li>
               <li class="nav-sub-item"><a href="{{url('company/order/reciept')}}" class="nav-sub-link"><i data-feather="message-square"></i> Quality inspection</a></li>
 
               </ul>

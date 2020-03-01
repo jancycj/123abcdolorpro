@@ -294,8 +294,14 @@
                         </div>
                     </div>
                     <div class="row order-ft">
-                        <div class="col-2 offset-10 mg-t-5">
+                        <div class="col-2 offset-8 mg-t-5" v-if="print_flag">
+                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
+                        </div>
+                        <div class="col-2 offset-8 mg-t-5" v-if="!print_flag">
                                 <button class="btn btn-primary btn-block " @click="save_oreder()">Create Order</button>
+                        </div>
+                        <div class="col-2  mg-t-5" >
+                                <button class="btn btn-secondary btn-block " @click="save_oreder()">Close</button>
                         </div>
                     </div>
                     </div>
@@ -433,6 +439,8 @@
            tax_object:{},
            companies : [],
            comapny_id : {{$company_id}},
+           print_flag : false,
+           order_id : 19,
        },
    methods: {
          toggleShow: function() {
@@ -795,7 +803,9 @@
                  order_details:this.order_detail_array,
              })
             .then(response => {
-                location.reload();
+                // location.reload();
+                this.order_id = response.data;
+                this.print_flag = true;
                 alert('successfully created!');
             })
             .catch((err) =>{
@@ -808,7 +818,25 @@
          **/
          remove_row(ind){
             this.$delete(this.order_detail_array, ind);
-         }
+         },
+         downloadPdf: function(id) {
+            
+            axios({
+                url: "/company/order/pdf",
+                method: "POST",
+                responseType: "blob",
+                data: {
+                order_id: this.order_id,
+                }
+            }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download","purchase_order.pdf");
+                document.body.appendChild(link);
+                link.click();
+            });
+            }
          
          
      

@@ -253,7 +253,7 @@
                                                 <input class="form-control max-width: 65px;" name="quantity"  v-model="ord.recieved" @input="check_balance(ord.balance,ord.recieved)">
                                             </td> 
                                             <td class="tx-medium " style="width:70px;"> 
-                                                <span > <button class="btn btn-xs btn-success" @click="add_qc(ord.item_id)" :disabled="!ord.recieved">QC </button></span> 
+                                                <span > <button class="btn btn-xs btn-success" @click="add_qc(ord.item_id,ord.id)" :disabled="!ord.recieved">QC </button></span> 
                                             </td>
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.remarks">
@@ -430,13 +430,13 @@
             });
 
         },
-        add_qc : function(id){
+        add_qc : function(item,id){
             // alert(id);  
             var vm = this;
             vm.item_detail_id = id;
             // vm.qc_array = qc;
             // $("#add_qc").modal('toggle');
-            axios.get('/customer/qc?item_id='+vm.item_detail_id).then((response) => {
+            axios.get('/customer/qc?item_id='+item).then((response) => {
             vm.qc_array = response.data;
             console.log(vm.qc_array);
             $("#add_qc").modal('toggle');
@@ -459,6 +459,7 @@
             $("#add_qc").modal('toggle');
         },
         send_order : function(){
+            
             var vm = this;
             if(!vm.order.dc_no){
                 alert('please enter dc number');
@@ -473,7 +474,7 @@
                 vm.order = {};
                 $("#view_order").modal('toggle');
                
-                location.reload();
+                // location.reload();
             })
             .catch((err) =>{
                 this.errors = err.response.data.errors;

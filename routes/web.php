@@ -93,7 +93,21 @@ Route::prefix('customer')->group(function() {
       Route::get('/qc', 'CostomersController@get_qc')->name('customer.get_qc');
       Route::resource('/OrderReceiptDetails', 'OrderReceiptDetailsController');
       
-	});
+      Route::prefix('report')->group(function() {
+
+            Route::get('/po', 'VendorReportController@po_orders')->name('vendor.report.po');
+            Route::get('/po_pdf', 'VendorReportController@po_pdf')->name('vendor.report.po.pdf');
+            Route::get('/register_pdf', 'VendorReportController@register_pdf')->name('vendor.report.register.pdf');
+            Route::get('/register', 'VendorReportController@register_orders')->name('vendor.report.register');
+            Route::get('/mir', 'VendorReportController@mir')->name('vendor.report.mir');
+            Route::get('/mir_pdf', 'VendorReportController@mir_pdf')->name('vendor.report.mir.pdf');
+
+        
+            
+            
+        });
+    });
+    
 	
 });
 

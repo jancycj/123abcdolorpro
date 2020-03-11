@@ -301,7 +301,7 @@
                                 <button class="btn btn-primary btn-block " @click="save_oreder()">Create Order</button>
                         </div>
                         <div class="col-2  mg-t-5" >
-                                <button class="btn btn-secondary btn-block " @click="save_oreder()">Close</button>
+                                <button class="btn btn-secondary btn-block " @click="clear_order()">Cancel</button>
                         </div>
                     </div>
                     </div>
@@ -812,6 +812,11 @@
                 this.errors = err.response.data.errors;
                 console.log(this.errors)
             });
+         },
+         clear_order : function () {
+            this.order = {};
+            this.order_detail_array = [];
+            this.scheduled_array
          },
 
          /* remove row of the table 

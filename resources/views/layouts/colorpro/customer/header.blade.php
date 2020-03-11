@@ -42,11 +42,10 @@
            <li class="nav-item with-sub">
              <a href="#" class="nav-link"><i data-feather="package"></i> Report</a>
              <ul class="navbar-menu-sub">
-               <li class="nav-sub-item"><a href="app-calendar.html" class="nav-sub-link"><i data-feather="calendar"></i>Calendar</a></li>
-               <li class="nav-sub-item"><a href="app-chat.html" class="nav-sub-link"><i data-feather="message-square"></i>Chat</a></li>
-               <li class="nav-sub-item"><a href="app-contacts.html" class="nav-sub-link"><i data-feather="users"></i>Contacts</a></li>
-               <li class="nav-sub-item"><a href="app-file-manager.html" class="nav-sub-link"><i data-feather="file-text"></i>File Manager</a></li>
-               <li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Mail</a></li>
+              <li class="nav-sub-item"><a href="{{url('customer/report/register')}}" class="nav-sub-link"><i data-feather="message-square"></i> Purchase orders</a></li>
+              <li class="nav-sub-item"><a href="{{url('customer/report/po')}}" class="nav-sub-link"><i data-feather="message-square"></i> Pending orders</a></li>
+              {{-- <li class="nav-sub-item"><a href="{{url('customer/orders')}}" class="nav-sub-link"><i data-feather="message-square"></i> Goods recieved/Inspection note</a></li> --}}
+              <li class="nav-sub-item"><a href="{{url('customer/report/mir')}}" class="nav-sub-link"><i data-feather="message-square"></i> MIR register-bought out</a></li>
              </ul>
            </li>
          </ul>

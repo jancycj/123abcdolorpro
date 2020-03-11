@@ -67,7 +67,7 @@ class OrderController extends Controller
         $order_details_ob = $request->order_details;
         $order = new order;
         $order->comapny_id          = $company_id;
-        $order->order_number        = $order_ob['quotation_no'];
+        $order->order_number        = $company_id . mt_rand(100000,999999);
         $order->order_date          = Carbon::now();
         $order->order_type          = $order_ob['order_type'];
         $order->shipto_customer_id  = $order_ob['ship_to'];

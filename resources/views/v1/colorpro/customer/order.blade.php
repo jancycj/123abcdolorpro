@@ -237,7 +237,7 @@
                                                 <span v-if="ord.schedules.length > 0"> <small class="tx-teal"> Scheduled</small></span> <span v-if="ord.schedules.length <= 0">@{{ord.delivery_date}}</span>
                                             </td>
                                             <td class="tx-medium ">@{{ord.balance}}</td>
-                                            <td class="tx-medium ">@{{ord.purchase_unit_id}}</td>
+                                            <td class="tx-medium ">@{{ord.unit}}</td>
                                             <td class="tx-medium "> 
                                                 
                                                 <span v-if="ord.schedule"> <a href="#" ><i class="fa fa-calendar"></i></a></span> <span v-if="!ord.schedule">--</span>
@@ -474,7 +474,7 @@
                 vm.order = {};
                 $("#view_order").modal('toggle');
                
-                // location.reload();
+                location.reload();
             })
             .catch((err) =>{
                 this.errors = err.response.data.errors;

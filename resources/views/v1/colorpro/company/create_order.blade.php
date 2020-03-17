@@ -804,6 +804,8 @@
              })
             .then(response => {
                 // location.reload();
+                this.order = {};
+                this.order_detail_array = [];
                 this.order_id = response.data;
                 this.print_flag = true;
                 alert('successfully created!');

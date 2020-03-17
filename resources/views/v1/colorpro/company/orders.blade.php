@@ -61,6 +61,7 @@
                                                         <th>Supplier</th>
                                                         <th>Total</th>
                                                         <th>Action</th>
+                                                        <th>print</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -78,6 +79,10 @@
                                                                 {{-- <span class="text-warning"></span> --}}
                                                                 <i class="fa fa-eye text-primary"></i>
                                                             </a>
+
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-outline-danger btn-block " @click="downloadPdf({{$item->id}})">Print PO</button>
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -197,6 +202,7 @@
                                             <th class="">Amount</th>
                                             <th class="" style="width:70px;">Completed</th>
                                             <th class="">remarks</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -225,6 +231,7 @@
                                             <td>
                                                 <input class="form-control" name="quantity"  v-model="ord.remarks">
                                             </td> 
+                                            
                                         </tr>
                                         
                                     </tbody>
@@ -595,6 +602,26 @@
             });
             
         },
+
+        /** download pdf */
+        downloadPdf: function(id) {
+            
+            axios({
+                url: "/company/order/pdf",
+                method: "POST",
+                responseType: "blob",
+                data: {
+                order_id: id,
+                }
+            }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download","purchase_order.pdf");
+                document.body.appendChild(link);
+                link.click();
+            });
+        }
      
      },
      mounted(){

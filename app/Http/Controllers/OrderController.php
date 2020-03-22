@@ -317,7 +317,7 @@ class OrderController extends Controller
         $id = $request->order_id;
         try {
             
-            $order = Order::where('id',19)->with('exact_details')
+            $order = Order::where('id',$id)->with('exact_details')
             ->with('exact_details.schedules')->with('exact_details.qc_details')->first();
 
             $bill_to = Company::where('id',$order->billto_customer_id)

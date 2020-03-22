@@ -455,6 +455,7 @@
                     </div> <!-- /card body -->
                 </div>
                 <div class="modal-footer">
+                    <button class="btn btn-outline-danger  " @click="downloadPdf(search_order.id)">Print PO</button>
                     <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Close</button>
                 </div>
             </div>

@@ -10,7 +10,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,8 +18,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
+<body id="app">
+    <div >
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -76,5 +75,18 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/app.js') }}" ></script>
+    <script>
+       
+        $('.navbar-menu .with-sub .nav-link').on('click', function(e){
+                e.preventDefault();
+                $(this).parent().toggleClass('show');
+                $(this).parent().siblings().removeClass('show');
+
+                if(window.matchMedia('(max-width: 991px)').matches) {
+                psNavbar.update();
+                }
+            })
+    </script>
 </body>
 </html>

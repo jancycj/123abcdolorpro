@@ -288,14 +288,14 @@
       @include('layouts.colorpro.header')
       @yield('content')
       @include('layouts.colorpro.footer')
-    </div> ><!-- /#app -->
+    </div> <!-- /#app -->
     <script src="{{ asset('new_assets/js/offline.min.js')}}"></script>
     <script src="{{ asset('new_assets/lib/date.min.js') }}"></script>
     <script src="{{ asset('new_assets/js/local.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.core.min.js"></script>
     <script src="{{ asset('new_assets/js/sweetalert.js') }}"></script>
     <script src="{{ asset('new_assets/lib/chart.js/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('new_assets/js/app.js') }}"></script>
+    <!-- <script src="{{ asset('new_assets/js/app.js') }}"></script> -->
     <script src="{{ asset('new_assets/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('new_assets/lib/jqueryui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('new_assets/lib/select2/js/select2.min.js') }}"></script>
@@ -356,15 +356,25 @@
     </script>
 
     <script type="text/javascript">
-      /*$('.dropdown').on('click', function() {
+      $('.dropdown').on('click', function() {
         $('[data-toggle=dropdown]').dropdown('toggle');
-      });*/
+      });
       $('#dfSettingsShow').click(function() {
         $('.df-settings').toggleClass('show');
       });
       $('#acc_dropdown').click(function() {
         $('.acc_dropdown').toggleClass('show');
       });
+      $('.dropdown-toggle').dropdown();
+      $('.navbar-menu .with-sub .nav-link').on('click', function(e){
+                e.preventDefault();
+                $(this).parent().toggleClass('show');
+                $(this).parent().siblings().removeClass('show');
+
+                if(window.matchMedia('(max-width: 991px)').matches) {
+                psNavbar.update();
+                }
+            })
     </script>
 
     @yield('script')

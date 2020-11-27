@@ -36,7 +36,7 @@ class Lookupseeder extends Seeder
             ['lookup_key' => 'Master','lookup_value'    =>'DISTRICTS','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
             ['lookup_key' => 'Master','lookup_value'    =>'STATES','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
             ['lookup_key' => 'Master','lookup_value'    =>'CUSTOMER CLASS','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
-               ['lookup_key' => 'Master','lookup_value'    =>'MODE OF DISPATCH','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
+            ['lookup_key' => 'Master','lookup_value'    =>'MODE OF DISPATCH','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
             ['lookup_key' => 'Master','lookup_value'    =>'MODE OF PAYMENT','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
             ['lookup_key' => 'Master','lookup_value'    =>'TYPE OF CONE','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
             ['lookup_key' => 'Master','lookup_value'    =>'TUBE SIZE','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],

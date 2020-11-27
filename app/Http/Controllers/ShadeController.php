@@ -14,7 +14,9 @@ class ShadeController extends Controller
      */
     public function index()
     {
-        //
+        $units = [];
+        $categories = [];
+        return view('v1.colorpro.company.shade',compact('units','categories'));
     }
 
     /**

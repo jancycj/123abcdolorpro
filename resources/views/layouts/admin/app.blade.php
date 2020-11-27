@@ -365,6 +365,15 @@
       $('#acc_dropdown').click(function() {
         $('.acc_dropdown').toggleClass('show');
       });
+      $('.navbar-menu .with-sub .nav-link').on('click', function(e){
+                e.preventDefault();
+                $(this).parent().toggleClass('show');
+                $(this).parent().siblings().removeClass('show');
+
+                if(window.matchMedia('(max-width: 991px)').matches) {
+                psNavbar.update();
+                }
+            })
     </script>
 
     @yield('script')

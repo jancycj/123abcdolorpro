@@ -32,18 +32,11 @@
            <a href="http://themepixels.me/dashforge/index.html" class="df-logo">dash<span>forge</span></a>
            <a id="mainMenuClose" href="#"><i data-feather="x"></i></a>
          </div><!-- navbar-menu-header -->
-         <ul class="nav navbar-menu">
+         <!-- <ul class="nav navbar-menu">
            <li class="nav-label pd-l-20 pd-lg-l-25 d-lg-none">Main Navigation</li>
            <li class="nav-item  ">
            <a href="{{url('/home')}}" class="nav-link"><i data-feather="pie-chart"></i> Home</a>
            </li>
-           
-           
-           {{-- <li class="nav-item"><a href="{{url('company/lookup')}}" class="nav-link"><i data-feather="box"></i> Masters</a></li>
-           <li class="nav-item"><a href="{{url('company/item')}}" class="nav-link"><i data-feather="box"></i> Items</a></li>
-           <li class="nav-item"><a href="{{url('company/stocks')}}" class="nav-link"><i data-feather="box"></i> Inventory</a></li>
-           <li class="nav-item"><a href="{{url('company/rates')}}" class="nav-link"><i data-feather="box"></i> Rates</a></li>
-           <li class="nav-item"><a href="{{url('/admin/process')}}" class="nav-link"><i data-feather="box"></i> Process</a></li> --}}
 
            <li class="nav-item with-sub">
             <a href="#" class="nav-link"><i data-feather="package"></i> Masters</a>
@@ -81,7 +74,8 @@
 
             </ul>
           </li>
-         </ul>
+         </ul> -->
+         <nav-bar/>
        </div><!-- navbar-menu-wrapper -->
      <div class="navbar-right">
        <div class="dropdown dropdown-message">

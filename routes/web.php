@@ -48,6 +48,7 @@ Route::prefix('company')->group(function() {
       Route::resource('rates', 'RatesController');
       Route::resource('qc', 'QCPlanController');
       Route::resource('shade', 'ShadeController');
+      Route::resource('article', 'ArticleController');
       Route::get('/item', 'ItemController@company_item')->name('company.item');
       Route::get('/customer', 'CostomersController@company_customer_index')->name('company.customer');
       Route::post('/customer', 'CostomersController@create_company_customer')->name('company.customer.save');

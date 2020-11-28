@@ -44,35 +44,27 @@
                       <thead>
                           <tr>
                               <th>Name</th>
-                              <th>Item code</th>
-                              <th>Catelog/Drwaing No</th>
-                              <th>Category</th>
-                              <th>Unit</th>
-                              <th>HSN Code</th>
-                              <th>Part Type</th>
-                              <th>Sourcing Code</th>
+                              <th>Code</th>
+                              <th>Colour</th>
+                              <th>Priority</th>
                               <th> Action</th>
                           </tr>
                       </thead>
                       <tbody>
-
                          
-                          <tr>
-                              <td>ss</td>
-                              <td>ss</td>
-                              <td>ss</td>
-                              <td>ss</td>
-                              <td>s}</td>
-                              <td>ss</td>
-                              <td>ss</td>
-                              <td>{ss</td>
+                          <tr v-for="shade in shades" v-bind:key="shade.id">
+                              <td>@{{shade.name}}</td>
+                              <td>@{{shade.code}}</td>
+                              <td>@{{shade.colour}}</td>
+                              <td>@{{shade.priority}}</td>
                               <td>
                                 <button type="button" class="btn btn-outline-primary btn-sm"
-                                @click="get_item_by('ss')"><i class="fa fa-pencil-square-o" ></i></button>
+                                @click="get_item_by(shade.id)"><i class="fa fa-pencil-square-o" ></i></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm"
+                                @click="delete_shade(shade.id)"><i class="fa fa-trash" ></i></button>
                               
                               </td>
-                            </tr>
-                          
+                          </tr>
                       </tbody>
                   </table>
               </div>
@@ -107,13 +99,13 @@
 
                                 <div class="row">
                                     <div class="col-6" 
-                                    @keydown.stop.prevent="keyEvent($event)" 
+                                    @keydown="keyEvent($event)" 
                                     
                                     >
                                         <div class="form-group">
                                             <label class=" form-control-label">Customer</label>
                                             <div class="input-group">
-                                                <input class="form-control" name="part_no" v-model="item.part_no">
+                                                <input class="form-control" v-model="shade.customer_name">
                                             </div>
                                         </div>
                                     </div>
@@ -121,7 +113,7 @@
                                         <div class="form-group">
                                             <label class=" form-control-label">Shade code</label>
                                             <div class="input-group">
-                                                <input class="form-control" name="name" v-model="item.name">
+                                                <input class="form-control"  v-model="shade.code">
                                             </div>
                                         </div>
                                     </div>
@@ -130,10 +122,8 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class=" form-control-label">Color </label>
-                                            <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.unit">
-                                                    @foreach ($units as $item)
-                                                        <option value="{{$item->id}}">{{$item->lookup_value}}</option>
-                                                    @endforeach
+                                            <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="shade.colour">
+                                                        <option :value="colour.lookup_value" v-for="colour in colours">@{{colour.lookup_value}}</option>
                                                     
                                             </select>
                                         </div>
@@ -143,7 +133,7 @@
                                         <div class="form-group">
                                             <label class=" form-control-label">Priority</label>
                                             <div class="input-group">
-                                                <input class="form-control" name="unit" v-model="item.catelog_drwaing_no">
+                                                <input class="form-control" name="unit" v-model="shade.priory">
                                             </div>
                                         </div>
                                         </div>
@@ -154,7 +144,7 @@
                                         <div class="form-group">
                                             <label class=" form-control-label">Program code </label>
                                             <div class="input-group">
-                                                <input class="form-control" name="unit" v-model="item.catelog_drwaing_no">
+                                                <input class="form-control" name="unit" v-model="shade.program_code">
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +152,7 @@
                                         <div class="form-group">
                                             <label class=" form-control-label">Customer code </label>
                                             <div class="input-group">
-                                                <input class="form-control" name="hsn" v-model="item.hsn_code">
+                                                <input class="form-control" name="hsn" v-model="shade.customer_code" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -172,11 +162,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()" v-if="!update_flag">Create</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="update_item()" v-if="update_flag">Update</button>
                     </div>
                 </div>
             </div>
         </div><!-- modal end -->
+
         <div class="modal fade" id="chooseCustomer" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -217,22 +209,21 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
-          $('#bootstrap-data-table').DataTable();
-      } );
+       
   </script>
 <script>
     var app = new Vue({
        el: '#app',
        data: {
            showMenu: false,
-           item:{},
+           shade:{},
            errors:[],
            item_ob : {},
            opening : {},
-           units : [],
-           categories : [],
+           colours : [],
+           shades : [],
            selected_customer : {},
+           update_flag : false,
        },
    methods: {
          toggleShow: function() {
@@ -243,14 +234,19 @@
            
          },
          getCostomerEvent(val){
-             console.log(val)
             this.selected_customer = val;
+            this.shade.customer_name = val.name;
+            this.shade.customer_code =val.short_name;
+            this.shade.customer_id =val.id;
+            console.log(this.shade)
+
+            $("#chooseCustomer").modal('toggle');
          },
          keyEvent : function(event){
              console.log(event)
-            if(event.code == 'F1' || event.code == 'F2'){
+            // if(event.code == 'F1' || event.code == 'F2'){
                 $("#chooseCustomer").modal('toggle');
-            }
+            // }
         },
         selectCustomer : function(event){
             if(event.code == 'Enter' ){
@@ -258,13 +254,27 @@
             }
         },
          save_item:function() {
-           console.log(this.item);
-
-            axios.post('/admin/items',this.item)
+           console.log(this.shade);
+            axios.post('/company/shade',this.shade)
             .then(response => {
                 $("#addItem").modal('toggle');
                 $(".modal-backdrop").remove();
                 alert('successfully created!');
+                location.reload();
+            })
+            .catch((err) =>{
+                this.errors = err.response.data.errors;
+                console.log(this.errors)
+            });
+         },
+         update_item:function() {
+          this.update_flag = false;
+           console.log(this.shade);
+            axios.put('/company/shade/'+this.shade.id,this.shade)
+            .then(response => {
+                $("#addItem").modal('toggle');
+                $(".modal-backdrop").remove();
+                alert('successfully updated!');
                 location.reload();
             })
             .catch((err) =>{
@@ -277,9 +287,33 @@
          get_item_by:function(id){
 
             var vm = this;
-            axios.get('/admin/items/'+id).then((response) => {
-                vm.item_ob = response.data;
-                $("#itemModal").modal('toggle');
+            vm.update_flag = true;
+            axios.get('/company/shade/'+id).then((response) => {
+                vm.shade = response.data;
+                vm.shade.program_code = response.data.code;
+                vm.shade.priory = response.data.priority;
+                vm.shade.code = response.data.name;
+                // vm.shade.customer_name
+                // code
+                // colour
+                // priory
+                // program_code
+                // customer_code
+
+                $("#addItem").modal('toggle');
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+
+        },
+        /* get item
+         **/
+        delete_shade:function(id){
+
+            var vm = this;
+            axios.delete('/company/shade/'+id).then((response) => {
+                alert('successfully deleted!');
+                location.reload();
             }, (error) => {
             // vm.errors = error.errors;
             });
@@ -291,8 +325,8 @@
         get_unit:function(){
 
             var vm = this;
-            axios.get('/general/lookup?json=true&&key=UNIT').then((response) => {
-            vm.units = response.data;
+            axios.get('/general/lookup?json=true&&key=COLOUR').then((response) => {
+            vm.colours = response.data;
 
             }, (error) => {
             // vm.errors = error.errors;
@@ -302,11 +336,11 @@
         /*
         get taxes
         **/
-        get_category:function(){
+        get_shades:function(){
 
             var vm = this;
-            axios.get('/general/lookup?json=true&&key=ITEM CATEGORY').then((response) => {
-            vm.categories = response.data;
+            axios.get('/company/shade?json').then((response) => {
+            vm.shades = response.data;
 
             }, (error) => {
             // vm.errors = error.errors;
@@ -334,7 +368,11 @@
      
      },
      mounted(){
-        
+
+     },
+     created(){
+        this.get_unit();
+        this.get_shades();
 
      }
     });

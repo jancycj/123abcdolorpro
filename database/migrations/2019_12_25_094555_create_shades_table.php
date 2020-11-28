@@ -19,6 +19,7 @@ class CreateShadesTable extends Migration
             $table->string('colour')->nullable();
             $table->string('code')->nullable();
             $table->integer('priority')->nullable();
+            $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['active','inactive', 'blocked']);
             $table->timestamps();

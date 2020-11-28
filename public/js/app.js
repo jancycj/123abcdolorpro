@@ -2069,6 +2069,7 @@ __webpack_require__.r(__webpack_exports__);
     selectCustomer: function selectCustomer(val, index) {
       this.selected_index = index;
       console.log(val);
+      this.$emit('customer', val);
     }
   }
 });

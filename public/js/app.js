@@ -2042,7 +2042,9 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {},
   watch: {
     search: function search(val) {
-      this.get_customers_by();
+      if (val != '') {
+        this.get_customers_by();
+      }
     }
   },
   methods: {
@@ -2078,10 +2080,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     selectData: function selectData(val, index) {
-      this.selected_index = index;
-      this.search = '';
       this.data = [];
       this.$emit('selected', val);
+      this.selected_index = index;
+      this.search = '';
     }
   }
 });
@@ -38828,104 +38830,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      on: {
-        keydown: function($event) {
-          return _vm.selectWithTab($event)
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: " form-control-label" }, [
-              _vm._v("Search")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.search,
-                    expression: "search"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { name: "part_no" },
-                domProps: { value: _vm.search },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.search = $event.target.value
-                  }
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: " form-control-label" }, [
+            _vm._v("Search")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.search,
+                  expression: "search"
                 }
-              })
-            ])
+              ],
+              staticClass: "form-control",
+              attrs: { name: "part_no" },
+              domProps: { value: _vm.search },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.search = $event.target.value
+                }
+              }
+            })
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 table-responsive" }, [
-          _c("table", { staticClass: "table table-bordered" }, [
-            _c("thead", [
-              _c(
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 table-responsive" }, [
+        _c("table", { staticClass: "table table-bordered" }, [
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _c("th", [_vm._v("S/L")]),
+                _vm._v(" "),
+                _vm._l(_vm.fields, function(field) {
+                  return _c("th", { key: field }, [_vm._v(_vm._s(field))])
+                })
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.data, function(cu, index) {
+              return _c(
                 "tr",
+                {
+                  key: cu.name,
+                  class: index == _vm.selected_index ? "hovered" : "",
+                  on: {
+                    click: function($event) {
+                      return _vm.selectData(cu, index)
+                    }
+                  }
+                },
                 [
-                  _c("th", [_vm._v("S/L")]),
+                  _c("td", [_vm._v(" " + _vm._s(index + 1))]),
                   _vm._v(" "),
                   _vm._l(_vm.fields, function(field) {
-                    return _c("th", { key: field }, [_vm._v(_vm._s(field))])
+                    return _c("td", { key: field }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(cu[field]) +
+                          "\n                    "
+                      )
+                    ])
                   })
                 ],
                 2
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.data, function(cu, index) {
-                return _c(
-                  "tr",
-                  {
-                    key: cu.name,
-                    class: index == _vm.selected_index ? "hovered" : "",
-                    on: {
-                      click: function($event) {
-                        return _vm.selectData(cu, index)
-                      }
-                    }
-                  },
-                  [
-                    _c("td", [_vm._v(" " + _vm._s(index + 1))]),
-                    _vm._v(" "),
-                    _vm._l(_vm.fields, function(field) {
-                      return _c("td", { key: field }, [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(cu[field]) +
-                            "\n                    "
-                        )
-                      ])
-                    })
-                  ],
-                  2
-                )
-              }),
-              0
-            )
-          ])
+            }),
+            0
+          )
         ])
       ])
-    ]
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

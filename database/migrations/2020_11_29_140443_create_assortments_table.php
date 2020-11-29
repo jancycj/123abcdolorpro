@@ -15,6 +15,17 @@ class CreateAssortmentsTable extends Migration
     {
         Schema::create('assortments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('customer_id')->nullable();
+            $table->string('article_no')->nullable();
+            $table->string('assortment_no')->nullable();
+            $table->string('assortment_name')->nullable();
+            $table->integer('slno')->nullable();
+            $table->string('shade_code')->nullable();
+            $table->string('shade_name')->nullable();
+            $table->integer('no_of_shades')->nullable();
+            $table->integer('no_of_box_per_box')->nullable();
+            $table->string('image_url')->nullable();
+            $table->enum('status',['active','inactive']);
             $table->timestamps();
         });
     }

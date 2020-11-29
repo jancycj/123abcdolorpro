@@ -1,5 +1,5 @@
 <template>
-     <div @keydown="selectWithTab($event)">
+     <div >
         <div class="row">
             <div class="col-6" >
                 <div class="form-group">
@@ -56,7 +56,10 @@
         },
         watch:{
             search(val){
-                this.get_customers_by();
+                if(val != ''){
+                    this.get_customers_by();
+
+                }
             }
         },
         methods: {
@@ -96,10 +99,10 @@
 
             },
             selectData(val,index){
-                this.selected_index = index;
-                this.search = '';
                 this.data = [];
                 this.$emit('selected',val)
+                this.selected_index = index;
+                this.search = '';
             }
         }
 

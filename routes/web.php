@@ -117,6 +117,7 @@ Route::prefix('quick')->group(function() {
 
 	Route::group(['middleware' => ['auth']],function() {
       Route::get('/customers', 'QuickController@customers')->name('quick.customers');
+      Route::post('/general', 'QuickController@general')->name('quick.general');
       
     });
     

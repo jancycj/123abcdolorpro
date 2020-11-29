@@ -61,6 +61,7 @@ class Lookupseeder extends Seeder
             ['lookup_key' => 'Master','lookup_value'    =>'TYPE OF PACKING','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
             ['lookup_key' => 'Master','lookup_value'    =>'CONTROLS','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
             ['lookup_key' => 'Master','lookup_value'    =>'PULLY ','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
+            ['lookup_key' => 'UNIT','lookup_value'    =>'KG ','lookup_description'    =>'unit table','genaral_value'    =>'unit table'],
 
         ]);
     }

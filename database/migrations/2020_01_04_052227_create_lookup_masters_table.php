@@ -16,7 +16,7 @@ class CreateLookupMastersTable extends Migration
         Schema::create('lookup_masters', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('lookup_key')->nullable();
-            $table->string('lookup_value')->unique()->nullable();
+            $table->string('lookup_value')->nullable();
             $table->string('lookup_description')->nullable();
             $table->string('genaral_value')->nullable();
             $table->date('end_date')->nullable();

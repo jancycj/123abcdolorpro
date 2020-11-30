@@ -94,7 +94,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Article*</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control"  v-model="article.article_no">
+                                    <input autocomplete="off" class="form-control"  v-model="article.article_no">
                                 </div>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Billing Name* </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control"  v-model="article.billing_name">
+                                    <input autocomplete="off" class="form-control"  v-model="article.billing_name">
                                 </div>
                             </div>
                         </div>
@@ -123,14 +123,14 @@
                             <div class="form-group row">
                                 <label class=" col-5 form-control-label">Customer</label>
                                 <div class=" col-7 input-group">
-                                    <input class="form-control" v-model="article.customer_code">
+                                    <input autocomplete="off" class="form-control" v-model="article.customer_code">
                                 </div>
                             </div>
                         </div>
                         <div class="col-7">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
-                                    <input class="form-control" name="unit" v-model="article.customer_name" disabled>
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.customer_name" disabled>
                                 </div>
                             </div>
                         </div>
@@ -140,14 +140,14 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Count 1</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control"  v-model="article.count">
+                                    <input autocomplete="off" class="form-control"  v-model="article.count">
                                 </div>
                             </div>
                         </div>
                         <div class="col-5">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
-                                    <input class="form-control" name="unit" v-model="article.count1_value" disabled>
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.count1_value" disabled>
                                 </div>
                             </div>
                         </div>
@@ -166,14 +166,14 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Count 2 </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.count1">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.count1">
                                 </div>
                             </div>
                         </div>
                         <div class="col-5">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
-                                    <input class="form-control" name="unit" v-model="article.count2_value" disabled>
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.count2_value" disabled>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Assortment Y/N </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.assortment_yn">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.assortment_yn">
                                 </div>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Thread Quality </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.thread_qlty">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.thread_qlty">
                                 </div>
                             </div>
                         </div>
@@ -199,7 +199,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Assert Name </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.assert_name" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.assert_name" >
                                 </div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Cops/Trays </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.no_of_cop_per_tray" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.no_of_cop_per_tray" >
                                 </div>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Weight Factor* </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.weight_factor">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.weight_factor">
                                 </div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Length (Mtr) </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.length" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.length" >
                                 </div>
                             </div>
                         </div>
@@ -233,7 +233,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Cops/Trays Line </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.no_cops_per_tray_line" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.no_cops_per_tray_line" >
                                 </div>
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No of Boxes/ Carton* </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.no_box">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.no_box">
                                 </div>
                             </div>
                         </div>
@@ -251,7 +251,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Weight (Gm) </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.weight" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.weight" >
                                 </div>
                             </div>
                         </div>
@@ -259,7 +259,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Std Prod/8 Hrs </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.std_prod" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.std_prod" >
                                 </div>
                             </div>
                         </div>
@@ -269,7 +269,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No of Tube Per Box* </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.no_tube_per_box">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.no_tube_per_box">
                                 </div>
                             </div>
                         </div>
@@ -277,7 +277,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Gauge </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.gauge" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.gauge" >
                                 </div>
                             </div>
                         </div>
@@ -285,7 +285,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Spindles </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.no_of_spindle" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.no_of_spindle" >
                                 </div>
                             </div>
                         </div>
@@ -295,7 +295,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Carton No  </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.carton_no">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.carton_no">
                                 </div>
                             </div>
                         </div>
@@ -303,7 +303,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Max Length (Mts) </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.max_length" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.max_length" >
                                 </div>
                             </div>
                         </div>
@@ -311,7 +311,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Box/G2Y </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.box_per_g2y" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.box_per_g2y" >
                                 </div>
                             </div>
                         </div>
@@ -321,7 +321,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">CLU/Box </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.clu">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.clu">
                                 </div>
                             </div>
                         </div>
@@ -329,7 +329,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Min Length (Mts) </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.min_length" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.min_length" >
                                 </div>
                             </div>
                         </div>
@@ -337,7 +337,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Color Code </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.color_code" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.color_code" >
                                 </div>
                             </div>
                         </div>
@@ -347,7 +347,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">CLU/Carton </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.clu_per_carton">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.clu_per_carton">
                                 </div>
                             </div>
                         </div>
@@ -355,7 +355,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">TKT </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.tkt" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.tkt" >
                                 </div>
                             </div>
                         </div>
@@ -363,7 +363,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Default process </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="hsn" v-model="article.default_process" >
+                                    <input autocomplete="off" class="form-control" name="hsn" v-model="article.default_process" >
                                 </div>
                             </div>
                         </div>
@@ -373,14 +373,14 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Thread Type </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.thread_type">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.thread_type">
                                 </div>
                             </div>
                         </div>
                         <div class="col-7">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
-                                    <input class="form-control" name="unit" v-model="article.thread_type_value" disabled>
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.thread_type_value" disabled>
                                 </div>
                             </div>
                         </div>
@@ -390,14 +390,14 @@
                             <div class="form-group row">
                                 <label class="col-4 form-control-label">Gray Yarn Code</label>
                                 <div class="col-8 input-group">
-                                    <input class="form-control" name="unit" v-model="article.grey_yarn_no">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.grey_yarn_no">
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
-                                    <input class="form-control" name="unit" v-model="article.gray_yarn_code_value" disabled>
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.gray_yarn_code_value" disabled>
                                 </div>
                             </div>
                         </div>
@@ -407,7 +407,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Cops / Chees</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.no_of_cops_chees">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.no_of_cops_chees">
                                 </div>
                             </div>
                         </div>
@@ -417,7 +417,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">New Article No: / Chees</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" name="unit" v-model="article.article_no_chees">
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="article.article_no_chees">
                                 </div>
                             </div>
                         </div>
@@ -504,7 +504,7 @@
                             :fields="['lookup_value','lookup_description']" 
                             :search_filed="'lookup_value'" 
                             :where_field="'lookup_key'"
-                            :where_value="'COLOUR'"
+                            :where_value="'YARN COUNT'"
                             @selected="getCount1($event)"
                             ></choose-component>
                                 
@@ -532,7 +532,7 @@
                             :fields="['lookup_value','lookup_description']" 
                             :search_filed="'lookup_value'" 
                             :where_field="'lookup_key'"
-                            :where_value="'COLOUR'"
+                            :where_value="'YARN COUNT'"
                             @selected="getCount2($event)"
                             ></choose-component>
                                 
@@ -559,7 +559,7 @@
                             :fields="['lookup_value','lookup_description']" 
                             :search_filed="'lookup_value'" 
                             :where_field="'lookup_key'"
-                            :where_value="'COLOUR'"
+                            :where_value="'YARN TYPE'"
                             @selected="getThread($event)"
                             ></choose-component>
                                 
@@ -582,11 +582,9 @@
                             
                         <div class="card-body card-block">
                             <choose-component 
-                            :table="'lookup_masters'" 
-                            :fields="['lookup_value','lookup_description']" 
-                            :search_filed="'lookup_value'" 
-                            :where_field="'lookup_key'"
-                            :where_value="'COLOUR'"
+                            :table="'items'" 
+                            :fields="['name','part_no']" 
+                            :search_filed="'part_no'" 
                             @selected="getYarn($event)"
                             ></choose-component>
                                 
@@ -692,8 +690,8 @@
             $("#threadPopup").modal('toggle');
          },
          getYarn(val){
-            this.article.grey_yarn_no = val.lookup_value;
-            this.article.gray_yarn_code_value = val.lookup_value;
+            this.article.grey_yarn_no = val.part_no;
+            this.article.gray_yarn_code_value = val.name;
             $("#yarnPopup").modal('toggle');
          },
          getArticle : function(event){

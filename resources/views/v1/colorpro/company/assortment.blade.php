@@ -105,7 +105,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Article*</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control"  v-model="assortment.article_no">
+                                    <input autocomplete="off" class="form-control"  v-model="assortment.article_no">
                                 </div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                             <div class="form-group row">
                                 <label class="col-4 form-control-label">Assortment Name* </label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control"  v-model="assortment.assortment_name">
+                                    <input autocomplete="off" class="form-control"  v-model="assortment.assortment_name">
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                             <div class="form-group row">
                                 <label class=" col-5 form-control-label">Assortment*</label>
                                 <div class=" col-7 input-group">
-                                    <input class="form-control" v-model="assortment.assortment_no">
+                                    <input autocomplete="off" class="form-control" v-model="assortment.assortment_no">
                                 </div>
                             </div>
                         </div>
@@ -134,14 +134,14 @@
                             <div class="form-group row">
                                 <label class=" col-5 form-control-label">Customer</label>
                                 <div class=" col-7 input-group">
-                                    <input class="form-control" v-model="assortment.customer_code">
+                                    <input autocomplete="off" class="form-control" v-model="assortment.customer_code">
                                 </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
-                                    <input class="form-control" name="unit" v-model="assortment.customer_name" disabled>
+                                    <input autocomplete="off" class="form-control" name="unit" v-model="assortment.customer_name" disabled>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                             <div class="form-group row">
                                 <label class="col-4 form-control-label">Billing name</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control"  v-model="assortment.billing_name">
+                                    <input autocomplete="off" class="form-control"  v-model="assortment.billing_name">
                                 </div>
                             </div>
                         </div>
@@ -159,7 +159,7 @@
                             <div class="form-group row">
                                 <label class="col-6 form-control-label">New Assertment To Copy </label>
                                 <div class="col-6 input-group">
-                                    <input class="form-control"  v-model="assortment.count">
+                                    <input autocomplete="off" class="form-control"  v-model="assortment.count">
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Shades</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control" type="number"  v-model="no_of_shades">
+                                    <input autocomplete="off" class="form-control" type="number"  v-model="no_of_shades">
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Cops Per Box</label>
                                 <div class="col-7 input-group">
-                                    <input class="form-control"  v-model="assortment.no_of_box_per_box">
+                                    <input autocomplete="off" class="form-control"  v-model="assortment.no_of_box_per_box">
                                 </div>
                             </div>
                         </div>
@@ -208,16 +208,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="d in assortment_shades">
-                                        <th scope="row">@{{d.sl_no}}</th>
+                                    <tr v-for="(d,index) in assortment_shades">
+                                        <th scope="row">@{{index+1}}</th>
                                         <td>
-                                            <input class="form-control"  v-model="d.shade_code" @keydown="getShades($event,d)">
+                                            <input autocomplete="off" class="form-control"  v-model="d.shade_code" @keydown="getShades($event,d)">
                                         </td>
                                         <td>
-                                            <input class="form-control"  v-model="d.colour" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="d.colour" disabled>
                                         </td>
                                         <td>
-                                            <a  class="action-icon " ><i class="fa fa-trash-o tx-danger"></i>
+                                            <a  class="action-icon " @click="deleteRow(index)"><i class="fa fa-trash-o tx-danger"></i>
+                                            </a>
+                                            <a  class="action-icon " @click="addRow()" v-if="index+1 == assortment_shades.length"><i class="fa fa-plus tx-teal"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -246,7 +248,7 @@
                                 <button class="btn btn-primary btn-block " @click="save_assortment()">Save</button>
                         </div>
                         <div class="col-2 offset-6 mg-t-5" v-if="!print_flag && update_flag">
-                                <button class="btn btn-primary btn-block " @click="update_assortment()">Update</button>
+                                <button class="btn btn-primary btn-block " @click="save_assortment()">Update</button>
                         </div>
                         <div class="col-2  mg-t-5" >
                                 <button class="btn btn-warning btn-block " @click="clear_article()">Delete</button>
@@ -397,9 +399,15 @@
            ],
            no_of_shades : 1,
            selected_obj : {},
+           removeFlag : false,
+           selected_file : '',
        },
        watch:{
         no_of_shades(val){
+            if(this.removeFlag){
+                this.removeFlag = false;
+                return;
+            }
             this.assortment_shades = [];
             var vm = this;
             var nmbr = parseInt(val);
@@ -414,6 +422,15 @@
         }
        },
    methods: {
+        deleteRow : function(ind){
+            this.removeFlag = true;
+            this.assortment_shades.splice(ind, 1);
+        },
+        addRow : function(ind){
+            this.removeFlag = true;
+            var last_obj = this.assortment_shades[this.assortment_shades.length - 1]
+            this.assortment_shades.push({sl_no: parseInt(last_obj.sl_no)+1 , shade_code:'',colour:''});
+        },
          toggleShow: function() {
            this.showMenu = !this.showMenu;
          },
@@ -517,9 +534,11 @@
         },
         clear_article : function(){
             this.assortment = {};
-            this.url = {};
+            this.url = '';
             this.assortment_shades = [];
-            vm.update_flag = false;
+            this.no_of_shades = 1;
+            this.update_flag = false;
+            this.removeFlag = false;
         },
         getArticleByNumber : function(val){
             var vm = this;
@@ -538,7 +557,11 @@
             this.assortment.no_of_shades = this.no_of_shades;
             this.assortment.assortment_shades = this.assortment_shades;
             let formData = new FormData();
-            formData.append('file', this.selected_file);
+            if(this.selected_file == ''){
+                console.log('file not specified')
+            } else{
+                formData.append('file', this.selected_file);
+            }
             formData.append('assortment',JSON.stringify(this.assortment));
             axios.post( '/company/assortment',
             formData,
@@ -552,6 +575,7 @@
                 }
             }
             ).then(response => {
+                alert('Succesfully Saved..!');
                 console.log(response.data)
 
             })
@@ -559,7 +583,7 @@
                 console.log('FAILURE!!');
             });
          },
-         update_article:function() {
+         update_assortment:function() {
            console.log(this.article);
             axios.put('/company/article/'+this.article.id,this.article)
             .then(response => {

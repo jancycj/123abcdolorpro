@@ -2206,18 +2206,188 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'side',
   data: function data() {
     return {
+      // menu_array : {
+      //     ab : [
+      //         {
+      //             menu:'Masters',
+      //             url:'#',
+      //             sub_menus:[
+      //                 {
+      //                     menu:'Masters',
+      //                     url:'/company/lookup',
+      //                 },
+      //                 {
+      //                     menu:'Items',
+      //                     url:'/company/item',
+      //                 },
+      //                 {
+      //                     menu:'QC plans',
+      //                     url:'/company/qc',
+      //                 },
+      //                 {
+      //                     menu:'Inventory',
+      //                     url:'/company/stocks',
+      //                 },
+      //                 {
+      //                     menu:'Rates',
+      //                     url:'/company/rates',
+      //                 },
+      //                 {
+      //                     menu:'Process',
+      //                     url:'/company/process',
+      //                 },
+      //                 {
+      //                     menu:'Shade',
+      //                     url:'/company/shade',
+      //                 },
+      //             ]
+      //         },
+      //         {
+      //             menu:'Transactions',
+      //             url:'#',
+      //             sub_menus:[
+      //                 {
+      //                     menu:'Material transfer',
+      //                     url:'/company/transaction',
+      //                 },
+      //                 {
+      //                     menu:'Orders',
+      //                     url:'/company/orders',
+      //                 },
+      //                 {
+      //                     menu:'Create Order',
+      //                     url:'/company/orders/create',
+      //                 },
+      //                 {
+      //                     menu:'Quality inspection',
+      //                     url:'/company/order/reciept',
+      //                 },
+      //             ]
+      //         },
+      //         {
+      //             menu:'Clients',
+      //             url:'company/customer',
+      //             sub_menus : []
+      //         },
+      //         {
+      //             menu:'Reports',
+      //             url:'#',
+      //             sub_menus:[
+      //                 {
+      //                     menu:'Stock Report',
+      //                     url:'/company/report/stock',
+      //                 },
+      //                 {
+      //                     menu:'Purchase orders',
+      //                     url:'/company/report/register',
+      //                 },
+      //                 {
+      //                     menu:'Pending orders',
+      //                     url:'/company/report/po',
+      //                 },
+      //                 {
+      //                     menu:'Goods recieved/Inspection note',
+      //                     url:'/company/orders',
+      //                 },
+      //                 {
+      //                     menu:'MIR register-bought out',
+      //                     url:'/company/report/mir',
+      //                 },
+      //             ]
+      //         }
+      //     ],
+      //     cd : [
+      //         {
+      //             menu:'Masters1',
+      //             url:'#',
+      //             sub_menus:[
+      //                 {
+      //                     menu:'Masters',
+      //                     url:'/company/lookup',
+      //                 },
+      //                 {
+      //                     menu:'Items',
+      //                     url:'/company/item',
+      //                 },
+      //                 {
+      //                     menu:'QC plans',
+      //                     url:'/company/qc',
+      //                 },
+      //                 {
+      //                     menu:'Inventory',
+      //                     url:'/company/stocks',
+      //                 },
+      //                 {
+      //                     menu:'Rates',
+      //                     url:'/company/rates',
+      //                 },
+      //                 {
+      //                     menu:'Process',
+      //                     url:'/company/process',
+      //                 },
+      //             ]
+      //         },
+      //         {
+      //             menu:'Transactions',
+      //             url:'#',
+      //             sub_menus:[
+      //                 {
+      //                     menu:'Material transfer',
+      //                     url:'/company/transaction',
+      //                 },
+      //                 {
+      //                     menu:'Orders',
+      //                     url:'/company/orders',
+      //                 },
+      //                 {
+      //                     menu:'Create Order',
+      //                     url:'/company/orders/create',
+      //                 },
+      //                 {
+      //                     menu:'Quality inspection',
+      //                     url:'/company/order/reciept',
+      //                 },
+      //             ]
+      //         },
+      //         {
+      //             menu:'Clients',
+      //             url:'company/customer',
+      //             sub_menus : []
+      //         },
+      //         {
+      //             menu:'Reports',
+      //             url:'#',
+      //             sub_menus:[
+      //                 {
+      //                     menu:'Stock Report',
+      //                     url:'/company/report/stock',
+      //                 },
+      //                 {
+      //                     menu:'Purchase orders',
+      //                     url:'/company/report/register',
+      //                 },
+      //                 {
+      //                     menu:'Pending orders',
+      //                     url:'/company/report/po',
+      //                 },
+      //                 {
+      //                     menu:'Goods recieved/Inspection note',
+      //                     url:'/company/orders',
+      //                 },
+      //                 {
+      //                     menu:'MIR register-bought out',
+      //                     url:'/company/report/mir',
+      //                 },
+      //             ]
+      //         }
+      //     ]
+      // }
       menu_array: {
-        ab: [{
+        "Supply Chain": [{
           menu: 'Masters',
           url: '#',
           sub_menus: [{
@@ -2233,22 +2403,16 @@ __webpack_require__.r(__webpack_exports__);
             menu: 'Inventory',
             url: '/company/stocks'
           }, {
-            menu: 'Rates',
+            menu: 'Purchase Rates',
             url: '/company/rates'
           }, {
-            menu: 'Process',
+            menu: 'Process rates',
             url: '/company/process'
-          }, {
-            menu: 'Shade',
-            url: '/company/shade'
           }]
         }, {
           menu: 'Transactions',
           url: '#',
           sub_menus: [{
-            menu: 'Material transfer',
-            url: '/company/transaction'
-          }, {
             menu: 'Orders',
             url: '/company/orders'
           }, {
@@ -2257,6 +2421,24 @@ __webpack_require__.r(__webpack_exports__);
           }, {
             menu: 'Quality inspection',
             url: '/company/order/reciept'
+          }, {
+            menu: 'Store Request',
+            url: '/company/order/reciept'
+          }, {
+            menu: 'Store issue',
+            url: '/company/order/reciept'
+          }, {
+            menu: ' Receipt from Customer',
+            url: '/company/order/reciept'
+          }, {
+            menu: 'Bin Card',
+            url: '/company/order/reciept'
+          }, {
+            menu: 'Material transfer to other units',
+            url: '/company/transaction'
+          }, {
+            menu: 'Material Receipt from other units',
+            url: '/company/transaction'
           }]
         }, {
           menu: 'Clients',
@@ -2280,68 +2462,173 @@ __webpack_require__.r(__webpack_exports__);
           }, {
             menu: 'MIR register-bought out',
             url: '/company/report/mir'
+          }, {
+            menu: 'Yarnn Status Report consolidated alll units',
+            url: '/company/report/mir'
           }]
         }],
-        cd: [{
-          menu: 'Masters1',
+        'Production Planning and Control': [{
+          menu: 'Masters',
           url: '#',
           sub_menus: [{
             menu: 'Masters',
             url: '/company/lookup'
           }, {
-            menu: 'Items',
-            url: '/company/item'
+            menu: 'Article Master',
+            url: '/company/article'
           }, {
-            menu: 'QC plans',
-            url: '/company/qc'
+            menu: 'Assortment Master',
+            url: '/company/assortment'
           }, {
-            menu: 'Inventory',
-            url: '/company/stocks'
+            menu: 'Shade Master',
+            url: '/company/shade'
           }, {
-            menu: 'Rates',
+            menu: 'Machine Master',
             url: '/company/rates'
           }, {
-            menu: 'Process',
+            menu: 'Receipy Creation',
             url: '/company/process'
           }]
         }, {
           menu: 'Transactions',
           url: '#',
           sub_menus: [{
-            menu: 'Material transfer',
+            menu: 'Work Order Generation',
             url: '/company/transaction'
           }, {
-            menu: 'Orders',
+            menu: 'Materail DC for OSP',
             url: '/company/orders'
           }, {
-            menu: 'Create Order',
+            menu: 'Materail Receipt OSP',
             url: '/company/orders/create'
-          }, {
-            menu: 'Quality inspection',
-            url: '/company/order/reciept'
           }]
-        }, {
-          menu: 'Clients',
-          url: 'company/customer',
-          sub_menus: []
         }, {
           menu: 'Reports',
           url: '#',
           sub_menus: [{
-            menu: 'Stock Report',
+            menu: 'Assortments',
             url: '/company/report/stock'
           }, {
-            menu: 'Purchase orders',
-            url: '/company/report/register'
+            menu: 'Shades',
+            url: '/company/report/stock'
           }, {
-            menu: 'Pending orders',
-            url: '/company/report/po'
+            menu: 'Work order Register',
+            url: '/company/report/stock'
           }, {
-            menu: 'Goods recieved/Inspection note',
+            menu: 'Receipy Master Report ',
+            url: '/company/report/stock'
+          }]
+        }],
+        'Production': [{
+          menu: 'Production',
+          url: '#',
+          sub_menus: [{
+            menu: 'Dyeing',
+            url: '/company/lookup'
+          }, {
+            menu: 'Drug line Generation',
+            url: '/company/item'
+          }, {
+            menu: 'Drug line Repot',
+            url: '/company/qc'
+          }, {
+            menu: 'Dyeing Production  Repot',
+            url: '/company/qc'
+          }, {
+            menu: 'Vessel loading',
+            url: '/company/stocks'
+          }, {
+            menu: 'vessel unloading',
+            url: '/company/rates'
+          }, {
+            menu: 'Passing',
+            url: '/company/process'
+          }, {
+            menu: 're dip',
+            url: '/company/process'
+          }, {
+            menu: 're dye',
+            url: '/company/process'
+          }, {
+            menu: 'Dyeing Production Report',
+            url: '/company/process'
+          }, {
+            menu: 'Dye and Chemical consumption Report',
+            url: '/company/process'
+          }, {
+            menu: 'Pending Dyeing jobs',
+            url: '/company/process'
+          }]
+        }, {
+          menu: 'Tube winding',
+          url: '#',
+          sub_menus: [{
+            menu: 'production entry',
+            url: '/company/transaction'
+          }, {
+            menu: 'production report',
             url: '/company/orders'
           }, {
-            menu: 'MIR register-bought out',
-            url: '/company/report/mir'
+            menu: 'pending works',
+            url: '/company/orders/create'
+          }]
+        }, {
+          menu: 'packing',
+          url: '#',
+          sub_menus: [{
+            menu: 'production entry',
+            url: '/company/report/stock'
+          }, {
+            menu: 'production report',
+            url: '/company/report/register'
+          }, {
+            menu: 'Pending works',
+            url: '/company/report/po'
+          }]
+        }],
+        'Customer Order Processing': [{
+          menu: 'Order processing',
+          url: '#',
+          sub_menus: [{
+            menu: 'Master',
+            url: '/company/lookup'
+          }, {
+            menu: 'Customer master',
+            url: '/company/item'
+          }, {
+            menu: 'transanctions',
+            url: '/company/qc'
+          }, {
+            menu: 'Enquiry',
+            url: '/company/stocks'
+          }, {
+            menu: 'Quotation',
+            url: '/company/rates'
+          }, {
+            menu: 'orders',
+            url: '/company/process'
+          }, {
+            menu: 'Performa invoice',
+            url: '/company/process'
+          }, {
+            menu: 'invoice',
+            url: '/company/process'
+          }]
+        }, {
+          menu: 'reports',
+          url: '#',
+          sub_menus: [{
+            menu: 'enquiry register',
+            url: '/company/transaction'
+          }, {
+            menu: 'quotation register',
+            url: '/company/orders'
+          }, {
+            menu: 'order register',
+            url: '/company/orders/create'
+          }, {
+            menu: 'invoice',
+            url: '/company/report/stock'
           }]
         }]
       }
@@ -38849,7 +39136,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { name: "part_no" },
+              attrs: { name: "part_no", autocomplete: "off" },
               domProps: { value: _vm.search },
               on: {
                 input: function($event) {
@@ -38969,7 +39256,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { name: "part_no" },
+                attrs: { name: "part_no", autocomplete: "off" },
                 domProps: { value: _vm.search },
                 on: {
                   input: function($event) {
@@ -39061,317 +39348,65 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "card" }, [
-        _c("nav", { staticClass: "nav nav-sidebar tx-13" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  return _vm.loadMenu("ab")
-                }
-              }
-            },
-            [
-              _c(
-                "svg",
-                {
-                  staticClass: "feather feather-inbox",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "24",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    fill: "none",
-                    stroke: "currentColor",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round"
+        _c(
+          "nav",
+          { staticClass: "nav nav-sidebar tx-13" },
+          _vm._l(_vm.menu_array, function(menu, index) {
+            return _c(
+              "a",
+              {
+                key: index,
+                staticClass: "nav-link active",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.loadMenu(index)
                   }
-                },
-                [
-                  _c("polyline", {
-                    attrs: { points: "22 12 16 12 14 15 10 15 8 12 2 12" }
-                  }),
-                  _c("path", {
+                }
+              },
+              [
+                _c(
+                  "svg",
+                  {
+                    staticClass: "feather feather-inbox",
                     attrs: {
-                      d:
-                        "M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "24",
+                      height: "24",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "stroke-width": "2",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round"
                     }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("span", [_vm._v("Inbox")]),
-              _vm._v(" "),
-              _vm._m(0)
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  return _vm.loadMenu("cd")
-                }
-              }
-            },
-            [
-              _c(
-                "svg",
-                {
-                  staticClass: "feather feather-monitor",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "24",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    fill: "none",
-                    stroke: "currentColor",
-                    "stroke-width": "2",
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round"
-                  }
-                },
-                [
-                  _c("rect", {
-                    attrs: {
-                      x: "2",
-                      y: "3",
-                      width: "20",
-                      height: "14",
-                      rx: "2",
-                      ry: "2"
-                    }
-                  }),
-                  _c("line", {
-                    attrs: { x1: "8", y1: "21", x2: "16", y2: "21" }
-                  }),
-                  _c("line", {
-                    attrs: { x1: "12", y1: "17", x2: "12", y2: "21" }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("span", [_vm._v("Starred")]),
-              _vm._v(" "),
-              _vm._m(1)
-            ]
-          ),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-            _c(
-              "svg",
-              {
-                staticClass: "feather feather-clock",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "24",
-                  height: "24",
-                  viewBox: "0 0 24 24",
-                  fill: "none",
-                  stroke: "currentColor",
-                  "stroke-width": "2",
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round"
-                }
-              },
-              [
-                _c("circle", { attrs: { cx: "12", cy: "12", r: "10" } }),
-                _c("polyline", { attrs: { points: "12 6 12 12 16 14" } })
+                  },
+                  [
+                    _c("polyline", {
+                      attrs: { points: "22 12 16 12 14 15 10 15 8 12 2 12" }
+                    }),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("span", [_vm._v(_vm._s(index))]),
+                _vm._v(" "),
+                _vm._m(0, true)
               ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Important")]),
-            _vm._v(" "),
-            _vm._m(2)
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-            _c(
-              "svg",
-              {
-                staticClass: "feather feather-star",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "24",
-                  height: "24",
-                  viewBox: "0 0 24 24",
-                  fill: "none",
-                  stroke: "currentColor",
-                  "stroke-width": "2",
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round"
-                }
-              },
-              [
-                _c("polygon", {
-                  attrs: {
-                    points:
-                      "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Sent Mail")]),
-            _vm._v(" "),
-            _vm._m(3)
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-            _c(
-              "svg",
-              {
-                staticClass: "feather feather-file",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "24",
-                  height: "24",
-                  viewBox: "0 0 24 24",
-                  fill: "none",
-                  stroke: "currentColor",
-                  "stroke-width": "2",
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round"
-                }
-              },
-              [
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
-                  }
-                }),
-                _c("polyline", { attrs: { points: "13 2 13 9 20 9" } })
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Drafts")]),
-            _vm._v(" "),
-            _vm._m(4)
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-            _c(
-              "svg",
-              {
-                staticClass: "feather feather-slash",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "24",
-                  height: "24",
-                  viewBox: "0 0 24 24",
-                  fill: "none",
-                  stroke: "currentColor",
-                  "stroke-width": "2",
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round"
-                }
-              },
-              [
-                _c("circle", { attrs: { cx: "12", cy: "12", r: "10" } }),
-                _c("line", {
-                  attrs: { x1: "4.93", y1: "4.93", x2: "19.07", y2: "19.07" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Spam")]),
-            _vm._v(" "),
-            _vm._m(5)
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-            _c(
-              "svg",
-              {
-                staticClass: "feather feather-trash",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "24",
-                  height: "24",
-                  viewBox: "0 0 24 24",
-                  fill: "none",
-                  stroke: "currentColor",
-                  "stroke-width": "2",
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round"
-                }
-              },
-              [
-                _c("polyline", { attrs: { points: "3 6 5 6 21 6" } }),
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Trash")]),
-            _vm._v(" "),
-            _vm._m(6)
-          ])
-        ])
+            )
+          }),
+          0
+        )
       ])
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "badge" }, [
-      _c("i", { staticClass: "fa fa-hand-o-right" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "badge" }, [
-      _c("i", { staticClass: "fa fa-hand-o-right" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "badge" }, [
-      _c("i", { staticClass: "fa fa-hand-o-right" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "badge" }, [
-      _c("i", { staticClass: "fa fa-hand-o-right" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "badge" }, [
-      _c("i", { staticClass: "fa fa-hand-o-right" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "badge" }, [
-      _c("i", { staticClass: "fa fa-hand-o-right" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

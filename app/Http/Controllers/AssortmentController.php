@@ -44,42 +44,73 @@ class AssortmentController extends Controller
     public function store(Request $request)
     {
         try{
-
             $assortment = $request->assortment;
             $shop = json_decode($assortment);
-            $assortment = new Assortment();
-            $assortment->customer_id = isset($shop->customer_id)? $shop->customer_id : ''; 
-            $assortment->article_no = isset($shop->article_no)? $shop->article_no : ''; 
-            $assortment->assortment_no = isset($shop->assortment_no)? $shop->assortment_no : ''; 
-            $assortment->assortment_name = isset($shop->assortment_name)? $shop->assortment_name : ''; 
-            $assortment->no_of_shades = isset($shop->no_of_shades)? $shop->no_of_shades : ''; 
-            $assortment->no_of_box_per_box = isset($shop->no_of_box_per_box)? $shop->no_of_box_per_box : '';
-            $image_url = ''; 
-            if($request->has('file')){
-                $file = $request->file('file');
-                $file_name = 'assortments'.'/'.time().'file.'.$file->getClientOriginalExtension();
-                Storage::disk('s3')->put($file_name, file_get_contents($request->file('file')), 'public');
-                $image_url = Storage::disk('s3')->url($file_name);
-            }
-            $assortment->image_url = $image_url; 
-            $assortment->save(); 
-            $assortment_id = $assortment->id;
-            if(isset($shop->assortment_shades)){
-                $shades = $shop->assortment_shades;
-                foreach($shades as $shade){
-                    $assortment_shade = new AssortmentShade();
-                    $assortment_shade->shade_id = $shade->shade_id;
-                    $assortment_shade->assortment_id = $assortment_id;
-                    $assortment_shade->save();
+            if(isset($shop->id)){
+                $assortment =  Assortment::where('id',$shop->id)->first();
+                $assortment->customer_id = isset($shop->customer_id)? $shop->customer_id : ''; 
+                $assortment->article_no = isset($shop->article_no)? $shop->article_no : ''; 
+                $assortment->assortment_no = isset($shop->assortment_no)? $shop->assortment_no : ''; 
+                $assortment->assortment_name = isset($shop->assortment_name)? $shop->assortment_name : ''; 
+                $assortment->no_of_shades = isset($shop->no_of_shades)? $shop->no_of_shades : ''; 
+                $assortment->no_of_box_per_box = isset($shop->no_of_box_per_box)? $shop->no_of_box_per_box : '';
+                $image_url = ''; 
+                if($request->has('file')){
+                    $file = $request->file('file');
+                    $file_name = 'assortments'.'/'.time().'file.'.$file->getClientOriginalExtension();
+                    Storage::disk('s3')->put($file_name, file_get_contents($request->file('file')), 'public');
+                    $image_url = Storage::disk('s3')->url($file_name);
                 }
-                
-            }
+                $assortment->image_url = $image_url; 
+                $assortment->save(); 
+                $assortment_id = $assortment->id;
+                if(isset($shop->assortment_shades)){
+                    AssortmentShade::where('assortment_id',$assortment_id)->delete();
+                    $shades = $shop->assortment_shades;
+                    foreach($shades as $shade){
+                        $assortment_shade = new AssortmentShade();
+                        $assortment_shade->shade_id = $shade->shade_id;
+                        $assortment_shade->assortment_id = $assortment_id;
+                        $assortment_shade->save();
+                    }
+                    
+                }
 
-            return response(['message' => 'successfully saved..!'],200);
+                return response(['message' => 'successfully saved..!'],200);
+            } else{
+                $assortment = new Assortment();
+                $assortment->customer_id = isset($shop->customer_id)? $shop->customer_id : ''; 
+                $assortment->article_no = isset($shop->article_no)? $shop->article_no : ''; 
+                $assortment->assortment_no = isset($shop->assortment_no)? $shop->assortment_no : ''; 
+                $assortment->assortment_name = isset($shop->assortment_name)? $shop->assortment_name : ''; 
+                $assortment->no_of_shades = isset($shop->no_of_shades)? $shop->no_of_shades : ''; 
+                $assortment->no_of_box_per_box = isset($shop->no_of_box_per_box)? $shop->no_of_box_per_box : '';
+                $image_url = ''; 
+                if($request->has('file')){
+                    $file = $request->file('file');
+                    $file_name = 'assortments'.'/'.time().'file.'.$file->getClientOriginalExtension();
+                    Storage::disk('s3')->put($file_name, file_get_contents($request->file('file')), 'public');
+                    $image_url = Storage::disk('s3')->url($file_name);
+                }
+                $assortment->image_url = $image_url; 
+                $assortment->save(); 
+                $assortment_id = $assortment->id;
+                if(isset($shop->assortment_shades)){
+                    $shades = $shop->assortment_shades;
+                    foreach($shades as $shade){
+                        $assortment_shade = new AssortmentShade();
+                        $assortment_shade->shade_id = $shade->shade_id;
+                        $assortment_shade->assortment_id = $assortment_id;
+                        $assortment_shade->save();
+                    }
+                    
+                }
+
+                return response(['message' => 'successfully saved..!'],200);
+            }
 
         } catch(Throwable $e){
-
-            return response(['message' => $e],200);
+            return response(['message' => $e],400);
 
         }
 

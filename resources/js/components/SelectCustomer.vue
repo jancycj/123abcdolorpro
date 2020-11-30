@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label class=" form-control-label">Customer</label>
                     <div class="input-group">
-                        <input class="form-control" name="part_no" v-model="search">
+                        <input class="form-control" name="part_no" v-model="search" autocomplete="off">
                     </div>
                 </div>
             </div>

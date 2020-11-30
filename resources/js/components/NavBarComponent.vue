@@ -26,15 +26,21 @@
             }
         },
         mounted() {
-            $('#acc_dropdown').click(function() {
-        $('.acc_dropdown').toggleClass('show');
-      });
+            
             
         },
         created: function () {
             if (localStorage.menus) {
                 this.menus = JSON.parse(localStorage.menus);
             }
+            $('.navbar-menu .with-sub .nav-link').on('click', function(e){
+                $(this).parent().toggleClass('show');
+                $(this).parent().siblings().removeClass('show');
+
+                if(window.matchMedia('(max-width: 991px)').matches) {
+                psNavbar.update();
+                }
+            })
         },
         methods: {
         }

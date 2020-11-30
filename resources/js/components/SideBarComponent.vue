@@ -552,7 +552,7 @@
         },
         methods: {
             loadMenu(menu){
-                
+                console.log(this.menu_array[menu])
                 localStorage.menus = JSON.stringify(this.menu_array[menu]);
                 location.reload();
             }

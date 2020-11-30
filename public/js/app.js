@@ -1966,15 +1966,20 @@ __webpack_require__.r(__webpack_exports__);
       menus: []
     };
   },
-  mounted: function mounted() {
-    $('#acc_dropdown').click(function () {
-      $('.acc_dropdown').toggleClass('show');
-    });
-  },
+  mounted: function mounted() {},
   created: function created() {
     if (localStorage.menus) {
       this.menus = JSON.parse(localStorage.menus);
     }
+
+    $('.navbar-menu .with-sub .nav-link').on('click', function (e) {
+      $(this).parent().toggleClass('show');
+      $(this).parent().siblings().removeClass('show');
+
+      if (window.matchMedia('(max-width: 991px)').matches) {
+        psNavbar.update();
+      }
+    });
   },
   methods: {}
 });
@@ -2638,6 +2643,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {},
   methods: {
     loadMenu: function loadMenu(menu) {
+      console.log(this.menu_array[menu]);
       localStorage.menus = JSON.stringify(this.menu_array[menu]);
       location.reload();
     }

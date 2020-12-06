@@ -56,15 +56,15 @@
         
 
         <div class="row">
-          <div class="col-2"></div>
-          <div class="col-7">
+          <div class="col-md-2 col-lg-2 col-sm-1"></div>
+          <div class="col-md-7 col-lg-7 col-sm-11">
               <div class="row no-gutters mg-t-10">
-                  <div class="col-3 col-sm-5 col-md-6 col-lg-5 bg-primary rounded-left">
+                  <div class=" col-sm-5 col-md-6 col-lg-5 bg-primary rounded-left">
                     <div class="wd-150p ht-100p">
                       <img src="{{asset('new_assets/assets/img/cmpny.jpeg')}}" class="wd-100p img-fit-cover img-object-top rounded-left" alt="">
                     </div>
                   </div><!-- col -->
-                  <div class="col-9 col-sm-7 col-md-6 col-lg-7 bg-white rounded-right">
+                  <div class=" col-sm-7 col-md-6 col-lg-7 bg-white rounded-right">
                     <div class="ht-100p d-flex flex-column justify-content-center pd-20 pd-sm-30 pd-md-40">
                       <span class="tx-color-04"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 wd-40 ht-40 stroke-wd-3 mg-b-20"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
                       <h3 class="tx-16 tx-sm-20 tx-md-24 mg-b-15 mg-md-b-20">Company Profile</h3>

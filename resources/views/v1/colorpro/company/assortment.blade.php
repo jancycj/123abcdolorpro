@@ -101,7 +101,7 @@
             <div class="card mg-b-2">
                 <div class="card-header ">
                     <div class="row">
-                        <div class="col-4" @keydown="getArticle($event)" >
+                        <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getArticle($event)" >
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Article*</label>
                                 <div class="col-7 input-group">
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div class="col-md-5 col-lg-5 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-4 form-control-label">Assortment Name* </label>
                                 <div class="col-7 input-group">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4" @keydown="getAssortment($event)" >
+                        <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getAssortment($event)" >
                             <div class="form-group row">
                                 <label class=" col-5 form-control-label">Assortment*</label>
                                 <div class=" col-7 input-group">
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4" 
+                        <div class="col-md-4 col-lg-4 col-sm-6" 
                         @keydown="keyEvent($event)" 
                         
                         >
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-12">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
                                     <input autocomplete="off" class="form-control" name="unit" v-model="assortment.customer_name" disabled>
@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5" >
+                        <div class="col-md-5 col-lg-5 col-sm-6" >
                             <div class="form-group row">
                                 <label class="col-4 form-control-label">Billing name</label>
                                 <div class="col-7 input-group">
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-md-7 col-lg-7 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-6 form-control-label">New Assertment To Copy </label>
                                 <div class="col-6 input-group">
@@ -165,7 +165,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4" >
+                        <div class="col-md-4 col-lg-4 col-sm-6" >
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Shades</label>
                                 <div class="col-7 input-group">
@@ -173,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div class="col-md-5 col-lg-5 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Cops Per Box</label>
                                 <div class="col-7 input-group">
@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-md-9 col-lg-9 col-sm-12">
                             <div class="table-responsive">
                                 <table class="table table-bordered mg-b-0">
                                 <thead>
@@ -232,7 +232,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-md-3 col-lg-3 col-sm-12">
                             <input type="file" ref="file" @change="onFileChange" style="display: none;"/>
                             <img :src="url == '' ?'/images/upload.png' : url" @click="$refs.file.click()" class="img-thumbnail wd-100p wd-sm-200" alt="Responsive image">
                         </div>
@@ -241,19 +241,19 @@
                 </div><!-- card-body -->
                 <div class="card-footer ">
                     <div class="row order-ft">
-                        <div class="col-2 offset-8 mg-t-5" v-if="print_flag">
+                        <div class="col-md-2 col-lg-2 col-sm-6 offset-8 mg-t-5" v-if="print_flag">
                                 <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
                         </div>
-                        <div class="col-2 offset-6 mg-t-5" v-if="!print_flag && !update_flag">
+                        <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
                                 <button class="btn btn-primary btn-block " @click="save_assortment()">Save</button>
                         </div>
-                        <div class="col-2 offset-6 mg-t-5" v-if="!print_flag && update_flag">
+                        <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
                                 <button class="btn btn-primary btn-block " @click="save_assortment()">Update</button>
                         </div>
-                        <div class="col-2  mg-t-5" >
+                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-warning btn-block " @click="clear_article()">Delete</button>
                         </div>
-                        <div class="col-2  mg-t-5" >
+                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_article()">Cancel</button>
                         </div>
                     </div>

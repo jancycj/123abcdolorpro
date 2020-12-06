@@ -1,8 +1,8 @@
 <header class="navbar navbar-header navbar-header-fixed">
-    <a href="" id="mainMenuOpen" class="burger-menu">
+    <a href="#" id="mainMenuOpen" class="burger-menu">
       <i class="fa fa-bars" aria-hidden="true"></i>
     </a>
-     <a href="" id="mainMenuOpen" class="burger-menu d-none"><i data-feather="menu"></i></a>
+     <a href="#" id="mainMenuOpen" class="burger-menu d-none"><i data-feather="menu"></i></a>
      <div class="navbar-brand">
        <!-- <a href="/" class="df-logo">Log<span>ezy</span></a> -->
        <a href="#"><h2 class="logo-new ">Tech-Pro:</h2></a>

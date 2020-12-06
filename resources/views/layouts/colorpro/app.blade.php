@@ -239,7 +239,7 @@
         padding: 10px 20px;
       }
      .navbar-header .nav-link {
-        color: rgb(255, 255, 255) !important;
+        /* color: rgb(255, 255, 255) !important; */
      }
      .logo-new {
             color: white;
@@ -375,6 +375,11 @@
                 psNavbar.update();
                 }
             })
+    </script>
+     <script type="text/javascript">
+     
+      $('.dropdown-toggle').dropdown();
+
     </script>
 
     @yield('script')

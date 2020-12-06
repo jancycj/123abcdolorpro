@@ -1966,7 +1966,20 @@ __webpack_require__.r(__webpack_exports__);
       menus: []
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    $('#acc_dropdown').click(function () {
+      $('.acc_dropdown').toggleClass('show');
+    });
+    $('#mainMenuOpen').on('click touchstart', function (e) {
+      e.preventDefault();
+      $('body').addClass('navbar-nav-show');
+    });
+    $('#mainMenuClose').on('click', function (e) {
+      console.log('ddddd');
+      e.preventDefault();
+      $('body').removeClass('navbar-nav-show');
+    });
+  },
   created: function created() {
     if (localStorage.menus) {
       this.menus = JSON.parse(localStorage.menus);

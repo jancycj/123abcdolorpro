@@ -26,7 +26,18 @@
             }
         },
         mounted() {
-            
+            $('#acc_dropdown').click(function() {
+                $('.acc_dropdown').toggleClass('show');
+            });
+            $('#mainMenuOpen').on('click touchstart', function(e){
+                e.preventDefault();
+                $('body').addClass('navbar-nav-show');
+            });
+            $('#mainMenuClose').on('click', function(e){
+                console.log('ddddd')
+                e.preventDefault();
+                $('body').removeClass('navbar-nav-show');
+            });
             
         },
         created: function () {
@@ -49,5 +60,4 @@
 </script>
 <style lang="css" scoped>
     
-   
 </style>

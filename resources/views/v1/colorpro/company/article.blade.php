@@ -90,7 +90,7 @@
             <div class="card mg-b-2">
                 <div class="card-header ">
                     <div class="row">
-                        <div class="col-4" @keydown="getArticle($event)" >
+                        <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getArticle($event)" >
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Article*</label>
                                 <div class="col-7 input-group">
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Billing Name* </label>
                                 <div class="col-7 input-group">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4" 
+                        <div class="col-md-4 col-lg-4 col-sm-6" 
                         @keydown="keyEvent($event)" 
                         
                         >
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-md-7 col-lg-7 col-sm-6">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
                                     <input autocomplete="off" class="form-control" name="unit" v-model="article.customer_name" disabled>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4" @keydown="chooseCount($event)">
+                        <div class="col-md-4 col-lg-4 col-sm-6" @keydown="chooseCount($event)">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Count 1</label>
                                 <div class="col-7 input-group">
@@ -144,14 +144,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div class="col-md-5 col-lg-5 col-sm-6">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
                                     <input autocomplete="off" class="form-control" name="unit" v-model="article.count1_value" disabled>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-md-3 col-lg-3 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">WBC </label>
                                 <select data-placeholder="Select master" class="standardSelect col-7 form-control" tabindex="1" name="unit"  v-model="article.wbc">
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4"  @keydown="chooseCount2($event)">
+                        <div class="col-md-4 col-lg-4 col-sm-6"  @keydown="chooseCount2($event)">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Count 2 </label>
                                 <div class="col-7 input-group">
@@ -170,14 +170,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div class="col-md-5 col-lg-5 col-sm-6">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
                                     <input autocomplete="off" class="form-control" name="unit" v-model="article.count2_value" disabled>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-md-3 col-lg-3 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Assortment Y/N </label>
                                 <div class="col-7 input-group">
@@ -187,7 +187,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Thread Quality </label>
                                 <div class="col-7 input-group">
@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Assert Name </label>
                                 <div class="col-7 input-group">
@@ -203,7 +203,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Cops/Trays </label>
                                 <div class="col-7 input-group">
@@ -213,7 +213,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Weight Factor* </label>
                                 <div class="col-7 input-group">
@@ -221,7 +221,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Length (Mtr) </label>
                                 <div class="col-7 input-group">
@@ -229,7 +229,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Cops/Trays Line </label>
                                 <div class="col-7 input-group">
@@ -239,7 +239,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No of Boxes/ Carton* </label>
                                 <div class="col-7 input-group">
@@ -247,7 +247,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Weight (Gm) </label>
                                 <div class="col-7 input-group">
@@ -255,7 +255,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Std Prod/8 Hrs </label>
                                 <div class="col-7 input-group">
@@ -265,7 +265,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No of Tube Per Box* </label>
                                 <div class="col-7 input-group">
@@ -273,7 +273,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Gauge </label>
                                 <div class="col-7 input-group">
@@ -281,7 +281,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Spindles </label>
                                 <div class="col-7 input-group">
@@ -291,7 +291,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Carton No  </label>
                                 <div class="col-7 input-group">
@@ -299,7 +299,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Max Length (Mts) </label>
                                 <div class="col-7 input-group">
@@ -307,7 +307,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Box/G2Y </label>
                                 <div class="col-7 input-group">
@@ -317,7 +317,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">CLU/Box </label>
                                 <div class="col-7 input-group">
@@ -325,7 +325,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Min Length (Mts) </label>
                                 <div class="col-7 input-group">
@@ -333,7 +333,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Color Code </label>
                                 <div class="col-7 input-group">
@@ -343,7 +343,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">CLU/Carton </label>
                                 <div class="col-7 input-group">
@@ -351,7 +351,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">TKT </label>
                                 <div class="col-7 input-group">
@@ -359,7 +359,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Default process </label>
                                 <div class="col-7 input-group">
@@ -369,7 +369,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4" @keydown="threadPopup($event)" >
+                        <div class="col-md-4 col-lg-4 col-sm-6" @keydown="threadPopup($event)" >
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Thread Type </label>
                                 <div class="col-7 input-group">
@@ -377,7 +377,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-md-7 col-lg-7 col-sm-6">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
                                     <input autocomplete="off" class="form-control" name="unit" v-model="article.thread_type_value" disabled>
@@ -386,7 +386,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5" @keydown="yarnPopup($event)">
+                        <div class="col-md-5 col-lg-5 col-sm-6" @keydown="yarnPopup($event)">
                             <div class="form-group row">
                                 <label class="col-4 form-control-label">Gray Yarn Code</label>
                                 <div class="col-8 input-group">
@@ -394,7 +394,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 col-lg-6 col-sm-6">
                             <div class="form-group row">
                                 <div class="col-12 input-group">
                                     <input autocomplete="off" class="form-control" name="unit" v-model="article.gray_yarn_code_value" disabled>
@@ -403,7 +403,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">No Of Cops / Chees</label>
                                 <div class="col-7 input-group">
@@ -413,7 +413,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">New Article No: / Chees</label>
                                 <div class="col-7 input-group">
@@ -425,19 +425,19 @@
                 </div><!-- card-body -->
                 <div class="card-footer ">
                     <div class="row order-ft">
-                        <div class="col-2 offset-8 mg-t-5" v-if="print_flag">
+                        <div class="col-md-2 col-lg-2 col-sm-12 offset-8 mg-t-5" v-if="print_flag">
                                 <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
                         </div>
-                        <div class="col-2 offset-6 mg-t-5" v-if="!print_flag && !update_flag">
+                        <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
                                 <button class="btn btn-primary btn-block " @click="save_article()">Save</button>
                         </div>
-                        <div class="col-2 offset-6 mg-t-5" v-if="!print_flag && update_flag">
+                        <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && update_flag">
                                 <button class="btn btn-primary btn-block " @click="update_article()">Update</button>
                         </div>
-                        <div class="col-2  mg-t-5" >
+                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-warning btn-block " @click="clear_article()">Delete</button>
                         </div>
-                        <div class="col-2  mg-t-5" >
+                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_article()">Cancel</button>
                         </div>
                     </div>

@@ -51,6 +51,8 @@ Route::prefix('company')->group(function() {
       Route::resource('article', 'ArticleController');
       Route::resource('assortment', 'AssortmentController');
       Route::get('/item', 'ItemController@company_item')->name('company.item');
+      Route::get('/item_import', 'ItemController@import')->name('company.item.import');
+      Route::post('/item_import', 'ItemController@importPost')->name('company.item.import.post');
       Route::get('/customer', 'CostomersController@company_customer_index')->name('company.customer');
       Route::post('/customer', 'CostomersController@create_company_customer')->name('company.customer.save');
       Route::get('/customer/create', 'CostomersController@company_customer_create')->name('company.customer.create');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\CompanyUser;
 use App\Item;
 use App\LookupMaster;
@@ -9,6 +10,8 @@ use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Importer;
 
 class ItemController extends Controller
 {
@@ -140,5 +143,86 @@ class ItemController extends Controller
         $user = User::where('id',Auth::id())->with('company')->first();
         $items =  Item::where('company_id',$company_id)->get();
         return view('v1.colorpro.company.item_master',compact('items','user','units','categories'));//
+    }
+
+    public function importPost(Request $request)
+    {
+        
+        // $import = new ItemsImport;
+        // Excel::import($import, 'item.xlsx');
+        // $data = $import->data;
+        // return $data;
+        $file = $request->file('file');
+        $excel = Importer::make('Excel');
+        $excel->load($file);
+        $collection = $excel->getCollection()->toArray();
+        $a = $collection[0];
+        $message = "";
+        foreach($collection as $key => $data){
+
+            if($key == 0){
+                continue;
+            }
+            // $c = array_combine($a, $data);
+            // return $c['Companyid'];
+            if($data[0] == ''){
+                $message = "company missing";
+                continue;
+            }
+            if($data[1] == ''){
+                $message = "part missing";
+                continue;
+            }
+            if($data[7] == ''){
+                $message = "category missing";
+                continue;
+            }
+            if($data[4] == ''){
+                $message = "unit missing";
+                continue;
+            }
+
+            if($company_id = Company::where('name',$data[0])->pluck('id')->first()){
+                if($category_id = LookupMaster::where('lookup_value',$data[7])->pluck('id')->first()){
+                    if($unit_id = LookupMaster::where('lookup_value',$data[4])->pluck('id')->first()){
+                        $item = new Item;
+                        $item->name                 = $data[3];
+                        $item->company_id           = $company_id ;
+                        $item->category_id          = $category_id;
+                        $item->part_no              = $data[1];
+                        $item->unit_id              = $unit_id;
+                        $item->part_type            = $data[5];
+                        $item->list_price            = $data[11];
+                        $item->created_by           = Auth::id();
+                        $item->updated_by           = Auth::id();
+                        $item->save();
+                        $stock = new Stock;
+                        $stock->company_id  = $company_id ;
+                        $stock->item_id     = $item->id;
+                        $stock->unit_id     = $item->unit_id;
+                        $stock->quantity     = $data[9];
+                        $stock->created_by  = Auth::id();
+                        $stock->save();
+                    }
+                }
+            }
+            return ['message' =>'true', 'data' => $message];
+            
+
+
+            
+        }
+    }
+
+    public function import(Request $request)
+    {
+         //PDF file is stored under project/public/download/info.pdf
+         $file= 'item.xlsx';
+
+         $headers = [
+               'Content-Type' => 'application/xlsx',
+            ];
+ 
+        return response()->download($file, 'filename.xlsx', $headers);
     }
 }

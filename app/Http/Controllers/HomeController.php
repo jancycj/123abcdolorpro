@@ -6,10 +6,12 @@ use App\Company;
 use App\CompanyUser;
 use App\Costomers;
 use App\CustomerUser;
+use App\Imports\ItemsImport;
 use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
+
 
 class HomeController extends Controller
 {
@@ -30,7 +32,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+        // $excel = Importer::make('Excel');
+        // $excel->load('item.xlsx');
+        // $collection = $excel->getCollection();
+        // return $collection;
+        
         $user = User::where('id',Auth::id())->with('roles')->first();
         
         $role = $user->roles[0]->name;

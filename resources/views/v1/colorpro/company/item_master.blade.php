@@ -24,10 +24,9 @@
           <h4 class="mg-b-0 tx-spacing--1">Company section</h4>
         </div>
         <div class="d-none d-md-block">
-          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save" class="wd-10 mg-r-5"></i> Save</button>
-          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload" class="wd-10 mg-r-5"></i> Export</button>
-          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2" class="wd-10 mg-r-5"></i> Share</button>
-          <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders" class="wd-10 mg-r-5"></i> Settings</button>
+          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase" @click="downloadXl"><i data-feather="save" class="wd-10 mg-r-5"></i> Downoload XL sample</button>
+          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5" @click="$refs.file.click()"><i data-feather="upload" class="wd-10 mg-r-5"></i> Import</button>
+          <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" style="display: none"/>
         </div>
       </div>
 
@@ -483,6 +482,7 @@
            opening : {},
            units : [],
            categories : [],
+           file : '',
        },
    methods: {
          toggleShow: function() {
@@ -564,6 +564,53 @@
             .catch((err) =>{
                 this.errors = err.response.data.errors;
                 console.log(this.errors)
+            });
+        },
+        downloadXl: function() {
+            let fileName = 'item_master';
+            axios({
+                url: "/company/item_import",
+                method: "GET",
+                responseType: "blob",
+            }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", fileName.split(" ").join("_") + ".xlsx");
+                document.body.appendChild(link);
+                link.click();
+            });
+        },
+        /* upload handling*/
+         handleFileUpload(){
+
+
+            this.file = this.$refs.file.files[0];
+            // this.candidate.profile_img = URL.srcObject(file);
+
+            let formData = new FormData();
+            formData.append('file', this.file);
+            axios.post('/company/item_import',
+            formData,
+            {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress:  progressEvent=> {
+                // this.upload_status = true;
+                // this.value=Math.round(  progressEvent.loaded / progressEvent.total * 100 );
+                }
+            }
+            ).then(response => {
+                alert('succesfully imported data');
+                // this.candidate.profile_img = response.data;
+                // this.upload_status = false;
+                // this.profile_image_upload_flag = true;
+                // this.update_candidate();
+
+            })
+            .catch((error)=>{
+                console.log('FAILURE!!');
             });
         },
      

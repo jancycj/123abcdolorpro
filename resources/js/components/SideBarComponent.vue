@@ -549,6 +549,7 @@
            
         },
         created: function () {
+            window.menu=this.menu_array["Supply Chain"];
         },
         methods: {
             loadMenu(menu){

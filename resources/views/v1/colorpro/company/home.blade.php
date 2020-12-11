@@ -380,16 +380,6 @@
   
 @endsection
 @section('script')
-<script src="{{asset('assets/js/lib/data-table/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/buttons.bootstrap.min.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/jszip.min.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/vfs_fonts.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/buttons.html5.min.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/buttons.print.min.js')}}"></script>
-    <script src="{{asset('assets/js/lib/data-table/buttons.colVis.min.js')}}"></script>
-    <!-- <script src="{{asset('assets/js/init/datatables-init.js')}}"></script> -->
 
 
     
@@ -451,15 +441,6 @@
       },
       mounted() {
 
-        $('.navbar-menu .with-sub .nav-link').on('click', function(e){
-                e.preventDefault();
-                $(this).parent().toggleClass('show');
-                $(this).parent().siblings().removeClass('show');
-
-                if(window.matchMedia('(max-width: 991px)').matches) {
-                psNavbar.update();
-                }
-            })
         // this.getWeekStartAndEnd();
         // this.get_candidate_availability();
         

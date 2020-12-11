@@ -1959,11 +1959,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+// if (localStorage.menus) {
+//     window.menus = JSON.parse(localStorage.menus);
+// } else{
+//     window.menus = [];
+// }
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'navBar',
   data: function data() {
     return {
-      menus: []
+      menus: [],
+      selected_menu: ''
     };
   },
   mounted: function mounted() {
@@ -1975,26 +1981,22 @@ __webpack_require__.r(__webpack_exports__);
       $('body').addClass('navbar-nav-show');
     });
     $('#mainMenuClose').on('click', function (e) {
-      console.log('ddddd');
       e.preventDefault();
       $('body').removeClass('navbar-nav-show');
     });
   },
   created: function created() {
-    if (localStorage.menus) {
-      this.menus = JSON.parse(localStorage.menus);
-    }
-
-    $('.navbar-menu .with-sub .nav-link').on('click', function (e) {
-      $(this).parent().toggleClass('show');
-      $(this).parent().siblings().removeClass('show');
-
-      if (window.matchMedia('(max-width: 991px)').matches) {
-        psNavbar.update();
-      }
-    });
+    this.menus = JSON.parse(localStorage.menus);
   },
-  methods: {}
+  methods: {
+    selectMenu: function selectMenu(menu) {
+      if (this.selected_menu == menu) {
+        menu = '';
+      }
+
+      this.selected_menu = menu;
+    }
+  }
 });
 
 /***/ }),
@@ -2653,7 +2655,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {},
-  created: function created() {},
+  created: function created() {
+    window.menu = this.menu_array["Supply Chain"];
+  },
   methods: {
     loadMenu: function loadMenu(menu) {
       console.log(this.menu_array[menu]);
@@ -39060,14 +39064,31 @@ var render = function() {
           "li",
           {
             key: menu.menu,
+            ref: "li",
+            refInFor: true,
             staticClass: "nav-item ",
-            class: menu.sub_menus.length > 0 ? "with-sub " : ""
+            class: [
+              menu.sub_menus.length > 0 ? "with-sub " : "",
+              _vm.selected_menu == menu.menu ? "show" : ""
+            ]
           },
           [
-            _c("a", { staticClass: "nav-link", attrs: { href: menu.url } }, [
-              _c("i", { attrs: { "data-feather": "package" } }),
-              _vm._v(" " + _vm._s(menu.menu))
-            ]),
+            _c(
+              "a",
+              {
+                staticClass: "nav-link",
+                attrs: { href: menu.url },
+                on: {
+                  click: function($event) {
+                    return _vm.selectMenu(menu.menu)
+                  }
+                }
+              },
+              [
+                _c("i", { attrs: { "data-feather": "package" } }),
+                _vm._v(" " + _vm._s(menu.menu))
+              ]
+            ),
             _vm._v(" "),
             _c(
               "ul",

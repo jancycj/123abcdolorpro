@@ -54,6 +54,7 @@ Route::prefix('company')->group(function() {
       Route::get('/item_import', 'ItemController@import')->name('company.item.import');
       Route::post('/item_import', 'ItemController@importPost')->name('company.item.import.post');
       Route::get('/customer', 'CostomersController@company_customer_index')->name('company.customer');
+      Route::get('/get_customer/{id}', 'CostomersController@show')->name('company.show');
       Route::post('/customer', 'CostomersController@create_company_customer')->name('company.customer.save');
       Route::get('/customer/create', 'CostomersController@company_customer_create')->name('company.customer.create');
       Route::get('/lookup', 'LookupMasterController@company_get_lookup')->name('company.lookup');

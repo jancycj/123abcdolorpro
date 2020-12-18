@@ -68,10 +68,10 @@ class CostomersController extends Controller
         $customer->email = $request->company_email;
         $customer->address_line1 = $request->address1;
         $customer->address_line2 = $request->address2;
-        $customer->district_id = $request->district;
-        $customer->state_id = $request->state;
+        $customer->district_id = $request->district_id;
+        $customer->state_id = $request->state_id;
         $customer->company_id = $request->comapny;
-        $customer->country_id = $request->country;
+        $customer->country_id = $request->country_id;
         $customer->save();
         $customer->customer_code = 'CSTMR-'.$customer->id;
         $customer->save();
@@ -85,7 +85,7 @@ class CostomersController extends Controller
         $user_role->user_id = $user->id;
         $user_role->role_id = 4;
         $user_role->save();
-        return redirect('/admin/customers/');
+        return 'success';
     }
 
     /**
@@ -223,10 +223,10 @@ class CostomersController extends Controller
         $customer->email = $request->email;
         $customer->address_line1 = $request->address1;
         $customer->address_line2 = $request->address2;
-        $customer->district_id = $request->district;
-        $customer->state_id = $request->state;
+        $customer->district_id           = $request->district_id;
+        $customer->state_id              = $request->state_id;
+        $customer->country_id            = $request->country_id;
         $customer->company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
-        $customer->country_id = $request->country;
         $customer->save();
         $customer->customer_code = 'CSTMR-'.$customer->id;
         $customer->save();
@@ -240,7 +240,8 @@ class CostomersController extends Controller
         $user_role->user_id = $user->id;
         $user_role->role_id = 4;
         $user_role->save();
-        return redirect('/company/customer/');
+        return 'true';
+        // return redirect('/company/customer/');
     }
 
     public function order(Request $request)

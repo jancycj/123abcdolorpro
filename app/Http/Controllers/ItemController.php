@@ -50,15 +50,15 @@ class ItemController extends Controller
         $this->validate($request, [
             'name'     => 'required',
             'part_no'    => 'required',
-            'category'    => 'required',
+            'category_id'    => 'required',
         ]);
         $company_id = CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first();
         $item = new Item;
         $item->name = $request->name;
         $item->company_id =$request->has('admin')? 0:$company_id ;
-        $item->category_id = $request->category;
+        $item->category_id = $request->category_id;
         $item->part_no = $request->part_no;
-        $item->unit_id = $request->unit;
+        $item->unit_id = $request->unit_id;
         $item->catelog_drwaing_no = $request->catelog_drwaing_no;
         $item->hsn_code = $request->hsn_code;
         $item->rol = $request->rol;
@@ -76,6 +76,7 @@ class ItemController extends Controller
         $stock->created_by  = Auth::id();
         
         $stock->save();
+        return 'true';
 
         // return redirect('/admin/items')->with(['message' => 'successfully added']);
     }

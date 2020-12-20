@@ -318,6 +318,10 @@
                                             url:'/company/article',
                                         },
                                         {
+                                            menu:'Purchase request',
+                                            url:'/company/indent',
+                                        },
+                                        {
                                             menu:'Assortment Master',
                                             url:'/company/assortment',
                                         },

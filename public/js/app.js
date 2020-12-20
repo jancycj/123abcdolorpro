@@ -2600,6 +2600,9 @@ __webpack_require__.r(__webpack_exports__);
             menu: 'Article Master',
             url: '/company/article'
           }, {
+            menu: 'Purchase request',
+            url: '/company/indent'
+          }, {
             menu: 'Assortment Master',
             url: '/company/assortment'
           }, {

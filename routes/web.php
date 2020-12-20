@@ -50,6 +50,7 @@ Route::prefix('company')->group(function() {
       Route::resource('shade', 'ShadeController');
       Route::resource('article', 'ArticleController');
       Route::resource('assortment', 'AssortmentController');
+      Route::resource('indent', 'IndentController');
       Route::get('/item', 'ItemController@company_item')->name('company.item');
       Route::get('/item_import', 'ItemController@import')->name('company.item.import');
       Route::post('/item_import', 'ItemController@importPost')->name('company.item.import.post');
@@ -121,6 +122,7 @@ Route::prefix('quick')->group(function() {
 
 	Route::group(['middleware' => ['auth']],function() {
       Route::get('/customers', 'QuickController@customers')->name('quick.customers');
+      Route::get('/items', 'QuickController@items')->name('quick.items');
       Route::post('/general', 'QuickController@general')->name('quick.general');
       
     });

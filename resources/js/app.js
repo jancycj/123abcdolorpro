@@ -25,6 +25,7 @@ Vue.component('side', require('./components/SideBarComponent.vue').default);
 Vue.component('nav-bar', require('./components/NavBarComponent.vue').default);
 Vue.component('choose-customer', require('./components/SelectCustomer.vue').default);
 Vue.component('choose-component', require('./components/SelectComponent.vue').default);
+Vue.component('choose-item', require('./components/SelectItem.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

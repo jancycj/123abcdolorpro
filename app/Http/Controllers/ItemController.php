@@ -60,6 +60,8 @@ class ItemController extends Controller
         $item->part_no = $request->part_no;
         $item->unit_id = $request->unit_id;
         $item->catelog_drwaing_no = $request->catelog_drwaing_no;
+        $item->default_supplier = $request->default_supplier;
+        $item->default_buyer = $request->default_buyer;
         $item->hsn_code = $request->hsn_code;
         $item->rol = $request->rol;
         $item->part_type = $request->part_type;

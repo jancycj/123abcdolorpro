@@ -30,6 +30,39 @@ class QuickController extends Controller
         ->limit($limit)->get();
     }    
     /**
+     * items
+     *
+     * @return void
+     */
+    public function items(Request $request)
+    {
+        $limit = $request->has('limit') ? $request->limit : 10;
+        $code = $request->has('code') ? $request->code : '';
+        $name = $request->has('name') ? $request->name : '';
+        return DB::table('items')->select(
+            'items.id',
+            'items.name',
+            'items.part_no',
+            'items.part_type',
+            'items.unit_id',
+            'items.category_id',
+            'lu.lookup_value as unit',
+            'lu.lookup_description as unit_des',
+            'lc.lookup_value as category',
+            'lc.lookup_description as category_des',
+            )
+        ->join('lookup_masters as lc', 'items.category_id', '=', 'lc.id')
+        ->join('lookup_masters as lu', 'items.unit_id', '=', 'lu.id')
+        ->where(function ($q) use($code, $name){
+           if($code != ''){
+                $q->where('name','like','%'.$code.'%');
+                $q->orWhere('part_no','like','%'.$code.'%');
+           }
+           
+        })
+        ->limit($limit)->get();
+    }  
+    /**
      * general
      *
      * @param  mixed $request

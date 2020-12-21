@@ -49,7 +49,7 @@ class QuickController extends Controller
             'lu.lookup_value as unit',
             'lu.lookup_description as unit_des',
             'lc.lookup_value as category',
-            'lc.lookup_description as category_des',
+            'lc.lookup_description as category_des'
             )
         ->join('lookup_masters as lc', 'items.category_id', '=', 'lc.id')
         ->join('lookup_masters as lu', 'items.unit_id', '=', 'lu.id')

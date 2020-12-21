@@ -208,6 +208,10 @@
                                     url:'/company/item',
                                 },
                                 {
+                                    menu:'Purchase request',
+                                    url:'/company/indent',
+                                },
+                                {
                                     menu:'QC plans',
                                     url:'/company/qc',
                                 },
@@ -317,10 +321,7 @@
                                             menu:'Article Master',
                                             url:'/company/article',
                                         },
-                                        {
-                                            menu:'Purchase request',
-                                            url:'/company/indent',
-                                        },
+                                        
                                         {
                                             menu:'Assortment Master',
                                             url:'/company/assortment',

@@ -126,7 +126,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getArticle($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getIndent($event)" >
                                     <div class="form-group row">
                                         <label class="col-5 form-control-label">Indent No*</label>
                                         <div class="col-7 input-group">
@@ -474,6 +474,32 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
+        <div class="modal fade" id="IndentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+                <div class="modal-content tx-14 card">
+
+                    <div class="modal-body">
+                            
+                        <div class="card-body card-block">
+                            <choose-component 
+                            :id="'indents'"
+                            :table="'indents'" 
+                            :fields="['id','indent_no','department']" 
+                            :search_filed="'indent_no'" 
+                            @selected="getAssortmentByNumber($event)"
+                            ></choose-component>
+                                
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- yarn popup modal end -->
     
   </div><!-- container -->
 </div><!-- content -->
@@ -687,12 +713,16 @@
             this.update_flag = false;
             this.removeFlag = false;
         },
-        getArticleByNumber : function(val){
+        getIndent : function(val){
+            if(event.code == 'F1' || event.code == 'F2'){
+                $("#IndentPopup").modal('toggle');
+                // this.get_article_by_number();
+            }
             var vm = this;
-            $("#articlePopup").modal('toggle');
+            // $("#IndentPopup").modal('toggle');
 
-            vm.assortment.article_no =val.article_no;
-            vm.assortment.billing_name =val.billing_name;
+            // vm.assortment.article_no =val.article_no;
+            // vm.assortment.billing_name =val.billing_name;
         },
         onFileChange(e) {
             this.selected_file = e.target.files[0];

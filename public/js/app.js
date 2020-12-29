@@ -2511,10 +2511,10 @@ __webpack_require__.r(__webpack_exports__);
       // }
       menu_array: {
         "Supply Chain": [{
-          menu: 'Masters',
+          menu: 'Lookup',
           url: '#',
           sub_menus: [{
-            menu: 'Masters',
+            menu: 'Lookup',
             url: '/company/lookup'
           }, {
             menu: 'Items',
@@ -2568,7 +2568,7 @@ __webpack_require__.r(__webpack_exports__);
           }]
         }, {
           menu: 'Clients',
-          url: 'company/customer',
+          url: '/company/customer',
           sub_menus: []
         }, {
           menu: 'Reports',
@@ -2594,10 +2594,10 @@ __webpack_require__.r(__webpack_exports__);
           }]
         }],
         'Production Planning and Control': [{
-          menu: 'Masters',
+          menu: 'Lookup',
           url: '#',
           sub_menus: [{
-            menu: 'Masters',
+            menu: 'Lookup',
             url: '/company/lookup'
           }, {
             menu: 'Article Master',
@@ -2716,11 +2716,11 @@ __webpack_require__.r(__webpack_exports__);
           menu: 'Order processing',
           url: '#',
           sub_menus: [{
-            menu: 'Master',
+            menu: 'Lookup',
             url: '/company/lookup'
           }, {
             menu: 'Customer master',
-            url: '/company/item'
+            url: '/company/customer'
           }, {
             menu: 'transanctions',
             url: '/company/qc'

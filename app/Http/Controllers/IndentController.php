@@ -49,6 +49,7 @@ class IndentController extends Controller
         $indent = new Indent();
         $indent->request_date = now();
         $indent->department   = $request->department;
+        $indent->indent_no   = $request->indent_no;
         $indent->request_by   = Auth::id();
         $indent->save();
         $indent_id = $indent->id;

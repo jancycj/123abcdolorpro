@@ -178,7 +178,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">autherized_person</label>
                                 <div class="col-7 input-group">
-                                    <input autocomplete="off" class="form-control" type="number"  v-model="client.autherized_person">
+                                    <input autocomplete="off" class="form-control"   v-model="client.autherized_person">
                                 </div>
                             </div>
                         </div>

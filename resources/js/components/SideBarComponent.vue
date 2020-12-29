@@ -22,7 +22,7 @@
                 //             url:'#',
                 //             sub_menus:[
                 //                 {
-                //                     menu:'Masters',
+                //                     menu:'Look Up',
                 //                     url:'/company/lookup',
                 //                 },
                 //                 {

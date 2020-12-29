@@ -196,11 +196,11 @@
                  menu_array : {
                     "Supply Chain" : [
                         {
-                            menu:'Masters',
+                            menu:'Lookup',
                             url:'#',
                             sub_menus:[
                                 {
-                                    menu:'Masters',
+                                    menu:'Lookup',
                                     url:'/company/lookup',
                                 },
                                 {
@@ -274,7 +274,7 @@
                         },
                         {
                             menu:'Clients',
-                            url:'company/customer',
+                            url:'/company/customer',
                             sub_menus : []
                         },
                         {
@@ -310,11 +310,11 @@
                     ],
                     'Production Planning and Control': [
                                 {
-                                    menu:'Masters',
+                                    menu:'Lookup',
                                     url:'#',
                                     sub_menus:[
                                         {
-                                            menu:'Masters',
+                                            menu:'Lookup',
                                             url:'/company/lookup',
                                         },
                                         {
@@ -489,12 +489,12 @@
                             url:'#',
                             sub_menus:[
                                 {
-                                    menu:'Master',
+                                    menu:'Lookup',
                                     url:'/company/lookup',
                                 },
                                 {
                                     menu:'Customer master',
-                                    url:'/company/item',
+                                    url:'/company/customer',
                                 },
                                 {
                                     menu:'transanctions',

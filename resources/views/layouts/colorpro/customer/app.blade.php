@@ -33,7 +33,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('new_assets/assets/img/favicon.png') }}">
 
-    <title>Logezy | Timesheet management made easy</title>
+    <title>ERP</title>
 
     <!-- vendor css -->
     <script src="{{asset('js/app.js')}}"></script>

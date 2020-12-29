@@ -186,8 +186,8 @@ class ItemController extends Controller
             }
 
             if($company_id = Company::where('name',$data[0])->pluck('id')->first()){
-                if($category_id = LookupMaster::where('lookup_value',$data[7])->pluck('id')->first()){
-                    if($unit_id = LookupMaster::where('lookup_value',$data[4])->pluck('id')->first()){
+                if($category_id = LookupMaster::where('lookup_value',strtoupper($data[7]))->pluck('id')->first()){
+                    if($unit_id = LookupMaster::where('lookup_value',strtoupper($data[4]))->pluck('id')->first()){
                         $item = new Item;
                         $item->name                 = $data[3];
                         $item->company_id           = $company_id ;
@@ -195,7 +195,7 @@ class ItemController extends Controller
                         $item->part_no              = $data[1];
                         $item->unit_id              = $unit_id;
                         $item->part_type            = $data[5];
-                        $item->list_price            = $data[11];
+                        $item->list_price           = $data[11];
                         $item->created_by           = Auth::id();
                         $item->updated_by           = Auth::id();
                         $item->save();
@@ -209,12 +209,10 @@ class ItemController extends Controller
                     }
                 }
             }
-            return ['message' =>'true', 'data' => $message];
-            
-
-
             
         }
+        return ['message' =>'true', 'data' => $message];
+
     }
 
     public function import(Request $request)

@@ -5,7 +5,7 @@
      <a href="#" id="mainMenuOpen" class="burger-menu d-none"><i data-feather="menu"></i></a>
      <div class="navbar-brand">
        <!-- <a href="/" class="df-logo">Log<span>ezy</span></a> -->
-       <a href="#"><h2 class="logo-new ">Tech-Pro:</h2></a>
+       <!-- <a href="#"><h2 class="logo-new ">Tech-Pro:</h2></a> -->
        <a href="#"><h5 class="logo-new ">{{ session('user_name') }}</h5></a>
        
        @if(Session::has('agencies'))

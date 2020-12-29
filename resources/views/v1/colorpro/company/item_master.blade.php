@@ -107,7 +107,7 @@
             <div class="d-sm-flex align-items-center justify-content-between ">
                 <div>
                     <div>
-                        <h5 class="hd">#Customer Master</h5>
+                        <h5 class="hd">#Item Master</h5>
                     </div>
                 </div>
                 <div class="d-none d-md-block">
@@ -128,7 +128,7 @@
                                 <div class="form-group row">
                                     <label class="col-5 form-control-label">Item name*</label>
                                     <div class="col-7 input-group">
-                                        <input autocomplete="off" class="form-control" v-model="item_obj.name">
+                                        <input autocomplete="off" class="form-control" v-model="item_obj.name" >
                                     </div>
                                 </div>
                             </div>
@@ -424,9 +424,9 @@
                             <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
                                 <button class="btn btn-primary btn-block ">Update</button>
                             </div>
-                            <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5">
+                            <!-- <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5">
                                 <button class="btn btn-warning btn-block " @click="clear_customer()">Delete</button>
-                            </div>
+                            </div> -->
                             <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5">
                                 <button class="btn btn-secondary btn-block " @click="clear_customer()">Cancel</button>
                             </div>
@@ -776,6 +776,7 @@
         mounted() {
             this.get_unit();
             this.get_category();
+            // $("#textboxID").focus();
 
         }
     });

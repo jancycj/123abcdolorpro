@@ -203,9 +203,9 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">Type</label>
                                 <div class="col-7 input-group">
-                                     <select data-placeholder="Choose a company..." class="standardSelect form-control" tabindex="1" name="type">
-                                          <option value="1">Vendor</option>
-                                          <option value="2">Suplier</option>
+                                     <select data-placeholder="Choose a company..." class="standardSelect form-control" tabindex="1" name="type" v-model="client.type">
+                                          <option value="vendor">Vendor</option>
+                                          <option value="reseller">Customer</option>
                                       </select>
                                 </div>
                             </div>
@@ -453,6 +453,7 @@ aria-hidden="true">
        mounted(){
         document.getElementById('email').value = '';
         document.getElementById('password').value = '';
+        this.client.type = 'vendor';
        },
    methods: {
          toggleShow: function() {

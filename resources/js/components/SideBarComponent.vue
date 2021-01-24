@@ -196,7 +196,7 @@
                  menu_array : {
                     "Supply Chain" : [
                         {
-                            menu:'Lookup',
+                            menu:'Masters',
                             url:'#',
                             sub_menus:[
                                 {
@@ -310,7 +310,7 @@
                     ],
                     'Production Planning and Control': [
                                 {
-                                    menu:'Lookup',
+                                    menu:'Masters',
                                     url:'#',
                                     sub_menus:[
                                         {

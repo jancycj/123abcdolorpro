@@ -160,8 +160,9 @@ class ItemController extends Controller
         $excel->load($file);
         $collection = $excel->getCollection()->toArray();
         $a = $collection[0];
-        $message = "";
+        $erors = [];
         foreach($collection as $key => $data){
+            $message = "";
 
             if($key == 0){
                 continue;
@@ -206,12 +207,22 @@ class ItemController extends Controller
                         $stock->quantity     = $data[9];
                         $stock->created_by  = Auth::id();
                         $stock->save();
+                    } else{
+                        $message = 'unit not found';
                     }
+                } else {
+                    $message = 'category not found';
                 }
+            } else{
+                $message = 'company not found';
             }
+            if($message != ""){
+                array_push($erors,$message);
+            }
+
             
         }
-        return ['message' =>'true', 'data' => $message];
+        return ['message' =>'true', 'data' => $erors];
 
     }
 

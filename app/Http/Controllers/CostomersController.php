@@ -226,6 +226,7 @@ class CostomersController extends Controller
         $customer->district_id           = $request->district_id;
         $customer->state_id              = $request->state_id;
         $customer->country_id            = $request->country_id;
+        $customer->type            = $request->type;
         $customer->company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $customer->save();
         $customer->customer_code = 'CSTMR-'.$customer->id;

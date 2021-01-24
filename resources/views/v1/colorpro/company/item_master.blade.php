@@ -124,14 +124,7 @@
                 <div class="card mg-b-2">
                     <div class="card-header ">
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 col-sm-6">
-                                <div class="form-group row">
-                                    <label class="col-5 form-control-label">Item name*</label>
-                                    <div class="col-7 input-group">
-                                        <input autocomplete="off" class="form-control" v-model="item_obj.name" >
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="col-md-5 col-lg-5 col-sm-6" @keydown="getItemPopup($event)">
                                 <div class="form-group row">
                                     <label class="col-5 form-control-label">part_no* </label>
@@ -140,14 +133,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4 col-lg-4 col-sm-6">
+                                <div class="form-group row">
+                                    <label class="col-5 form-control-label">Item name*</label>
+                                    <div class="col-7 input-group">
+                                        <input autocomplete="off" class="form-control" v-model="item_obj.name" >
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-
-
-
-
-
-
+                        <div class="row">
+                            <div class="col-12">
+                               <ul>
+                                    <li v-for="er in errors"> <span class="error text-danger">@{{er}}</span></li>
+                               </ul>
+                            </div>
+                        </div>
 
                     </div><!-- card-header -->
                     <div class="card-body">
@@ -504,7 +505,7 @@
             <div class="modal-body">
 
                 <div class="card-body card-block">
-                    <choose-customer @customer="getCostomer($event)"></choose-customer>
+                    <choose-customer @customer="getCostomer($event)" ></choose-customer>
 
                 </div>
             </div>
@@ -692,6 +693,7 @@
                             }
                         }
                     ).then(response => {
+                        this.errors = response.data.data;
                         alert('succesfully imported data');
                         // this.candidate.profile_img = response.data;
                         // this.upload_status = false;
@@ -776,6 +778,7 @@
         mounted() {
             this.get_unit();
             this.get_category();
+            this.item_obj.status = 'active';
             // $("#textboxID").focus();
 
         }

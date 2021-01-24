@@ -274,7 +274,7 @@
                     <div class="modal-body">
                             
                         <div class="card-body card-block">
-                            <choose-customer @customer="getCostomerEvent($event)"></choose-customer>
+                            <choose-customer @customer="getCostomerEvent($event)" :customer="true"></choose-customer>
                                 
                         </div>
                     </div>

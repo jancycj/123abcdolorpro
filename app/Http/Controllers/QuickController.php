@@ -27,6 +27,12 @@ class QuickController extends Controller
                 $q->orWhere('name','like','%'.$name.'%');
            }
         })
+        ->where(function ($q) use($request){
+            if($request->is_customer){
+                 $q->where('type','reseller');
+            }
+         })
+        
         ->limit($limit)->get();
     }    
     /**

@@ -105,7 +105,7 @@
                                         <div class="form-group">
                                             <label class=" form-control-label">Customer</label>
                                             <div class="input-group">
-                                                <input class="form-control" v-model="shade.customer_name">
+                                                <input class="form-control" v-model="customer_name">
                                             </div>
                                         </div>
                                     </div>
@@ -152,7 +152,7 @@
                                         <div class="form-group">
                                             <label class=" form-control-label">Customer code </label>
                                             <div class="input-group">
-                                                <input class="form-control" name="hsn" v-model="shade.customer_code" disabled>
+                                                <input class="form-control" name="hsn" v-model="customer_code" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                     <div class="modal-body">
                             
                         <div class="card-body card-block">
-                            <choose-customer @customer="getCostomerEvent($event)"></choose-customer>
+                            <choose-customer @customer="getCostomerEvent($event)" :customer="true"></choose-customer>
                                 
                         </div>
                     </div>
@@ -224,6 +224,8 @@
            shades : [],
            selected_customer : {},
            update_flag : false,
+           customer_code : '',
+           customer_name : '',
        },
    methods: {
          toggleShow: function() {
@@ -235,6 +237,8 @@
          },
          getCostomerEvent(val){
             this.selected_customer = val;
+            this.customer_code = val.short_name;
+            this.customer_name = val.name;
             this.shade.customer_name = val.name;
             this.shade.customer_code =val.short_name;
             this.shade.customer_id =val.id;
@@ -272,6 +276,8 @@
            console.log(this.shade);
             axios.put('/company/shade/'+this.shade.id,this.shade)
             .then(response => {
+                this.shade.customer_code = this.customer_code;
+                this.shade.customer_name = this.customer_name;
                 $("#addItem").modal('toggle');
                 $(".modal-backdrop").remove();
                 alert('successfully updated!');
@@ -293,6 +299,8 @@
                 vm.shade.program_code = response.data.code;
                 vm.shade.priory = response.data.priority;
                 vm.shade.code = response.data.name;
+                vm.customer_code = val.customer_code;
+                vm.customer_name = val.customer_name;
                 // vm.shade.customer_name
                 // code
                 // colour

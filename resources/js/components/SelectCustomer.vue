@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label class=" form-control-label">Customer</label>
                     <div class="input-group">
-                        <input class="form-control" name="part_no" v-model="search" autocomplete="off">
+                        <input class="form-control" name="part_no" v-model="search" autocomplete="off" ref="search">
                     </div>
                 </div>
             </div>
@@ -38,6 +38,12 @@
 <script>
     export default {
         name: 'navBar',
+        props: {
+            customer: {
+                type: Boolean,
+                default: false
+            }
+        },
         data(){
             return {
                 menus : [],
@@ -49,7 +55,7 @@
             }
         },
         mounted() {
-            
+            this.$refs.search.focus();
         },
         created: function () {
            
@@ -77,7 +83,7 @@
             get_customers_by:function(){
 
                 var vm = this;
-                axios.get('/quick/customers?limit=5&name='+this.search+'&code='+this.search).then((response) => {
+                axios.get('/quick/customers?limit=5&name='+this.search+'&code='+this.search+'&is_customer='+this.customer).then((response) => {
                     vm.customers = response.data;
                     // $("#itemModal").modal('toggle');
                 }, (error) => {

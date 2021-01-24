@@ -2058,7 +2058,9 @@ __webpack_require__.r(__webpack_exports__);
       selected_index: 0
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.$refs.search.focus();
+  },
   created: function created() {},
   watch: {
     search: function search(val) {
@@ -2158,6 +2160,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'navBar',
+  props: {
+    customer: {
+      type: Boolean,
+      "default": false
+    }
+  },
   data: function data() {
     return {
       menus: [],
@@ -2167,7 +2175,9 @@ __webpack_require__.r(__webpack_exports__);
       selected_index: 0
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.$refs.search.focus();
+  },
   created: function created() {},
   watch: {
     search: function search(val) {
@@ -2190,7 +2200,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     get_customers_by: function get_customers_by() {
       var vm = this;
-      axios.get('/quick/customers?limit=5&name=' + this.search + '&code=' + this.search).then(function (response) {
+      axios.get('/quick/customers?limit=5&name=' + this.search + '&code=' + this.search + '&is_customer=' + this.customer).then(function (response) {
         vm.customers = response.data; // $("#itemModal").modal('toggle');
       }, function (error) {// vm.errors = error.errors;
       });
@@ -2269,6 +2279,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    this.$refs.search.focus();
     this.get_customers_by();
   },
   created: function created() {},
@@ -2511,7 +2522,7 @@ __webpack_require__.r(__webpack_exports__);
       // }
       menu_array: {
         "Supply Chain": [{
-          menu: 'Lookup',
+          menu: 'Masters',
           url: '#',
           sub_menus: [{
             menu: 'Lookup',
@@ -2594,7 +2605,7 @@ __webpack_require__.r(__webpack_exports__);
           }]
         }],
         'Production Planning and Control': [{
-          menu: 'Lookup',
+          menu: 'Masters',
           url: '#',
           sub_menus: [{
             menu: 'Lookup',
@@ -39330,6 +39341,7 @@ var render = function() {
                   expression: "search"
                 }
               ],
+              ref: "search",
               staticClass: "form-control",
               attrs: { name: "part_no", autocomplete: "off" },
               domProps: { value: _vm.search },
@@ -39450,6 +39462,7 @@ var render = function() {
                     expression: "search"
                   }
                 ],
+                ref: "search",
                 staticClass: "form-control",
                 attrs: { name: "part_no", autocomplete: "off" },
                 domProps: { value: _vm.search },
@@ -39567,6 +39580,7 @@ var render = function() {
                     expression: "search"
                   }
                 ],
+                ref: "search",
                 staticClass: "form-control",
                 attrs: { name: "part_no", autocomplete: "off" },
                 domProps: { value: _vm.search },

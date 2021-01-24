@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label class=" form-control-label">Search</label>
                     <div class="input-group">
-                        <input class="form-control" name="part_no" v-model="search" autocomplete="off">
+                        <input class="form-control" name="part_no" v-model="search" autocomplete="off" ref="search">
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             }
         },
         mounted() {
-            
+            this.$refs.search.focus();
         },
         created: function () {
            

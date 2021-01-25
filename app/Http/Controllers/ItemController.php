@@ -114,15 +114,20 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+      
         $item->name = $request->name;
+        $item->category_id = $request->category_id;
+        $item->part_no = $request->part_no;
+        $item->unit_id = $request->unit_id;
         $item->catelog_drwaing_no = $request->catelog_drwaing_no;
+        $item->default_supplier = $request->default_supplier;
+        $item->default_buyer = $request->default_buyer;
         $item->hsn_code = $request->hsn_code;
+        $item->rol = $request->rol;
         $item->part_type = $request->part_type;
         $item->sourcing_code = $request->sourcing_code;
-        $item->category_id = $request->category_id;
-        $item->rol = $request->rol;
-        $item->updated_by = Auth::id();
         $item->status = $request->status;
+        $item->updated_by = Auth::id();
         $item->save();
         return 'True';
 
@@ -189,6 +194,10 @@ class ItemController extends Controller
             if($company_id = Company::where('name',$data[0])->pluck('id')->first()){
                 if($category_id = LookupMaster::where('lookup_value',strtoupper($data[7]))->pluck('id')->first()){
                     if($unit_id = LookupMaster::where('lookup_value',strtoupper($data[4]))->pluck('id')->first()){
+                        if(Item::where('part_no',$data[1])->first()){
+                            $message = "item exists";
+                            continue;
+                        }
                         $item = new Item;
                         $item->name                 = $data[3];
                         $item->company_id           = $company_id ;

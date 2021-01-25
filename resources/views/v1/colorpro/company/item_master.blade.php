@@ -422,14 +422,14 @@
                             <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
                                 <button class="btn btn-primary btn-block " @click="save_item()">Save</button>
                             </div>
-                            <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
+                            <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag" @click="update_item_ob()">
                                 <button class="btn btn-primary btn-block ">Update</button>
                             </div>
                             <!-- <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5">
                                 <button class="btn btn-warning btn-block " @click="clear_customer()">Delete</button>
                             </div> -->
                             <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5">
-                                <button class="btn btn-secondary btn-block " @click="clear_customer()">Cancel</button>
+                                <button class="btn btn-secondary btn-block " @click="cancelOb()">Cancel</button>
                             </div>
                         </div>
 
@@ -586,6 +586,13 @@
                 $("#addItem").modal('toggle');
 
             },
+            cancelOb(){
+                this.item_obj = {};
+                this.unit = '';
+                this.unit_name = '';
+                this.category = '';
+                this.category_name = '';
+            },
             save_item: function() {
                 console.log(this.item_obj);
 
@@ -599,14 +606,20 @@
                         console.log(this.errors)
                     });
             },
+            getItem : function(event){
+                this.get_item_by(event.id);
+                this.update_flag = true;
+            },
             /* get item
              **/
             get_item_by: function(id) {
 
                 var vm = this;
                 axios.get('/admin/items/' + id).then((response) => {
-                    vm.item_ob = response.data;
-                    $("#itemModal").modal('toggle');
+                    vm.item_obj = response.data;
+                    vm.unit = response.data.unit;
+                    vm.category = response.data.category;
+                    $("#itemPopup").modal('toggle');
                 }, (error) => {
                     // vm.errors = error.errors;
                 });
@@ -644,13 +657,13 @@
             update stock **/
             update_item_ob: function() {
 
-                axios.put('/admin/items/' + this.item_ob.id, this.item_ob)
+                axios.put('/admin/items/' + this.item_obj.id, this.item_obj)
                     .then(response => {
-                        this.item_ob = {};
-                        $("#itemModal").modal('toggle');
-                        $(".modal-backdrop").remove();
+                        this.item_obj = {};
+                        // $("#itemModal").modal('toggle');
+                        // $(".modal-backdrop").remove();
                         alert('successfully updated!');
-                        location.reload();
+                        // location.reload();
 
                     })
                     .catch((err) => {
@@ -739,7 +752,7 @@
             getItemPopup: function(event) {
                 console.log(event)
                 if (event.code == 'F1' || event.code == 'F2') {
-                    $("#statePopup").modal('toggle');
+                    $("#itemPopup").modal('toggle');
                     // this.get_article_by_number();
                 }
             },

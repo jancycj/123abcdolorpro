@@ -55,7 +55,6 @@
             }
         },
         mounted() {
-            this.$refs.search.focus();
             this.get_customers_by();
         },
         created: function () {

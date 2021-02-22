@@ -207,10 +207,7 @@
                                     menu:'Items',
                                     url:'/company/item',
                                 },
-                                {
-                                    menu:'Purchase request',
-                                    url:'/company/indent',
-                                },
+                                
                                 {
                                     menu:'QC plans',
                                     url:'/company/qc',
@@ -233,17 +230,24 @@
                             menu:'Transactions',
                             url:'#',
                             sub_menus:[
-                               
                                 {
-                                    menu:'Orders',
-                                    url:'/company/orders',
+                                    menu:'Purchase request',
+                                    url:'/company/indent',
                                 },
                                 {
                                     menu:'Create Order',
                                     url:'/company/orders/create',
                                 },
                                 {
+                                    menu:'Material Invard',
+                                    url:'/company/orders/create',
+                                },
+                                {
                                     menu:'Quality inspection',
+                                    url:'/company/order/reciept',
+                                },
+                                {
+                                    menu:'Stock Update',
                                     url:'/company/order/reciept',
                                 },
                                 {
@@ -254,13 +258,18 @@
                                     menu:'Store issue',
                                     url:'/company/order/reciept',
                                 },
+                                
+                                {
+                                    menu:'Bin Card',
+                                    url:'/company/order/reciept',
+                                },
                                 {
                                     menu:' Receipt from Customer',
                                     url:'/company/order/reciept',
                                 },
                                 {
-                                    menu:'Bin Card',
-                                    url:'/company/order/reciept',
+                                    menu:'Orders',
+                                    url:'/company/orders',
                                 },
                                 {
                                     menu:'Material transfer to other units',

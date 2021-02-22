@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DocNo;
 use App\Indent;
 use App\IndentDetails;
 use Illuminate\Http\Request;
@@ -14,8 +15,13 @@ class IndentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->has('details')){
+            $doc = DocNo::getDocNumber('ind',1);
+            return response($doc,200);
+        }
+        // return DocNo::getDocNumber('ind',1);
       
         $units = [];
         $categories = [];
@@ -43,13 +49,12 @@ class IndentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'indent_no'     => 'required',
-        ]);
+        
         $indent = new Indent();
         $indent->request_date = now();
         $indent->department   = $request->department;
-        $indent->indent_no   = $request->indent_no;
+        $indent->product_group   = $request->product_group;
+        $indent->indent_no   =  DocNo::getDocNumberString('ind',1);
         $indent->request_by   = Auth::id();
         $indent->save();
         $indent_id = $indent->id;
@@ -58,6 +63,7 @@ class IndentController extends Controller
             $indentDetails = new IndentDetails();
             $indentDetails->request_id = $indent_id;
             $indentDetails->request_date = now();
+            $indentDetails->need_by_date = $item['need_by_date'];
             $indentDetails->item_id = $item['item_id'];
             $indentDetails->uom = $item['unit_id'];
             $indentDetails->puchased_qty = $item['qty'];
@@ -66,11 +72,11 @@ class IndentController extends Controller
             $indentDetails->updated_by = Auth::id();
             $indentDetails->save();
         }
+        $doc = DocNo::updateDoc('ind',1);
         return 'true';
         // $indent->product_group   = $request->product_group ;
         // $indent->approved_by   = $request->approved_by ;
         // $indent->approved_date = $request->approved_date ;
-        
         
         
         
@@ -83,9 +89,9 @@ class IndentController extends Controller
      * @param  \App\Indent  $indent
      * @return \Illuminate\Http\Response
      */
-    public function show(Indent $indent)
+    public function show($id)
     {
-        //
+       return Indent::where('id',$id)->with('items')->first();
     }
 
     /**
@@ -108,7 +114,25 @@ class IndentController extends Controller
      */
     public function update(Request $request, Indent $indent)
     {
-        //
+        $indent->department   = $request->department;
+        $indent->product_group   = $request->product_group;
+        $indent->save();
+        $indent_id = $indent->id;
+        $items = $request->items;
+        IndentDetails::where('request_id',$indent_id)->delete();
+        foreach($items as $item){
+            $indentDetails = new IndentDetails();
+            $indentDetails->request_id = $indent_id;
+            $indentDetails->need_by_date = $item['need_by_date'];
+            $indentDetails->item_id = $item['item_id'];
+            $indentDetails->uom = $item['unit_id'];
+            $indentDetails->puchased_qty = $item['qty'];
+            $indentDetails->default_supplier = 1;
+            // $indentDetails->need_by_date = $item->item_id;
+            $indentDetails->updated_by = Auth::id();
+            $indentDetails->save();
+        }
+        return 'true';
     }
 
     /**

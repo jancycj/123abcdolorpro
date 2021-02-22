@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('company_id')->nullable();
             $table->string('name')->nullable();
             $table->unsignedInteger('category_id')->nullable();
-            $table->string('part_no')->unique();;
+            $table->string('part_no')->unique();
             $table->unsignedInteger('unit_id')->nullable();
             $table->string('catelog_drwaing_no')->nullable();
             $table->string('hsn_code')->nullable();

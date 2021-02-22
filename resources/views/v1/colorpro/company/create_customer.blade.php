@@ -111,9 +111,9 @@
                         </div>
                         <div class="col-md-5 col-lg-5 col-sm-6">
                             <div class="form-group row">
-                                <label class="col-5 form-control-label">short_name* </label>
+                                <label class="col-5 form-control-label">GST* </label>
                                 <div class="col-7 input-group">
-                                    <input autocomplete="off" class="form-control"  v-model="client.short_name">
+                                    <input autocomplete="off" class="form-control"  v-model="client.gst_no">
                                 </div>
                             </div>
                         </div>
@@ -263,7 +263,7 @@
                                 <button class="btn btn-primary btn-block " @click="save_customer()">Save</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
-                                <button class="btn btn-primary btn-block " >Update</button>
+                                <button class="btn btn-primary btn-block " @click="update_customer()">Update</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-warning btn-block " @click="clear_customer()">Delete</button>
@@ -511,6 +511,17 @@ aria-hidden="true">
          save_customer:function() {
            console.log(this.client);
             axios.post('/company/customer',this.client)
+            .then(response => {
+                alert('saved successfully..!')
+            })
+            .catch((err) =>{
+                this.errors = err.response.data.errors;
+                console.log(this.errors)
+            });
+         },
+         update_customer:function() {
+           console.log(this.client);
+            axios.put('/company/customer/'+this.client.id,this.client)
             .then(response => {
                 alert('saved successfully..!')
             })

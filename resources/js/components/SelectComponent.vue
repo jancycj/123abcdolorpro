@@ -13,7 +13,7 @@
         <div class="row" >
             <div class="col-12 table-responsive">
                 <table class="table table-bordered">
-                    <thead>
+                    <thead v-if="data.length > 0">
                     <tr>
                         <th>S/L</th>
                         <th v-for="field in fields" v-bind:key="field">{{field}}</th>
@@ -25,6 +25,9 @@
                         <td v-for="field in fields" v-bind:key="field">
                             {{cu[field]}}
                         </td>
+                    </tr>
+                    <tr v-if="data.length <= 0">
+                        <h3>No dtata found. please create some data</h3>
                     </tr>
                     </tbody>
                 </table>
@@ -50,6 +53,7 @@
         },
         mounted() {
             this.$refs.search.focus();
+             this.get_customers_by();
         },
         created: function () {
            
@@ -99,7 +103,7 @@
 
             },
             selectData(val,index){
-                this.data = [];
+                console.log('selected',val)
                 this.$emit('selected',val)
                 this.selected_index = index;
                 this.search = '';

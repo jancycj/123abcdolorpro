@@ -57,6 +57,7 @@ Route::prefix('company')->group(function() {
       Route::get('/customer', 'CostomersController@company_customer_index')->name('company.customer');
       Route::get('/get_customer/{id}', 'CostomersController@show')->name('company.show');
       Route::post('/customer', 'CostomersController@create_company_customer')->name('company.customer.save');
+      Route::put('/customer/{id}', 'CostomersController@update')->name('company.customer.update');
       Route::get('/customer/create', 'CostomersController@company_customer_create')->name('company.customer.create');
       Route::get('/lookup', 'LookupMasterController@company_get_lookup')->name('company.lookup');
       Route::post('/lookup', 'LookupMasterController@company_post_lookup')->name('company.lookup.post');

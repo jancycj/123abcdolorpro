@@ -217,6 +217,7 @@ class CostomersController extends Controller
         $customer = new Costomers;
         $customer->name = $request->name;
         $customer->short_name = $request->short_name;
+        $customer->gst_no = $request->gst_no;
         $customer->autherized_person = $request->autherized_person;
         $customer->autherized_person_phone = $request->autherized_person_phone;
         $customer->phone_number = $request->phone;

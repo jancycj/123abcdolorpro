@@ -130,13 +130,13 @@
                                     <div class="form-group row">
                                         <label class="col-5 form-control-label">Indent No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_no">
+                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_no" >
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-6">
                                     <div class="form-group row">
-                                        <label class="col-4 form-control-label">Indent Date* </label>
+                                        <label class="col-4 form-control-label">Request Date* </label>
                                         <div class="col-7 input-group">
                                             <input autocomplete="off" class="form-control"  v-model="indent.indent_date" disabled>
                                         </div>
@@ -154,6 +154,7 @@
                                     </div>
                                 </div>
                                 
+
                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                     <div class="form-group row">
                                         <div class="col-12 input-group">
@@ -163,7 +164,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getfamilyPopup($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getFamilyPopup($event)" >
                                     <div class="form-group row">
                                         <label class=" col-5 form-control-label">family*</label>
                                         <div class=" col-7 input-group">
@@ -196,7 +197,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div data-label="Sort By" class="df-example demo-forms">
+                            <!-- <div data-label="Sort By" class="df-example demo-forms">
                                 <div class="row row-sm">
                                     <div class="col-sm-12">
                                         <div class="custom-control custom-radio">
@@ -216,8 +217,8 @@
                                             <label class="custom-control-label" for="customRadio1">Party</label>
                                         </div>
                                     </div>
-                                </div><!-- row -->
-                            </div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                     
@@ -240,7 +241,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Qty</th>
                                     <th scope="col">UOM</th>
-                                    <th scope="col">Rq date</th>
+                                    <th scope="col">Nd By date</th>
                                     <th scope="col">Remarks</th>
                                     <th scope="col">stat</th>
                                     <th scope="col">mode</th>
@@ -257,13 +258,13 @@
                                              @{{d.name}} 
                                         </td>
                                         <td>
-                                             @{{d.qty}} 
+                                             <input autocomplete="off" class="form-control"  v-model="d.qty" >
                                         </td>
                                         <td>
                                              @{{d.unit}} 
                                         </td>
                                         <td>
-                                             @{{d.date}} 
+                                             @{{d.need_by_date}} 
                                         </td>
                                         <td>
                                              @{{d.remark}} 
@@ -283,22 +284,22 @@
                                     <tr>
                                         <td scope="row">#</td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.part_no" @keydown="getItemPopup($event,d)">
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.part_no" @keydown="getItemPopup($event)">
                                         </td>
                                         <td>
                                             <input autocomplete="off" class="form-control"  v-model="item_ob.name" disabled>
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.qty" @keydown="add_ob($event,d)">
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.qty" @keydown="add_ob($event)">
                                         </td>
                                         <td>
                                             <input autocomplete="off" class="form-control"  v-model="item_ob.unit" disabled>
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.date" disabled>
+                                            <input autocomplete="off" type="date" class="form-control"  v-model="item_ob.need_by_date" >
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.remark" @keydown="add_ob($event,d)">
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.remark" @keydown="add_ob($event)">
                                         </td>
                                         <td>
                                             <input autocomplete="off" class="form-control"  v-model="item_ob.status" disabled>
@@ -333,13 +334,13 @@
                                 <button class="btn btn-primary btn-block " @click="save_indent()">Save</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
-                                <button class="btn btn-primary btn-block " @click="save_indent()">Update</button>
+                                <button class="btn btn-primary btn-block " @click="update_indent()">Update</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
-                                <button class="btn btn-warning btn-block " @click="clear_article()">Delete</button>
+                                <button class="btn btn-warning btn-block " @click="clear_indent()">Delete</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
-                                <button class="btn btn-secondary btn-block " @click="clear_article()">Cancel</button>
+                                <button class="btn btn-secondary btn-block " @click="clear_indent()">Cancel</button>
                         </div>
                     </div>
                     
@@ -351,7 +352,7 @@
       </div><!-- row row-xs -->
 
         <div class="modal fade" id="chooseCustomer" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true">
+  aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
                 <div class="modal-content tx-14 card">
@@ -372,7 +373,7 @@
         </div><!-- modal end -->
 
         <div class="modal fade" id="sectionPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true">
+  aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
                 <div class="modal-content tx-14 card">
@@ -383,7 +384,7 @@
                             <choose-component 
                             :id="'section'"
                             :table="'lookup_masters'" 
-                            :fields="['lookup_value','lookup_description']" 
+                            :fields="['id','lookup_value','lookup_description']" 
                             :search_filed="'lookup_value'" 
                             :where_field="'lookup_key'"
                             :where_value="'STORE'"
@@ -400,7 +401,7 @@
             </div>
         </div><!-- yarn popup modal end -->
         <div class="modal fade" id="familyPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true">
+  aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
                 <div class="modal-content tx-14 card">
@@ -411,11 +412,11 @@
                             <choose-component 
                             :id ="'family'"
                             :table="'lookup_masters'" 
-                            :fields="['lookup_value','lookup_description']" 
+                            :fields="['id','lookup_value','lookup_description']" 
                             :search_filed="'lookup_value'" 
                             :where_field="'lookup_key'"
                             :where_value="'PRODUCT FAMILY'"
-                            @selected="getSection($event)"
+                            @selected="getFamily($event)"
                             ></choose-component>
                                 
                         </div>
@@ -428,7 +429,7 @@
             </div>
         </div><!-- yarn popup modal end -->
         <div class="modal fade" id="itemPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true">
+  aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
                 <div class="modal-content tx-14 card">
@@ -437,6 +438,7 @@
                             
                         <div class="card-body card-block">
                             <choose-item 
+                            ref="itemPop"
                             @selected="getItem($event)"
                             ></choose-item>
                                 
@@ -450,7 +452,7 @@
             </div>
         </div><!-- yarn popup modal end -->
         <div class="modal fade" id="assortmentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true">
+  aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
                 <div class="modal-content tx-14 card">
@@ -475,7 +477,7 @@
             </div>
         </div><!-- yarn popup modal end -->
         <div class="modal fade" id="IndentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true">
+  aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
                 <div class="modal-content tx-14 card">
@@ -488,7 +490,7 @@
                             :table="'indents'" 
                             :fields="['id','indent_no','department']" 
                             :search_filed="'indent_no'" 
-                            @selected="getAssortmentByNumber($event)"
+                            @selected="getIndentEdit($event)"
                             ></choose-component>
                                 
                         </div>
@@ -533,15 +535,26 @@
            update_flag : false,
            print_flag : false,
            url :'',
-           items : [
-               
-           ],
-           indent : {},
+           items : [ ],
+           indent : {
+               indent_no : '',
+                indent_date:'',
+                department :'',
+                product_group : '',
+                section : '',
+                section_des : '',
+                family : '',
+                family_des : '',
+            },
            item_ob : {sl_no : 1, shade_code:'', colour: ''},
            no_of_shades : 1,
            selected_obj : {},
            removeFlag : false,
            selected_file : '',
+           indent_section : '',
+            indent_section_description : '',
+            indent_details : {},
+            
        },
        watch:{
         no_of_shades(val){
@@ -597,8 +610,12 @@
          
         getSection : function(event){
              console.log(event)
-             this.item.section = val.lookup_value;
-            this.item.section_des = val.lookup_description;
+             this.indent.section = event.lookup_value;
+             this.indent.department = event.id;
+            this.indent.section_des = event.lookup_description;
+            this.indent_section = event.lookup_value;
+            this.indent_section_description = event.lookup_description;
+
             // if(event.code == 'F1' || event.code == 'F2'){
                 $("#sectionPopup").modal('toggle');
                 // this.get_article_by_number();
@@ -614,8 +631,10 @@
          
         getFamily : function(event){
              console.log(event)
-             this.item.family = val.lookup_value;
-            this.item.family_des = val.lookup_description;
+             this.indent.family = event.lookup_value;
+            this.indent.family_des = event.lookup_description;
+            this.indent.product_group = event.id;
+
             // if(event.code == 'F1' || event.code == 'F2'){
                 $("#familyPopup").modal('toggle');
                 // this.get_article_by_number();
@@ -630,6 +649,7 @@
         getItemPopup : function(event, obj){
             this.selected_obj = obj;
              console.log('selected_obj',this.selected_obj)
+             this.$refs.itemPop.$refs.search.focus();
             // if(event.code == 'F1' || event.code == 'F2'){
                 $("#itemPopup").modal('toggle');
             // }
@@ -640,14 +660,22 @@
             vm.item_ob.item_id = val.id;
             console.log('val', vm.item_ob);
             // vm.items.push(vm.item_ob)
-
+            if(this.check_item_in_items(val.id)){
+                    alert('duplicate item');
+                    return;
+                }
             $("#itemPopup").modal('toggle');
         },
         add_ob : function(event){
+
             var vm = this;
 
             if(event.code == 'Enter' ){
-                
+                console.log(this.check_item_in_items(vm.item_ob.item_id),'trueeee')
+                if(this.check_item_in_items(vm.item_ob.item_id)){
+                    alert('duplicate item');
+                    return;
+                }
                 if(! vm.item_ob.unit_id){
                     alert('please provide an item');
                     return;
@@ -659,6 +687,13 @@
                 vm.items.push(vm.item_ob);
                 vm.item_ob = {};
             }
+        },
+        check_item_in_items(check_item){
+            console.log(this.items, check_item)
+            var valueArr = [];
+            valueArr = this.items.filter(function(item){ return item.item_id == check_item });
+            return valueArr.length > 0;
+        
         },
        
         selectCustomer : function(event){
@@ -705,13 +740,22 @@
             });
 
         },
-        clear_article : function(){
-            this.assortment = {};
-            this.url = '';
-            this.assortment_shades = [];
-            this.no_of_shades = 1;
-            this.update_flag = false;
-            this.removeFlag = false;
+        clear_indent : function(){
+            this.items =  [];
+            this.indent =   {
+               indent_no : '',
+                indent_date:'',
+                department :'',
+                product_group : '',
+                section : '',
+                section_des : '',
+                family : '',
+                family_des : '',
+            };
+           this.item_ob = {sl_no : 1, shade_code:'', colour: ''},
+            this.getIndentNo();
+
+            
         },
         getIndent : function(val){
             if(event.code == 'F1' || event.code == 'F2'){
@@ -729,10 +773,29 @@
             this.url = URL.createObjectURL(this.selected_file);
             
         },
+        getIndentNo(){
+            axios.get('/company/indent?details=true').then((response) => {
+                this.indent_details = response.data;
+                var dateObj = new Date();
+                var month = dateObj.getUTCMonth() + 1; //months from 1-12
+                var day = dateObj.getUTCDate();
+                var year = dateObj.getUTCFullYear();
+
+                this.indent.indent_date = day + "-" + month + "-" + year
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
+        },
         save_indent:function() {
             var vm = this;
             vm.indent.items = vm.items; 
+            if(vm.items.length <= 0){
+                alert('please provide item')
+                return;
+            }
+            
             axios.post( '/company/indent',vm.indent).then(response => {
+                this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
                 alert('Succesfully Saved..!');
                 console.log(response.data)
 
@@ -741,9 +804,8 @@
                 console.log('FAILURE!!');
             });
          },
-         update_assortment:function() {
-           console.log(this.article);
-            axios.put('/company/article/'+this.article.id,this.article)
+         update_indent:function() {
+            axios.put('/company/indent/'+this.indent.id,this.indent)
             .then(response => {
                 alert('successfully updated!');
             })
@@ -752,15 +814,13 @@
                 console.log(this.errors)
             });
          },
-         getAssortmentByNumber : function(val){
+         getIndentEdit : function(val){
             var vm = this;
             vm.update_flag = true;
-            axios.get('/company/assortment/?assortment_no='+val.assortment_no).then((response) => {
-                this.assortment = response.data;
-                this.assortment_shades = response.data.assortment_shades;
-                console.log(this.assortment.assortment_shades)
-                this.url = response.data.image_url;
-                $("#assortmentPopup").modal('toggle');
+            axios.get('/company/indent/'+val.id).then((response) => {
+                this.indent = response.data;
+                this.items = response.data.items;
+                $("#IndentPopup").modal('toggle');
             }, (error) => {
             // vm.errors = error.errors;
             });
@@ -768,7 +828,7 @@
      
      },
      mounted(){
-
+        this.getIndentNo();
      },
      created(){
         this.get_colors();

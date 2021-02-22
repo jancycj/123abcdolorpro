@@ -2046,6 +2046,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'navBar',
   props: ['query', 'fields', 'search_filed', 'table', 'where_value', 'where_field'],
@@ -2060,6 +2063,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.$refs.search.focus();
+    this.get_customers_by();
   },
   created: function created() {},
   watch: {
@@ -2102,7 +2106,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     selectData: function selectData(val, index) {
-      this.data = [];
+      console.log('selected', val);
       this.$emit('selected', val);
       this.selected_index = index;
       this.search = '';
@@ -2351,7 +2355,7 @@ __webpack_require__.r(__webpack_exports__);
       //             url:'#',
       //             sub_menus:[
       //                 {
-      //                     menu:'Masters',
+      //                     menu:'Look Up',
       //                     url:'/company/lookup',
       //                 },
       //                 {
@@ -2531,9 +2535,6 @@ __webpack_require__.r(__webpack_exports__);
             menu: 'Items',
             url: '/company/item'
           }, {
-            menu: 'Purchase request',
-            url: '/company/indent'
-          }, {
             menu: 'QC plans',
             url: '/company/qc'
           }, {
@@ -2550,13 +2551,19 @@ __webpack_require__.r(__webpack_exports__);
           menu: 'Transactions',
           url: '#',
           sub_menus: [{
-            menu: 'Orders',
-            url: '/company/orders'
+            menu: 'Purchase request',
+            url: '/company/indent'
           }, {
             menu: 'Create Order',
             url: '/company/orders/create'
           }, {
+            menu: 'Material Invard',
+            url: '/company/orders/create'
+          }, {
             menu: 'Quality inspection',
+            url: '/company/order/reciept'
+          }, {
+            menu: 'Stock Update',
             url: '/company/order/reciept'
           }, {
             menu: 'Store Request',
@@ -2565,11 +2572,14 @@ __webpack_require__.r(__webpack_exports__);
             menu: 'Store issue',
             url: '/company/order/reciept'
           }, {
+            menu: 'Bin Card',
+            url: '/company/order/reciept'
+          }, {
             menu: ' Receipt from Customer',
             url: '/company/order/reciept'
           }, {
-            menu: 'Bin Card',
-            url: '/company/order/reciept'
+            menu: 'Orders',
+            url: '/company/orders'
           }, {
             menu: 'Material transfer to other units',
             url: '/company/transaction'
@@ -39362,51 +39372,63 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 table-responsive" }, [
         _c("table", { staticClass: "table table-bordered" }, [
-          _c("thead", [
-            _c(
-              "tr",
-              [
-                _c("th", [_vm._v("S/L")]),
-                _vm._v(" "),
-                _vm._l(_vm.fields, function(field) {
-                  return _c("th", { key: field }, [_vm._v(_vm._s(field))])
-                })
-              ],
-              2
-            )
-          ]),
+          _vm.data.length > 0
+            ? _c("thead", [
+                _c(
+                  "tr",
+                  [
+                    _c("th", [_vm._v("S/L")]),
+                    _vm._v(" "),
+                    _vm._l(_vm.fields, function(field) {
+                      return _c("th", { key: field }, [_vm._v(_vm._s(field))])
+                    })
+                  ],
+                  2
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.data, function(cu, index) {
-              return _c(
-                "tr",
-                {
-                  key: cu.name,
-                  class: index == _vm.selected_index ? "hovered" : "",
-                  on: {
-                    click: function($event) {
-                      return _vm.selectData(cu, index)
+            [
+              _vm._l(_vm.data, function(cu, index) {
+                return _c(
+                  "tr",
+                  {
+                    key: cu.name,
+                    class: index == _vm.selected_index ? "hovered" : "",
+                    on: {
+                      click: function($event) {
+                        return _vm.selectData(cu, index)
+                      }
                     }
-                  }
-                },
-                [
-                  _c("td", [_vm._v(" " + _vm._s(index + 1))]),
-                  _vm._v(" "),
-                  _vm._l(_vm.fields, function(field) {
-                    return _c("td", { key: field }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(cu[field]) +
-                          "\n                    "
-                      )
+                  },
+                  [
+                    _c("td", [_vm._v(" " + _vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.fields, function(field) {
+                      return _c("td", { key: field }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(cu[field]) +
+                            "\n                    "
+                        )
+                      ])
+                    })
+                  ],
+                  2
+                )
+              }),
+              _vm._v(" "),
+              _vm.data.length <= 0
+                ? _c("tr", [
+                    _c("h3", [
+                      _vm._v("No dtata found. please create some data")
                     ])
-                  })
-                ],
-                2
-              )
-            }),
-            0
+                  ])
+                : _vm._e()
+            ],
+            2
           )
         ])
       ])
@@ -52511,8 +52533,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\project\123abcdolorpro\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\project\123abcdolorpro\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/html/planb/123abcdolorpro/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/planb/123abcdolorpro/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

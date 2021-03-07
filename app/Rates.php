@@ -3,17 +3,23 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Rates extends Model
 {
     //
-    public $appends = ['item','pm_unit', 'pr_unit','customer','quantity'];
+    public $appends = ['item','pm_unit', 'pr_unit','customer','quantity','part_no'];
     /**
      * [Item]
      */
     public function getItemAttribute() {
        
         return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('name')->first();
+
+    }
+    public function getPartNoAttribute() {
+       
+        return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('part_no')->first();
 
     }
     public function getQuantityAttribute() {
@@ -34,6 +40,13 @@ class Rates extends Model
     public function getCustomerAttribute() {
        
         return Costomers::where('id',$this->customer_id)->pluck('name')->first();
+
+    }
+    public function getRateAttribute($value) {
+       
+        $currency = DB::table('lookup_masters')->where('lookup_value',$this->currency_id)->pluck('genaral_value')->first();
+        isset($currency) ? $currency :0;
+        return $value * $currency * $this->conversion_factor;
 
     }
 }

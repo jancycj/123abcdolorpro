@@ -3,16 +3,58 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
-    public $appends = ['ship_to_company_name','bill_to_company_name','supplier_name'];
+    public $appends = ['ship_to',
+        'ship_to_name',
+        'bill_to_company_name',
+        'supplier_name',
+        'supplier_code',
+        'order_no',
+        'quotation_no',
+        'department',
+        'department_name',
+    ];
     /**
      * [Item]
      */
-    public function getShipToCompanyNameAttribute() {
+    public function getDepartmentAttribute() {
+       
+        return DB::table('lookup_masters')->where('id',$this->department_id)->pluck('lookup_value')->first();
+
+    }
+     /**
+     * [Item]
+     */
+    public function getDepartmentNameAttribute() {
+       
+        return DB::table('lookup_masters')->where('id',$this->department_id)->pluck('lookup_description')->first();
+
+    }
+    /**
+     * [Item]
+     */
+    public function getShipToNameAttribute() {
        
         return Company::where('id',$this->shipto_customer_id)->pluck('name')->first();
+
+    }
+    /**
+     * [Item]
+     */
+    public function getShipToAttribute() {
+       
+        return Company::where('id',$this->shipto_customer_id)->pluck('company_code')->first();
+
+    }
+    /**
+     * [Item]
+     */
+    public function getQuotationNoAttribute() {
+       
+        return $this->quote_ref_no;
 
     }
     /**
@@ -26,9 +68,22 @@ class Order extends Model
     /**
      * [Item]
      */
+    public function getSupplierCodeAttribute() {
+       
+        return Costomers::where('id',$this->supplier_id)->pluck('customer_code')->first();
+
+    }
+    /**
+     * [Item]
+     */
     public function getSupplierNameAttribute() {
        
-        return Costomers::where('id',$this->suppier_id)->pluck('name')->first();
+        return Costomers::where('id',$this->supplier_id)->pluck('name')->first();
+
+    }
+    public function getOrderNoAttribute() {
+       
+        return $this->order_number;
 
     }
     /*details relation*/

@@ -18,12 +18,16 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('comapny_id')->nullable();
             $table->string('order_number')->nullable();
             $table->date('order_date')->nullable();
-            $table->unsignedInteger('suppier_id')->nullable();
+            $table->unsignedInteger('supplier_id')->nullable();
             $table->unsignedInteger('billto_customer_id')->nullable();
             $table->string('order_type')->nullable();
             $table->integer('amendment_no')->nullable();
+            $table->string('indent_no')->nullable();
+            $table->date('indent_date')->nullable();
             $table->date('amendment_date')->nullable();
+            $table->text('amendment_remarks')->nullable();
             $table->unsignedInteger('shipto_customer_id')->nullable();
+            $table->unsignedInteger('department_id')->nullable();
             $table->string('quote_ref_no')->nullable();
             $table->date('quote_ref_date')->nullable();
             $table->unsignedInteger('created_by')->nullable();

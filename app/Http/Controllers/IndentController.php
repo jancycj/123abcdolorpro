@@ -7,6 +7,7 @@ use App\Indent;
 use App\IndentDetails;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class IndentController extends Controller
 {
@@ -66,7 +67,8 @@ class IndentController extends Controller
             $indentDetails->need_by_date = $item['need_by_date'];
             $indentDetails->item_id = $item['item_id'];
             $indentDetails->uom = $item['unit_id'];
-            $indentDetails->puchased_qty = $item['qty'];
+            $indentDetails->quantity = $item['qty'];
+            $indentDetails->puchased_qty = 0;
             $indentDetails->default_supplier = 1;
             // $indentDetails->need_by_date = $item->item_id;
             $indentDetails->updated_by = Auth::id();
@@ -126,7 +128,8 @@ class IndentController extends Controller
             $indentDetails->need_by_date = $item['need_by_date'];
             $indentDetails->item_id = $item['item_id'];
             $indentDetails->uom = $item['unit_id'];
-            $indentDetails->puchased_qty = $item['qty'];
+            $indentDetails->quantity = $item['qty'];
+            $indentDetails->puchased_qty = 0;
             $indentDetails->default_supplier = 1;
             // $indentDetails->need_by_date = $item->item_id;
             $indentDetails->updated_by = Auth::id();
@@ -144,5 +147,55 @@ class IndentController extends Controller
     public function destroy(Indent $indent)
     {
         //
+    }
+    
+    /**
+     * getIndentItem
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function getIndentItem(Request $request)
+    {
+        if($request->has('indent_no') && $request->has('party')){
+            $indent_no = $request->indent_no;
+            $party = $request->party;
+            $data = DB::table('indent_details as indd')
+            ->join('indents as ind', 'indd.request_id', '=', 'ind.id')
+            ->join('items as ite', 'indd.item_id', '=', 'ite.id')
+            ->leftJoin('rates as rt', 'indd.item_id', '=', 'rt.item_id')
+            ->leftJoin('lookup_masters as lk', 'rt.currency_id', '=', 'lk.lookup_value')
+            ->leftJoin('lookup_masters as lkv', 'rt.purchase_unit', '=', 'lkv.id')
+            ->where('ind.indent_no', '=',$indent_no)
+            ->where('ite.default_supplier', '=',$party)
+            ->select(
+                'ind.indent_no',
+                'indd.item_id',
+                'ite.name as item',
+                'ite.part_no',
+                'ite.default_supplier',
+                'indd.need_by_date',
+                'indd.quantity',
+                'indd.uom as pr_unit',
+                'rt.discount',
+                'rt.specifications',
+                'rt.currency_id',
+                'rt.primary_unit',
+                'rt.purchase_unit',
+                'rt.conversion_factor',
+                'lk.genaral_value as currency',
+                'lkv.lookup_value as pm_unit',
+                DB::raw("IFNULL(indd.need_by_date,DATE_ADD(CURDATE() , INTERVAL 15 DAY)) as date"),
+                DB::raw(" rt.rate * (IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) as rate"),
+                DB::raw("indd.quantity * rt.rate * (IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) as sub_total"),
+                DB::raw("(indd.quantity * rt.rate * (IFNULL(lk.genaral_value,1))* (IFNULL(rt.conversion_factor,1)) )  - (indd.quantity * rt.rate *(IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) ) * ((IFNULL(rt.discount,0))/100)  as grant_total")
+
+
+                )
+            ->get();
+            return $data;
+            
+        }
+        return 'tt';
     }
 }

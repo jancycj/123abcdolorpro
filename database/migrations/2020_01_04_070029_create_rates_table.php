@@ -22,7 +22,7 @@ class CreateRatesTable extends Migration
             $table->unsignedInteger('purchase_unit')->nullable();
             $table->double('rate', 8, 2)->nullable();
             $table->double('conversion_factor', 8, 2)->nullable();
-            $table->double('discount', 8, 2)->nullable();
+            $table->double('discount', 8, 2)->default(0);
             $table->string('specifications')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

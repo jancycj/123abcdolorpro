@@ -16,13 +16,13 @@
                     <thead v-if="data.length > 0">
                     <tr>
                         <th>S/L</th>
-                        <th v-for="field in fields" v-bind:key="field">{{field}}</th>
+                        <th v-for="field in table_fields" v-bind:key="field">{{field}}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(cu,index) in data"  v-bind:key="cu.name" :class="index == selected_index ? 'hovered' : ''" v-on:dblclick="selectData(cu,index)">
+                    <tr v-for="(cu,index) in data"  v-bind:key="cu.name" :class="index == selected_index ? 'hovered' : ''"  v-on:dblclick="selectData(cu,index)">
                         <td> {{index+1}}</td>
-                        <td v-for="field in fields" v-bind:key="field">
+                        <td v-for="field in table_fields" v-bind:key="field">
                             {{cu[field]}}
                         </td>
                     </tr>
@@ -39,7 +39,7 @@
 
 <script>
     export default {
-        name: 'navBar',
+        name: 'RawSelect',
         props:['query','fields','search_filed','table','where_value','where_field'],
         data(){
             return {
@@ -48,6 +48,7 @@
                 search : '',
                 data : [],
                 selected_index:0,
+                table_fields :[],
                 
             }
         },
@@ -82,19 +83,17 @@
                 }
             },
             get_customers_by:function(){
-
+                
                 var vm = this;
-                axios.post('/quick/general',{
-                    table:this.table,
-                    fields:this.fields,
+                var qry_string = this.query.replace("$vrbl", this.search);  
+                axios.post('/quick/rawGeneral',{
                     search : this.search,
-                    search_filed : this.search_filed,
-                    where_field : this.where_field,
-                    where_value : this.where_value,
+                    qry : qry_string,
                 }).then((response) => {
                     if(response.data.message == 'success'){
                         vm.data = response.data.data;
-                        console.log('vm.data',vm.data)
+                        vm.table_fields = Object.keys(vm.data[0])
+                        console.log('vm.fields',vm.table_fields)
                     }
                     // $("#itemModal").modal('toggle');
                 }, (error) => {

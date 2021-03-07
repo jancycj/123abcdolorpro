@@ -7,7 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetails extends Model
 {
 
-    public $appends = ['item','item_part_no','item_hsn','balance','recieved_balance','order_no','pending_amount','unit','discount_rate'];
+    public $appends = [
+        'item',
+        'item_part_no',
+        'part_no',
+        'item_hsn','balance',
+        'recieved_balance',
+        'order_no',
+        'pending_amount',
+        'unit',
+        'discount_rate',
+        'pm_unit',
+        'date',
+        'primary_unit',
+        'purchase_unit'
+    ];
     /**
      * [Item]
      */
@@ -16,7 +30,36 @@ class OrderDetails extends Model
         return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('name')->first();
 
     }
+    /**
+     * [Item]
+     */
+    public function getPrimaryUnitAttribute() {
+       
+        return $this->primary_unit_id;
+
+    }
+     /**
+     * [Item]
+     */
+    public function getPurchaseUnitAttribute() {
+       
+        return $this->purchase_unit_id;
+
+    }
+     /**
+     * [Item]
+     */
+    public function getDateAttribute() {
+       
+        return $this->delivery_date;
+
+    }
     public function getItemPartNoAttribute() {
+       
+        return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('part_no')->first();
+
+    }
+    public function getPartNoAttribute() {
        
         return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('part_no')->first();
 
@@ -83,6 +126,11 @@ class OrderDetails extends Model
      }
 
     public function getUnitAttribute() {
+       
+        return LookupMaster::where('id',$this->purchase_unit_id)->pluck('lookup_value')->first();
+
+    }
+    public function getPmUnitAttribute() {
        
         return LookupMaster::where('id',$this->purchase_unit_id)->pluck('lookup_value')->first();
 

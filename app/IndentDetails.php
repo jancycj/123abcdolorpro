@@ -29,7 +29,7 @@ class IndentDetails extends Model
     }
     public function getQtyAttribute() {
        
-        return $this->puchased_qty;
+        return $this->quantity;
 
     }
     public function getUnitIdAttribute() {

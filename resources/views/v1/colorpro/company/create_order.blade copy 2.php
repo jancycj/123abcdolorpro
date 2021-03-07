@@ -128,7 +128,7 @@
                             <div class="row">
                                 <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getIndent($event)" >
                                     <div class="form-group row">
-                                        <label class="col-5 form-control-label">Indent No*</label>
+                                        <label class="col-5 form-control-label">Order No*</label>
                                         <div class="col-7 input-group">
                                             <input autocomplete="off" class="form-control"  v-model="indent.indent_no" >
                                         </div>
@@ -136,7 +136,7 @@
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-6">
                                     <div class="form-group row">
-                                        <label class="col-4 form-control-label">Request Date* </label>
+                                        <label class="col-4 form-control-label">Order Date* </label>
                                         <div class="col-7 input-group">
                                             <input autocomplete="off" class="form-control"  v-model="indent.indent_date" disabled>
                                         </div>
@@ -387,7 +387,7 @@
                             :fields="['id','lookup_value','lookup_description']" 
                             :search_filed="'lookup_value'" 
                             :where_field="'lookup_key'"
-                            :where_value="'DEPARTMENT'"
+                            :where_value="'STORE'"
                             @selected="getSection($event)"
                             ></choose-component>
                                 

@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return view('v1.colorpro.company.employees');
     }
 
     /**

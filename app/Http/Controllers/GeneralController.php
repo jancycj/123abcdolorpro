@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Events\VacancyCreated;
+use App\Helpers\DocNo;
 use App\LookupMaster;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -78,6 +79,14 @@ class GeneralController extends Controller
 
         }
 
+    }
+    public function get_doc(Request $request)
+    {
+        if($request->has('no_id')){
+            $no = $request->no_id;
+            $doc = DocNo::getDocNumber($no,1);
+            return response(["doc_no" => $doc, 'sys_date' => date("Y-m-d")],200);
+        }
     }
 
     

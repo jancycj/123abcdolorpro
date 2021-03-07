@@ -51,6 +51,8 @@ Route::prefix('company')->group(function() {
       Route::resource('article', 'ArticleController');
       Route::resource('assortment', 'AssortmentController');
       Route::resource('indent', 'IndentController');
+      Route::resource('employee', 'EmployeeController');
+      Route::post('/updateOrders', 'OrderController@updateOrders')->name('company.order.updateOrders');
       Route::get('/item', 'ItemController@company_item')->name('company.item');
       Route::get('/item_import', 'ItemController@import')->name('company.item.import');
       Route::post('/item_import', 'ItemController@importPost')->name('company.item.import.post');
@@ -71,6 +73,7 @@ Route::prefix('company')->group(function() {
       Route::post('/accept_order', 'OrderController@accept_order')->name('company.accept_order');
       Route::get('/search_order', 'OrderController@search_order')->name('order.search');
       Route::post('/order/pdf', 'OrderController@exportPdf')->name('order.pdf');
+      Route::get('/getIndentItem', 'IndentController@getIndentItem')->name('order.getIndentItem');
 
       
         Route::prefix('report')->group(function() {
@@ -125,6 +128,7 @@ Route::prefix('quick')->group(function() {
       Route::get('/customers', 'QuickController@customers')->name('quick.customers');
       Route::get('/items', 'QuickController@items')->name('quick.items');
       Route::post('/general', 'QuickController@general')->name('quick.general');
+      Route::post('/rawGeneral', 'QuickController@rawGeneral')->name('quick.rawGeneral');
       
     });
     
@@ -139,6 +143,7 @@ Route::prefix('general')->group(function() {
       Route::get('/department', 'GeneralController@get_departments')->name('general.department');
       Route::get('/currency', 'GeneralController@get_currency')->name('general.currency');
       Route::get('/lookup', 'GeneralController@get_lookup')->name('general.lookup');
+      Route::get('/docNo', 'GeneralController@get_doc')->name('general.doc_no');
 	});
 	
 });

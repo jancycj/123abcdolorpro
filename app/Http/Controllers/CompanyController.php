@@ -182,10 +182,29 @@ class CompanyController extends Controller
             return Stock::where('company_id',$company_id)->get();
         }
     }
-    public function get_rate($stock_id)
+    public function get_rate($stock_id, Request $request)
     {
-        return Rates::where('item_id',$stock_id)->first();
+        if($request->has('supplier')){
+            if($rates = Rates::where(['item_id' => $stock_id, 'customer_id' => $request->supplier])->first()){
+            return response(['status' => 'success', 'data' => $rates],200);
+
+            }
+            else{
+                return response(['status' => 'error', 'data' => ['no rates found']],200);
+    
+            }
+        }
+        
+        if($rates = Rates::where('item_id',$stock_id)->first()){
+            return response(['status' => 'success', 'data' => $rates],200);
+
+        } else{
+            return response(['status' => 'error', 'data' => ['no rates found']],200);
+
+        }
+
     }
+    
     public function get_order_reciept()
     {
 

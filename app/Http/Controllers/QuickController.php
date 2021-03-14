@@ -18,17 +18,17 @@ class QuickController extends Controller
         $limit = $request->has('limit') ? $request->limit : 10;
         $code = $request->has('code') ? $request->code : '';
         $name = $request->has('name') ? $request->name : '';
-        return DB::table('costomers')->select('id','name','short_name')
+        return DB::table('costomers')->select('id','name','short_name','customer_code')
         ->where(function ($q) use($code, $name){
            if($code != ''){
-                $q->where('short_name','like','%'.$code.'%');
+                $q->where('customer_code','like','%'.$code.'%');
            }
            if($name != ''){
                 $q->orWhere('name','like','%'.$name.'%');
            }
         })
         ->where(function ($q) use($request){
-            if($request->is_customer){
+            if($request->is_customer != 'false'){
                  $q->where('type','reseller');
             }
          })

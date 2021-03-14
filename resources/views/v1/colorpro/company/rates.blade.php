@@ -49,7 +49,7 @@
                             <label class=" form-control-label">Items</label>
                             <select placeholder="Select item" class="standardSelect form-control" tabindex="1" name="unit" @change="get_rates(selected)" v-model="selected_item">
                                 @foreach ($items as $item)
-                                    <option value="{{$item->id}}">{{$item->item}}</option>
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach
                                 
                             </select>
@@ -144,7 +144,7 @@
                                         <label class=" form-control-label">Item</label>
                                         <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.item">
                                                 @foreach ($items as $item)
-                                                    <option value="{{$item->id}}">{{$item->item}}</option>
+                                                    <option value="{{$item->id}}">{{$item->name}}</option>
                                                 @endforeach
                                                 
                                         </select>

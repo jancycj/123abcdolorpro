@@ -867,8 +867,13 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
 
         },
         get_item_rates:function(evnt){
+            
             var vm = this;
-            axios.get('/company/get_rate/'+evnt.id).then((response) => {
+            if(!vm.order.supplier_id){
+                alert("please select a supplier");
+                return;
+            }
+            axios.get('/company/get_rate/'+evnt.id+'?supplier='+vm.order.supplier_id).then((response) => {
             console.log(response.data);
             var rateResOb = response.data;
 

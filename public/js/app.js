@@ -2671,7 +2671,7 @@ __webpack_require__.r(__webpack_exports__);
             url: '/company/orders/create'
           }, {
             menu: 'Material Invard',
-            url: '/company/orders/create'
+            url: '/company/order/reciept'
           }, {
             menu: 'Quality inspection',
             url: '/company/order/reciept'
@@ -39802,7 +39802,7 @@ var render = function() {
                     key: cu.name,
                     class: index == _vm.selected_index ? "hovered" : "",
                     on: {
-                      click: function($event) {
+                      dblclick: function($event) {
                         return _vm.selectCustomer(cu, index)
                       }
                     }
@@ -39920,7 +39920,7 @@ var render = function() {
                     key: cu.name,
                     class: index == _vm.selected_index ? "hovered" : "",
                     on: {
-                      click: function($event) {
+                      dblclick: function($event) {
                         return _vm.selectCustomer(cu, index)
                       }
                     }

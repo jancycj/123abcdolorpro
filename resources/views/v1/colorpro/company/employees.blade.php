@@ -129,7 +129,7 @@
                                 <div class="form-group row">
                                     <label class="col-5 form-control-label">Employee code </label>
                                     <div class="col-7 input-group">
-                                        <input autocomplete="off" class="form-control" v-model="item_obj.part_no">
+                                        <input autocomplete="off" class="form-control" v-model="item_obj.employee_code">
                                     </div>
                                 </div>
                             </div>

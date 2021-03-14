@@ -26,7 +26,7 @@ class RatesController extends Controller
         }
         $units = LookupMaster::where('lookup_key','UNIT')->get();
         $customers =  Costomers::where('company_id',CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first())->get();
-        $items= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
+        $items= Item::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
         return view('v1.colorpro.company.rates',compact('customers','items','units'));
     }
 

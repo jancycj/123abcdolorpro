@@ -43,9 +43,10 @@ class Rates extends Model
 
     }
     public function getRateAttribute($value) {
-       
         $currency = DB::table('lookup_masters')->where('lookup_value',$this->currency_id)->pluck('genaral_value')->first();
-        isset($currency) ? $currency :0;
+        $currency = $currency != null ? $currency : 1;
+
+        isset($this->conversion_factor)?$this->conversion_factor:1;
         return $value * $currency * $this->conversion_factor;
 
     }

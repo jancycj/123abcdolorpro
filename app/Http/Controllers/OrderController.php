@@ -67,9 +67,10 @@ class OrderController extends Controller
             'order'     => 'required',
             'order_details'    => 'required',
         ]);
-        $indent_no = isset($order_ob['indent_no'])?$order_ob['indent_no']:0 ;
         $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $order_ob = $request->order;
+        $indent_no = isset($order_ob['indent_no'])?$order_ob['indent_no']:0 ;
+
         // return $order_ob['quotation_no'];
         $order_details_ob = $request->order_details;
         $order = new order;
@@ -467,7 +468,7 @@ class OrderController extends Controller
     {
         $indent_id = DB::table('indents')->where('indent_no',$indendt_no)->pluck('id')->first();
         if($indent = IndentDetails::where(['request_id' => $indent_id,'item_id' => $item_id])->first()){
-            $indent->puchased_qty = $quantity;
+            $indent->puchased_qty = $indent->puchased_qty + $quantity;
             $indent->save();
         }
         return 'true';

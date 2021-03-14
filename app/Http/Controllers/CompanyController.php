@@ -182,11 +182,11 @@ class CompanyController extends Controller
             return Stock::where('company_id',$company_id)->get();
         }
     }
-    public function get_rate($stock_id, Request $request)
+    public function get_rate($id, Request $request)
     {
         if($request->has('supplier')){
-            if($rates = Rates::where(['item_id' => $stock_id, 'customer_id' => $request->supplier])->first()){
-            return response(['status' => 'success', 'data' => $rates],200);
+            if($rates = Rates::where(['item_id' => $id, 'customer_id' => $request->supplier])->first()){
+                return response(['status' => 'success', 'data' => $rates],200);
 
             }
             else{
@@ -195,7 +195,7 @@ class CompanyController extends Controller
             }
         }
         
-        if($rates = Rates::where('item_id',$stock_id)->first()){
+        if($rates = Rates::where('item_id',$id)->first()){
             return response(['status' => 'success', 'data' => $rates],200);
 
         } else{
@@ -208,6 +208,7 @@ class CompanyController extends Controller
     public function get_order_reciept()
     {
 
+        return view('v1.colorpro.company.materialInward');
         // return OrderDetails::with('completed_reciept')->get();
         
         $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
@@ -220,6 +221,7 @@ class CompanyController extends Controller
         return view('v1.colorpro.company.order_reciept',compact('pending_orders','completed_orders','shortclosed_orders','company_id','stock_update'));
 
     }
+    
     
 
 

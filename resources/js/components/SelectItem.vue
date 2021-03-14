@@ -24,7 +24,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(cu,index) in customers"  v-bind:key="cu.name" :class="index == selected_index ? 'hovered' : ''" @click="selectCustomer(cu,index)">
+                    <tr v-for="(cu,index) in customers"  v-bind:key="cu.name" :class="index == selected_index ? 'hovered' : ''" v-on:dblclick="selectCustomer(cu,index)">
                         <td> {{index+1}}</td>
                         <td>{{cu.part_no}}</td>
                         <td>{{cu.name}}</td>

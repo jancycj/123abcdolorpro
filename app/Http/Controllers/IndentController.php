@@ -175,7 +175,6 @@ class IndentController extends Controller
                 'ite.part_no',
                 'ite.default_supplier',
                 'indd.need_by_date',
-                'indd.quantity',
                 'indd.uom as pr_unit',
                 'rt.discount',
                 'rt.specifications',
@@ -186,6 +185,7 @@ class IndentController extends Controller
                 'lk.genaral_value as currency',
                 'lkv.lookup_value as pm_unit',
                 DB::raw("IFNULL(indd.need_by_date,DATE_ADD(CURDATE() , INTERVAL 15 DAY)) as date"),
+                DB::raw("(IFNULL(indd.quantity,0)) - (IFNULL(indd.puchased_qty,0)) as quantity"),
                 DB::raw(" rt.rate * (IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) as rate"),
                 DB::raw("indd.quantity * rt.rate * (IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) as sub_total"),
                 DB::raw("(indd.quantity * rt.rate * (IFNULL(lk.genaral_value,1))* (IFNULL(rt.conversion_factor,1)) )  - (indd.quantity * rt.rate *(IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) ) * ((IFNULL(rt.discount,0))/100)  as grant_total")

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     
-    public $appends = ['unit', 'category','created_date','updated_date'];
+    public $appends = ['unit', 'category','created_date','updated_date','default_supplier_name','default_supplier_code'];
     
      /**
      * [Item]
@@ -15,6 +15,22 @@ class Item extends Model
     public function getUnitAttribute() {
        
         return LookupMaster::where('id',$this->unit_id)->pluck('lookup_value')->first();
+
+    }
+     /**
+     * [Item]
+     */
+    public function getDefaultSupplierNameAttribute() {
+       
+        return Costomers::where('id',$this->default_supplier)->pluck('name')->first();
+
+    }
+     /**
+     * [Item]
+     */
+    public function getDefaultSupplierCodeAttribute() {
+       
+        return Costomers::where('id',$this->default_supplier)->pluck('customer_code')->first();
 
     }
      /**

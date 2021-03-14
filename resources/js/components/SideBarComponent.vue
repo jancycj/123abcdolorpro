@@ -240,7 +240,7 @@
                                 },
                                 {
                                     menu:'Material Invard',
-                                    url:'/company/orders/create',
+                                    url:'/company/order/reciept',
                                 },
                                 {
                                     menu:'Quality inspection',

@@ -301,7 +301,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">list_price</label>
                                                     <div class="col-7 input-group">
-                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_ob.list_price" disabled>
+                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_obj.list_price" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -309,7 +309,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">wt_average_rate</label>
                                                     <div class="col-7 input-group">
-                                                        <input class="form-control" v-model="item_ob.wt_average_rate" disabled>
+                                                        <input class="form-control" v-model="item_obj.wt_average_rate" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -319,14 +319,14 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">default_supplier</label>
                                                     <div class="col-7 input-group">
-                                                        <input type="text" autocomplete="off" class="form-control" v-model="default_supplier_name">
+                                                        <input type="text" autocomplete="off" class="form-control" v-model="item_obj.default_supplier_name">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-sm-12">
                                                 <div class="form-group row">
                                                     <div class="col-12 input-group">
-                                                        <input autocomplete="off" class="form-control" name="unit" v-model="default_supplier_code" disabled>
+                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_obj.default_supplier_code" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -359,7 +359,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">gst_cost</label>
                                                     <div class="col-7 input-group">
-                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_ob.gst_cost" disabled>
+                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_obj.gst_cost" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -367,7 +367,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">purchase_cost</label>
                                                     <div class="col-7 input-group">
-                                                        <input class="form-control" v-model="item_ob.purchase_cost" disabled>
+                                                        <input class="form-control" v-model="item_obj.purchase_cost" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -377,7 +377,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">labor_cost</label>
                                                     <div class="col-7 input-group">
-                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_ob.labor_cost" disabled>
+                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_obj.labor_cost" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -385,7 +385,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">material_cost</label>
                                                     <div class="col-7 input-group">
-                                                        <input class="form-control" v-model="item_ob.material_cost" disabled>
+                                                        <input class="form-control" v-model="item_obj.material_cost" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -395,7 +395,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">other_cost</label>
                                                     <div class="col-7 input-group">
-                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_ob.other_cost" disabled>
+                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_obj.other_cost" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -403,7 +403,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">total_cost</label>
                                                     <div class="col-7 input-group">
-                                                        <input class="form-control" v-model="item_ob.total_cost" disabled>
+                                                        <input class="form-control" v-model="item_obj.total_cost" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -561,7 +561,10 @@
             showMenu: false,
             item: {},
             errors: [],
-            item_ob: {},
+            item_ob: {
+                default_supplier_name : '',
+                default_supplier_code : '',
+            },
             item_obj: {},
             opening: {},
             units: [],
@@ -764,10 +767,12 @@
                 }
             },
             getCostomer: function(ev) {
-                console.log(ev)
+                console.log('sssss',ev)
                 this.item_obj.default_supplier   = ev.id;
                 this.default_supplier_name          = ev.name;
-                this.default_supplier_code               = ev.short_name;
+                this.default_supplier_code               = ev.customer_code;
+                this.item_obj.default_supplier_name          = ev.name;
+                this.item_obj.default_supplier_code               = ev.customer_code;
                 $("#supplierPopup").modal('toggle');
 
             },

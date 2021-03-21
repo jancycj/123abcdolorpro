@@ -18,7 +18,8 @@ class AddEmployeeDataToUsersTable extends Migration
             $table->string('username')->after('password')->nullable();
             $table->string('mac_id')->after('username')->nullable();
             $table->date('last_login_date')->after('username')->nullable();
-            $table->integer('status')->after('last_login_date')->nullable();
+            $table->string('status')->after('last_login_date')->nullable()->default('Active');
+            $table->string('type')->after('status')->nullable();
         });
     }
 
@@ -34,6 +35,7 @@ class AddEmployeeDataToUsersTable extends Migration
             $table->dropColumn('username');
             $table->dropColumn('last_login_date');
             $table->dropColumn('status');
+            $table->dropColumn('type');
         });
     }
 }

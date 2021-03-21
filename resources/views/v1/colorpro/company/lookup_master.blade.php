@@ -44,7 +44,7 @@
                                 
                             </select>
                       </div>
-                      <div class="col-9">
+                      <div class="col-9" v-if="has_permission('company.lookup.post')">
                             <a href="#" class="btn btn-sm btn-outline-secondary float-right" @click="create_item()"><i class="fa fa-plus"></i>create</a>
                       </div>
                   </div>
@@ -169,6 +169,8 @@
            errors:[],
            selected:'CURRENCY',
            lookup_master_values:[],
+           permissions: window.permissions,
+
        },
    methods: {
          toggleShow: function() {
@@ -205,6 +207,9 @@
                 console.log(this.errors)
             });
          },
+         has_permission: function(url) {
+            return this.permissions.includes(url);
+        },
      
      },
      mounted(){

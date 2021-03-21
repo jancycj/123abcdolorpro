@@ -40,9 +40,9 @@
                     <form method="POST" action="{{ route('login') }}">
                          @csrf
                         <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email">
-                            @error('email')
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Username">
+                            @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -58,7 +58,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="checkbox">
+                        <!-- <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="remember"> Remember Me
                             </label>
@@ -66,7 +66,7 @@
                                 <a href="#">Forgotten Password?</a>
                             </label>
 
-                        </div>
+                        </div> -->
                         <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
                         
                     </form>

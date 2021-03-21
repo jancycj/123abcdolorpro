@@ -27,6 +27,7 @@ Vue.component('choose-customer', require('./components/SelectCustomer.vue').defa
 Vue.component('choose-component', require('./components/SelectComponent.vue').default);
 Vue.component('raw-component', require('./components/RawSelectComponent.vue').default);
 Vue.component('choose-item', require('./components/SelectItem.vue').default);
+Vue.component('add-user', require('./components/AddUserComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

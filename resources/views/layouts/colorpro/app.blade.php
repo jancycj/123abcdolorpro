@@ -33,7 +33,12 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('new_assets/assets/img/favicon.png') }}">
 
-    <title>Logezy | Timesheet management made easy</title>
+    <title>PlanB</title>
+
+    <script type="text/javascript">
+      window.pages = {!! json_encode(session('pages')) !!};
+      window.permissions = {!! json_encode(session('allowed_routes')) !!};
+    </script>
 
     <!-- vendor css -->
     <script src="{{asset('js/app.js')}}"></script>

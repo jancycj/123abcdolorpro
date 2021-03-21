@@ -19,6 +19,7 @@ class CreateUserPermissionsTable extends Migration
             $table->unsignedInteger('permission_id')->nullable();
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('created_by')->nullable();
+            $table->double('limit', 8, 2)->nullable();
             $table->timestamps();
         });
     }

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Page;
 use App\Permissions;
+use App\UserPermissions;
 use Illuminate\Http\Request;
+use Auth;
 
-class PermissionsController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +17,21 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        $permissions = Permissions::all();
-        $grpd = $permissions->groupBy(['side_menu','parent_menu','title']);
-        return $grpd;
+        $role = 'employee';
+        $user_id = Auth::id();
+        switch($role){
+
+            case 'employee':
+                    return Page::employeeMenus($user_id);
+                break;
+
+            case 'admin':
+                return Page::adminMenus();
+                break;
+        }
+
+        
+
     }
 
     /**
@@ -43,10 +58,10 @@ class PermissionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Permissions  $permissions
+     * @param  \App\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function show(Permissions $permissions)
+    public function show(Page $page)
     {
         //
     }
@@ -54,10 +69,10 @@ class PermissionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Permissions  $permissions
+     * @param  \App\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permissions $permissions)
+    public function edit(Page $page)
     {
         //
     }
@@ -66,10 +81,10 @@ class PermissionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Permissions  $permissions
+     * @param  \App\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permissions $permissions)
+    public function update(Request $request, Page $page)
     {
         //
     }
@@ -77,10 +92,10 @@ class PermissionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Permissions  $permissions
+     * @param  \App\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permissions $permissions)
+    public function destroy(Page $page)
     {
         //
     }

@@ -67,7 +67,7 @@
                   <div class=" col-sm-7 col-md-6 col-lg-7 bg-white rounded-right">
                     <div class="ht-100p d-flex flex-column justify-content-center pd-20 pd-sm-30 pd-md-40">
                       <span class="tx-color-04"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 wd-40 ht-40 stroke-wd-3 mg-b-20"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
-                      <h3 class="tx-16 tx-sm-20 tx-md-24 mg-b-15 mg-md-b-20">Company Profile</h3>
+                      <h3 class="tx-16 tx-sm-20 tx-md-24 mg-b-15 mg-md-b-20">{{$user->role ?? $user->role}} Profile</h3>
                       <h5 class="tx-16 tx-sm-17 tx-md-17 mg-b-10 mg-md-b-10">{{$company->company->name}}</h5>
                       <p class="tx-12 tx-md-13 tx-color-03 mg-b-25">{{$company->company->email}}</p>
                     <p class="tx-14 tx-md-16 tx-color-02">{{$company->company->address_line1}}</p>
@@ -76,7 +76,9 @@
                       @if($company->company->website)
                         <p><a href="{{$company->company->website}}" target="_blank" >Website</a></p>
                       @endif
-                      <a href="#" class="btn btn-primary btn-block btn-uppercase" @click="get_company_profile({{$company->company->id}})">Edit</a>
+                      @if($user->role != 'employee')
+                        <a href="#" class="btn btn-primary btn-block btn-uppercase" @click="get_company_profile({{$company->company->id}})">Edit</a>
+                      @endif
                     </div>
                   </div><!-- col -->
                 </div>

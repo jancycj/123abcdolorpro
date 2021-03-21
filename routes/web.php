@@ -44,14 +44,20 @@ Route::prefix('company')->group(function() {
 	Route::group(['middleware' => ['auth']],function() {
       Route::resource('stocks', 'StockController');
       Route::resource('transaction', 'MaterialTransferController');
-      Route::resource('orders', 'OrderController');
+      Route::resource('orders', 'OrderController'); 
+      //[view => order.index, edit =>order.show , create =>order.store, delete => order.destroy]
       Route::resource('rates', 'RatesController');
       Route::resource('qc', 'QCPlanController');
       Route::resource('shade', 'ShadeController');
       Route::resource('article', 'ArticleController');
       Route::resource('assortment', 'AssortmentController');
       Route::resource('indent', 'IndentController');
-      Route::resource('employee', 'EmployeeController');
+      Route::resource('employees', 'EmployeeController');
+      Route::get('/user', 'EmployeeController@getUser')->name('company.user.index');
+      Route::post('/user', 'EmployeeController@createUser')->name('company.user.create');
+      Route::get('/user/{id}', 'EmployeeController@showUser')->name('company.user.show');
+      Route::put('/user/{id}', 'EmployeeController@updateUser')->name('company.user.update');
+
       Route::post('/updateOrders', 'OrderController@updateOrders')->name('company.order.updateOrders');
       Route::get('/item', 'ItemController@company_item')->name('company.item');
       Route::get('/item_import', 'ItemController@import')->name('company.item.import');
@@ -145,6 +151,8 @@ Route::prefix('general')->group(function() {
       Route::get('/currency', 'GeneralController@get_currency')->name('general.currency');
       Route::get('/lookup', 'GeneralController@get_lookup')->name('general.lookup');
       Route::get('/docNo', 'GeneralController@get_doc')->name('general.doc_no');
+      Route::get('/menu', 'PageController@index')->name('menu.index');
+      Route::get('/permissions', 'PermissionsController@index')->name('menu.index');
 	});
 	
 });
@@ -176,9 +184,7 @@ Route::get('color', function () {
 Route::get('branches', function () {
    return view('v1.company.branches');
 });
-Route::get('employees', function () {
-   return view('v1.company.employees');
-});
+
 Route::get('departments', function () {
    return view('v1.company.departments');
 });

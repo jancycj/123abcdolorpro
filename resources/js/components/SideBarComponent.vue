@@ -193,7 +193,8 @@
                 //         }
                 //     ]
                 // }
-                 menu_array : {
+                menu_array : window.pages,
+                 menu_array1 : {
                     "Supply Chain" : [
                         {
                             menu:'Masters',

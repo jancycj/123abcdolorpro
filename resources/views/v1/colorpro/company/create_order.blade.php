@@ -393,7 +393,7 @@
                                 <button class="btn btn-primary btn-block " @click="update_order()">Update Order</button>
                         </div>
                         <div class="col-2 offset-8 mg-t-5" v-if="!print_flag">
-                                <button class="btn btn-primary btn-block " @click="save_oreder()">Create Order</button>
+                                <button class="btn btn-primary btn-block " v-if="has_permission('company.lookup.post')" @click="save_oreder()">Create Order</button>
                         </div>
                         <div class="col-2  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_order()">Cancel</button>
@@ -637,6 +637,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
     var app = new Vue({
        el: '#app',
        data: {
+            permissions: window.permissions,
            showMenu: false,
            order_flag:false,
            tax_class:{},
@@ -686,6 +687,9 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
            order_qry : order_qry,
        },
    methods: {
+        has_permission: function(url) {
+            return this.permissions.includes(url);
+        },
          toggleShow: function() {
            this.showMenu = !this.showMenu;
          },

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsTable extends Migration
+class CreateEmployeeUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('employee_users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->nullable();
-            $table->enum('method', ['get','post', 'delete','put']);
-            $table->enum('type', ['view','create', 'edit','delete']);
-            $table->string('url')->nullable();
-            $table->string('page_slug');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('employee_id')->nullable();
+            $table->enum('status', ['active', 'inactive' ,'blocked','deleted']);
             $table->unsignedInteger('created_by')->nullable();
-            $table->boolean('has_limit')->default(0);
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('employee_users');
     }
 }

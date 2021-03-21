@@ -261,6 +261,8 @@
        data: {
            showMenu: false,
            transaction:{},
+           permissions: window.permissions,
+
        },
    methods: {
          toggleShow: function() {
@@ -284,7 +286,10 @@
                 this.errors = err.response.data.errors;
                 console.log(this.errors)
             });
-         }
+         },
+         has_permission: function(url) {
+            return this.permissions.includes(url);
+        },
      
      },
      mounted(){

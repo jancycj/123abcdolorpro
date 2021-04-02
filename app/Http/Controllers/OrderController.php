@@ -103,6 +103,7 @@ class OrderController extends Controller
         $order->tax_id              = isset($order_ob['tax_ob'])? $order_ob['tax_ob']['id']:''; 
         $order->tax_percent         = $order_ob['tax_value']; 
         $order->tax_amount          = $order_ob['tax_amount'];
+        $order->tax_name          = $order_ob['tax_name'];
         $order->grant_total         = $order_ob['grant_total'];
         $order->save();
         $doc = DocNo::updateDoc('po',1);
@@ -118,8 +119,8 @@ class OrderController extends Controller
             $order_details->discount            = $od['discount'];
             $order_details->grant_total         = $od['grant_total'];
             $order_details->sub_total           = $od['sub_total'];
-            $order_details->primary_unit_id     = $od['primary_unit'];
-            $order_details->purchase_unit_id    = $od['purchase_unit'];
+            // $order_details->primary_unit_id     = $od['primary_unit'];
+            $order_details->purchase_unit_id    = $od['purchase_unit_id'];;
             $order_details->conversion_factor   = $od['conversion_factor'];
             $order_details->delivery_date       = isset($od['date'])?$od['date']:null;
             $order_details->status              = 'pending';
@@ -269,12 +270,14 @@ class OrderController extends Controller
         $order->tax_id              = isset($order_ob['tax_ob'])? $order_ob['tax_ob']['id']:''; 
         $order->tax_percent         = $order_ob['tax_value']; 
         $order->tax_amount          = $order_ob['tax_amount'];
+        $order->tax_name          = $order_ob['tax_name'];
         $order->grant_total         = $order_ob['grant_total'];
         $order->save();
         $order_id = $order->id;
         
         OrderDetails::where('order_id',$order_id)->delete();
-
+            $currency = '';
+            $exchange_rate = '';
         foreach($order_details_ob as $od){
 
             $order_details                      = new OrderDetails;
@@ -285,12 +288,16 @@ class OrderController extends Controller
             $order_details->discount            = $od['discount'];
             $order_details->grant_total         = $od['grant_total'];
             $order_details->sub_total           = $od['sub_total'];
-            $order_details->primary_unit_id     = $od['primary_unit'];
-            $order_details->purchase_unit_id    = $od['purchase_unit'];
+            // $order_details->primary_unit_id     = $od['primary_unit'];
+            $order_details->purchase_unit_id    = $od['purchase_unit_id'];
             $order_details->conversion_factor   = $od['conversion_factor'];
+            $order_details->item_weight         = $od['item_weight'];
             $order_details->delivery_date       = isset($od['date'])?$od['date']:null;
             $order_details->status              = 'pending';
             $order_details->save();
+            $currency = $od['currency'];
+            $exchange_rate = $od['exchange_rate'];
+
             $this->updateIndentByQuantity($indent_no, $od['item_id'], $od['quantity']);
 
             $order_details_id = $order_details->id;
@@ -312,6 +319,8 @@ class OrderController extends Controller
 
         }
 
+        $order->currency         = $currency;
+        $order->exchange_rate         = $exchange_rate;
 
         $customer = Costomers::where('id',$order->suppier_id)->first();
 

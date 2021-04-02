@@ -185,7 +185,7 @@ class CompanyController extends Controller
     public function get_rate($id, Request $request)
     {
         if($request->has('supplier')){
-            if($rates = Rates::where(['item_id' => $id, 'customer_id' => $request->supplier])->first()){
+            if($rates = Rates::where(['item_id' => $id, 'supplier_id' => $request->supplier])->first()){
                 return response(['status' => 'success', 'data' => $rates],200);
 
             }

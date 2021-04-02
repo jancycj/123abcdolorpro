@@ -90,7 +90,7 @@
             <div class="d-sm-flex align-items-center justify-content-between ">
                 <div>
                     <div >
-                        <h5 class="hd">#Customer Master</h5> 
+                        <h5 class="hd">#Vendor Master</h5> 
                     </div> 
                 </div>
                 
@@ -411,6 +411,8 @@ aria-hidden="true">
                         :id="'customer'"
                         :table="'costomers'" 
                         :fields="['id','name','short_name']" 
+                        :where_field="'type'"
+                        :where_value="'vendor'"
                         :search_filed="'short_name'" 
                         @selected="getCustomer($event)"
                         ></choose-component>

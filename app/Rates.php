@@ -8,18 +8,23 @@ use Illuminate\Support\Facades\DB;
 class Rates extends Model
 {
     //
-    public $appends = ['item','pm_unit', 'pr_unit','customer','quantity','part_no'];
+    public $appends = ['item','item_name','pm_unit','stock_unit','purchase_unit', 'pr_unit','customer','supplier_name','supplier_code','quantity','part_no',];
     /**
      * [Item]
      */
     public function getItemAttribute() {
        
-        return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('name')->first();
+        return Item::where('id',$this->item_id)->pluck('name')->first();
+
+    }
+    public function getItemNameAttribute() {
+       
+        return Item::where('id',$this->item_id)->pluck('name')->first();
 
     }
     public function getPartNoAttribute() {
        
-        return Item::where('id',Stock::where('id',$this->item_id)->pluck('item_id')->first())->pluck('part_no')->first();
+        return Item::where('id',$this->item_id)->pluck('part_no')->first();
 
     }
     public function getQuantityAttribute() {
@@ -32,6 +37,16 @@ class Rates extends Model
         return LookupMaster::where('id',$this->primary_unit)->pluck('lookup_value')->first();
 
     }
+    public function getStockUnitAttribute() {
+       
+        return LookupMaster::where('id',$this->stock_unit_id)->pluck('lookup_value')->first();
+
+    }
+    public function getPurchaseUnitAttribute() {
+       
+        return LookupMaster::where('id',$this->purchase_unit_id)->pluck('lookup_value')->first();
+
+    }
     public function getPrUnitAttribute() {
        
         return LookupMaster::where('id',$this->purchase_unit)->pluck('lookup_value')->first();
@@ -39,15 +54,18 @@ class Rates extends Model
     }
     public function getCustomerAttribute() {
        
-        return Costomers::where('id',$this->customer_id)->pluck('name')->first();
+        return Costomers::where('id',$this->supplier_id)->pluck('name')->first();
 
     }
-    public function getRateAttribute($value) {
-        $currency = DB::table('lookup_masters')->where('lookup_value',$this->currency_id)->pluck('genaral_value')->first();
-        $currency = $currency != null ? $currency : 1;
-
-        isset($this->conversion_factor)?$this->conversion_factor:1;
-        return $value * $currency * $this->conversion_factor;
+    public function getSupplierNameAttribute() {
+       
+        return Costomers::where('id',$this->supplier_id)->pluck('name')->first();
 
     }
+    public function getSupplierCodeAttribute() {
+       
+        return Costomers::where('id',$this->supplier_id)->pluck('customer_code')->first();
+
+    }
+    
 }

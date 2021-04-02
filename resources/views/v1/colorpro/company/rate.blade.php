@@ -104,6 +104,11 @@
     color: #8392a5;
     padding: 0 5px;
 }
+
+tr.clickable:hover{
+    cursor: pointer;
+    background: #9e9e9e;
+}
     </style>
 @endsection
 @section('content')
@@ -113,7 +118,7 @@
             <div class="d-sm-flex align-items-center justify-content-between ">
                 <div>
                     <div >
-                        <h5 class="hd">#Purchase Indent </h5> 
+                        <h5 class="hd">#Purchase Rate </h5> 
                     </div> 
                 </div>
                 
@@ -124,32 +129,14 @@
             <div class="card mg-b-2">
                 <div class="card-header ">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
+                            
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getIndent($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getItemPopup($event)" >
                                     <div class="form-group row">
-                                        <label class="col-5 form-control-label">Indent No*</label>
-                                        <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_no" >
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 col-lg-5 col-sm-6">
-                                    <div class="form-group row">
-                                        <label class="col-4 form-control-label">Request Date* </label>
-                                        <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_date" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getSectionPopup($event)" >
-                                    <div class="form-group row">
-                                        <label class=" col-5 form-control-label">section*</label>
+                                        <label class=" col-5 form-control-label">Item*</label>
                                         <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.section">
+                                            <input autocomplete="off" class="form-control" v-model="rateObj.part_no">
                                         </div>
                                     </div>
                                 </div>
@@ -158,69 +145,172 @@
                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                     <div class="form-group row">
                                         <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.section_des" disabled>
+                                            <input autocomplete="off" class="form-control" name="unit" v-model="rateObj.item_name" disabled>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getFamilyPopup($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getSupplierPopup($event)" >
                                     <div class="form-group row">
-                                        <label class=" col-5 form-control-label">family*</label>
+                                        <label class=" col-5 form-control-label">Supplier*</label>
                                         <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.family">
+                                            <input autocomplete="off" class="form-control" v-model="rateObj.supplier_code">
                                         </div>
                                     </div>
                                 </div>
+                                
+
                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                     <div class="form-group row">
                                         <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.family_des" disabled>
+                                            <input autocomplete="off" class="form-control" name="unit" v-model="rateObj.supplier_name" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-10 col-lg-10 col-sm-6" >
+                                    <div class="form-group row">
+                                        <label class="col-2 form-control-label">Remarks</label>
+                                        <div class="col-10 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.remarks">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 col-lg-6 col-sm-6" >
+                                <div class="col-md-10 col-lg-10 col-sm-6" >
                                     <div class="form-group row">
-                                        <label class="col-3 form-control-label">Remarks</label>
-                                        <div class="col-9 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="indent.remarks">
+                                        <label class="col-2 form-control-label">Specification</label>
+                                        <div class="col-10 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.specifications">
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-3">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-4" >
                                     <div class="form-group row">
-                                        <a href="#" class="btn btn-white btn-block">Copy Assortment</a>
+                                        <label class="col-5 form-control-label">Stock unit</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.stock_unit" disabled>
+                                        </div>
                                     </div>
-                                </div> -->
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">Pur.unit</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.purchase_unit" @keydown="getUnitPopup($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">con.factor</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.conversion_factor">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-4" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">Item weight</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.item_weight" @keydown="add_ob($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">Basic rate</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.rate" @keydown="add_ob($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">discount</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.discount" @keydown="add_ob($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-4" @keydown="getCurrencyPopup($event)" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">Currency</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.currency">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">Exch rate</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.exchange_rate" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getTaxPopup($event)" >
+                                    <div class="form-group row">
+                                        <label class=" col-5 form-control-label">Tax*</label>
+                                        <div class=" col-7 input-group">
+                                            <input autocomplete="off" class="form-control" v-model="rateObj.tax_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="col-md-6 col-lg-6 col-sm-12">
+                                    <div class="form-group row">
+                                        <div class="col-12 input-group">
+                                            <input autocomplete="off" class="form-control" name="unit" v-model="rateObj.tax_value" disabled>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <!-- <div data-label="Sort By" class="df-example demo-forms">
-                                <div class="row row-sm">
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Part No</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Part name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Party</label>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-6" >
+                                    <div class="form-group row">
+                                        <label class="col-4 form-control-label">Qnt No</label>
+                                        <div class="col-8 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="rateObj.quatation_no">
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-6" >
+                                    <div class="form-group row">
+                                        <label class="col-4 form-control-label">Qtn date</label>
+                                        <div class="col-8 input-group">
+                                            <input autocomplete="off" class="form-control" type="date"  v-model="rateObj.quatation_date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
                         </div>
+                        
                     </div>
+
+                   
                     
                     
                 </div><!-- card-header -->
@@ -237,81 +327,61 @@
                                 <thead>
                                     <tr>
                                     <th scope="col">SiNo</th>
-                                    <th scope="col">Part No *</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Qty</th>
-                                    <th scope="col">UOM</th>
-                                    <th scope="col">Nd By date</th>
-                                    <th scope="col">Remarks</th>
-                                    <th scope="col">stat</th>
-                                    <th scope="col">mode</th>
+                                    <th scope="col">supplier Name</th>
+                                    <th scope="col">Part No</th>
+                                    <th scope="col">Qtn No</th>
+                                    <th scope="col">Qtn date</th>
+                                    <th scope="col">Stock Unit</th>
+                                    <th scope="col">Purchase Unit</th>
+                                    <th scope="col">Rate</th>
+                                    <th scope="col">Con.factor</th>
+                                    <th scope="col">Item Wieght</th>
+                                    <th scope="col">Default rate</th>
                                     <th scope="col">action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(d,index) in items">
+                                    <tr v-for="(d,index) in rates" class="clickable" >
                                         <td scope="row">@{{index+1}}</td>
-                                        <td>
+                                        <td @click="selectOb(d)">
+                                            @{{d.supplier_name}}
+                                        </td>
+                                        <td @click="selectOb(d)">
                                             @{{d.part_no}}
                                         </td>
-                                        <td>
-                                             @{{d.name}} 
+                                        <td @click="selectOb(d)">
+                                             @{{d.quatation_no}} 
                                         </td>
-                                        <td>
-                                             <input autocomplete="off" class="form-control"  v-model="d.qty" >
+                                        <td @click="selectOb(d)">
+                                            @{{d.quatation_date == '0000-00-00' ? '' : d.quatation_date}} 
                                         </td>
-                                        <td>
-                                             @{{d.unit}} 
+                                        <td @click="selectOb(d)">
+                                             @{{d.stock_unit}} 
                                         </td>
-                                        <td>
-                                             @{{d.need_by_date}} 
+                                        <td @click="selectOb(d)">
+                                             @{{d.purchase_unit}} 
                                         </td>
-                                        <td>
-                                             @{{d.remark}} 
+                                        <td @click="selectOb(d)">
+                                             @{{d.rate}} 
                                         </td>
-                                        <td>
-                                             @{{d.status}} 
+                                        <td @click="selectOb(d)">
+                                             @{{d.conversion_factor}} 
                                         </td>
-                                        <td>
-                                             @{{d.mode}} 
+                                        <td @click="selectOb(d)">
+                                             @{{d.item_weight}} 
                                         </td>
 
+                                        
+                                        <td>
+                                            
+                                            <input type="checkbox" name="default" id="default_rate" v-model="d.is_default" @change ="checkDefault(d, d.is_default)">
+                                        </td>
                                         <td>
                                             <a  class="action-icon " @click="deleteRow(index)"><i class="fa fa-trash-o tx-danger"></i>
                                             </a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td scope="row">#</td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.part_no" @keydown="getItemPopup($event)">
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.name" disabled>
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.qty" @keydown="add_ob($event)">
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.unit" disabled>
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" type="date" class="form-control"  v-model="item_ob.need_by_date" >
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.remark" @keydown="add_ob($event)">
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.status" disabled>
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.mode" disabled>
-                                        </td>
-                                        <td>
-                                            #
-                                        </td>
-                                       
-                                    </tr>
+                                    
                                     <!-- <tr>
                                         <td></td>
                                         <td> <input class="form-control"  v-model="assortment.no_of_box_per_box"></td>
@@ -327,20 +397,16 @@
                 </div><!-- card-body -->
                 <div class="card-footer ">
                     <div class="row order-ft">
-                        <div class="col-md-2 col-lg-2 col-sm-6 offset-8 mg-t-5" v-if="print_flag">
-                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
-                        </div>
+                       
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
-                                <button class="btn btn-primary btn-block " @click="save_indent()">Save</button>
+                                <button class="btn btn-primary btn-block " @click="save_rate()">Save</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
-                                <button class="btn btn-primary btn-block " @click="update_indent()">Update</button>
+                                <button class="btn btn-primary btn-block " @click="save_rate()">Update</button>
                         </div>
+                        
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
-                                <button class="btn btn-warning btn-block " @click="clear_indent()">Delete</button>
-                        </div>
-                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
-                                <button class="btn btn-secondary btn-block " @click="clear_indent()">Cancel</button>
+                                <button class="btn btn-secondary btn-block " @click="clear_rate()">Cancel</button>
                         </div>
                     </div>
                     
@@ -351,7 +417,7 @@
         
       </div><!-- row row-xs -->
 
-        <div class="modal fade" id="chooseCustomer" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+        <div class="modal fade" id="SupplierPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -360,7 +426,15 @@
                     <div class="modal-body">
                             
                         <div class="card-body card-block">
-                            <choose-customer @customer="getCostomerEvent($event)"></choose-customer>
+                            <choose-component 
+                            :id="'section'"
+                            :table="'costomers'" 
+                            :fields="['id','name','customer_code']" 
+                            :search_filed="'name'" 
+                            :where_field="'type'"
+                            :where_value="'vendor'"
+                            @selected="getSupplier($event)"
+                            ></choose-component>
                                 
                         </div>
                     </div>
@@ -372,7 +446,65 @@
             </div>
         </div><!-- modal end -->
 
-        <div class="modal fade" id="sectionPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+        <div class="modal fade" id="taxPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+  aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+                <div class="modal-content tx-14 card">
+
+                    <div class="modal-body">
+                            
+                        <div class="card-body card-block">
+                            <choose-component 
+                            :id="'section'"
+                            :table="'lookup_masters'" 
+                            :fields="['id','lookup_value','lookup_description','genaral_value']" 
+                            :search_filed="'lookup_value'" 
+                            :where_field="'lookup_key'"
+                            :where_value="'TAX'"
+                            @selected="getTax($event)"
+                            ></choose-component>
+                                
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- yarn popup modal end -->
+
+        <div class="modal fade" id="currencyPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+  aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+                <div class="modal-content tx-14 card">
+
+                    <div class="modal-body">
+                            
+                        <div class="card-body card-block">
+                            <choose-component 
+                            :id="'section'"
+                            :table="'lookup_masters'" 
+                            :fields="['id','lookup_value','lookup_description','genaral_value']" 
+                            :search_filed="'lookup_value'" 
+                            :where_field="'lookup_key'"
+                            :where_value="'CURRENCY'"
+                            @selected="getCurrency($event)"
+                            ></choose-component>
+                                
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- yarn popup modal end -->
+
+        <div class="modal fade" id="unitPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -387,8 +519,8 @@
                             :fields="['id','lookup_value','lookup_description']" 
                             :search_filed="'lookup_value'" 
                             :where_field="'lookup_key'"
-                            :where_value="'DEPARTMENT'"
-                            @selected="getSection($event)"
+                            :where_value="'UNIT'"
+                            @selected="getUnit($event)"
                             ></choose-component>
                                 
                         </div>
@@ -400,34 +532,7 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="familyPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-
-                <div class="modal-content tx-14 card">
-
-                    <div class="modal-body">
-                            
-                        <div class="card-body card-block">
-                            <choose-component 
-                            :id ="'family'"
-                            :table="'lookup_masters'" 
-                            :fields="['id','lookup_value','lookup_description']" 
-                            :search_filed="'lookup_value'" 
-                            :where_field="'lookup_key'"
-                            :where_value="'PRODUCT FAMILY'"
-                            @selected="getFamily($event)"
-                            ></choose-component>
-                                
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- yarn popup modal end -->
+       
         <div class="modal fade" id="itemPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -451,57 +556,8 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="assortmentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-
-                <div class="modal-content tx-14 card">
-
-                    <div class="modal-body">
-                            
-                        <div class="card-body card-block">
-                            <choose-component 
-                            :table="'assortments'" 
-                            :fields="['id','assortment_no','assortment_name']" 
-                            :search_filed="'assortment_no'" 
-                            @selected="getAssortmentByNumber($event)"
-                            ></choose-component>
-                                
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="IndentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-
-                <div class="modal-content tx-14 card">
-
-                    <div class="modal-body">
-                            
-                        <div class="card-body card-block">
-                            <choose-component 
-                            :id="'indents'"
-                            :table="'indents'" 
-                            :fields="['id','indent_no','department']" 
-                            :search_filed="'indent_no'" 
-                            @selected="getIndentEdit($event)"
-                            ></choose-component>
-                                
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- yarn popup modal end -->
+        
+        
     
   </div><!-- container -->
 </div><!-- content -->
@@ -535,16 +591,21 @@
            update_flag : false,
            print_flag : false,
            url :'',
-           items : [ ],
-           indent : {
-               indent_no : '',
-                indent_date:'',
-                department :'',
-                product_group : '',
-                section : '',
-                section_des : '',
-                family : '',
-                family_des : '',
+           rates : [
+                
+            ],
+           rateObj : {
+                part_no : '',
+                item_name:'',
+                supplier_code :'',
+                supplier_name : '',
+                tax_code: '',
+                tax_value: '',
+                tax_name: '',
+                currency: '',
+                exchange_rate: '',
+                stock_unit : '',
+                purchase_unit : '',
             },
            item_ob : {sl_no : 1, shade_code:'', colour: ''},
            no_of_shades : 1,
@@ -600,43 +661,57 @@
 
             $("#chooseCustomer").modal('toggle');
          },
-         getSectionPopup : function(event){
+         getUnitPopup : function(event){
              console.log(event)
             if(event.code == 'F1' || event.code == 'F2'){
-                $("#sectionPopup").modal('toggle');
+                $("#unitPopup").modal('toggle');
                 // this.get_article_by_number();
             }
         },
-         
-        getSection : function(event){
+        getUnit : function(event){
              console.log(event)
-             this.indent.section = event.lookup_value;
-             this.indent.department = event.id;
-            this.indent.section_des = event.lookup_description;
-            this.indent_section = event.lookup_value;
-            this.indent_section_description = event.lookup_description;
+             this.rateObj.purchase_unit = event.lookup_value;
+             this.rateObj.purchase_unit_id = event.id;
 
             // if(event.code == 'F1' || event.code == 'F2'){
-                $("#sectionPopup").modal('toggle');
+                $("#unitPopup").modal('toggle');
                 // this.get_article_by_number();
             // }
         },
-        getFamilyPopup : function(event){
+        getTaxPopup : function(event){
              console.log(event)
             if(event.code == 'F1' || event.code == 'F2'){
-                $("#familyPopup").modal('toggle');
+                $("#taxPopup").modal('toggle');
                 // this.get_article_by_number();
             }
         },
          
-        getFamily : function(event){
+        getTax : function(event){
              console.log(event)
-             this.indent.family = event.lookup_value;
-            this.indent.family_des = event.lookup_description;
-            this.indent.product_group = event.id;
+             this.rateObj.tax_code = event.lookup_value;
+             this.rateObj.tax_value = event.genaral_value;
+             this.rateObj.tax_name = event.lookup_description;
 
             // if(event.code == 'F1' || event.code == 'F2'){
-                $("#familyPopup").modal('toggle');
+                $("#taxPopup").modal('toggle');
+                // this.get_article_by_number();
+            // }
+        },
+        getCurrencyPopup : function(event){
+             console.log(event)
+            if(event.code == 'F1' || event.code == 'F2'){
+                $("#currencyPopup").modal('toggle');
+                // this.get_article_by_number();
+            }
+        },
+         
+        getCurrency : function(event){
+             console.log(event)
+             this.rateObj.currency = event.lookup_value;
+             this.rateObj.exchange_rate = event.genaral_value;
+
+            // if(event.code == 'F1' || event.code == 'F2'){
+                $("#currencyPopup").modal('toggle');
                 // this.get_article_by_number();
             // }
         },
@@ -656,50 +731,140 @@
         },
         getItem : function(val){
             var vm = this;
-            vm.item_ob = val;
-            vm.item_ob.item_id = val.id;
-            console.log('val', vm.item_ob);
+            vm.rateObj.part_no = val.part_no;
+            vm.rateObj.item_name = val.name;
+            vm.rateObj.item_id = val.id;
+            vm.rateObj.stock_unit = val.unit;
+            vm.rateObj.stock_unit_id = val.unit_id;
+            if(this.check_item_in_items(val.id)){
+                alert('duplicate item');
+                return;
+            }
+            axios.get('/company/rateByItem/'+val.id).then((response) => {
+                vm.rates = response.data;
+                $("#itemPopup").modal('toggle');
+
+            }, (error) => {
+                // vm.errors = error.errors;
+            });
+                // vm.items.push(vm.item_ob)
+            
+        },
+        getSupplierPopup : function(event, obj){
+            this.selected_obj = obj;
+             console.log('selected_obj',this.selected_obj)
+             this.$refs.itemPop.$refs.search.focus();
+            // if(event.code == 'F1' || event.code == 'F2'){
+                $("#SupplierPopup").modal('toggle');
+            // }
+        },
+        getSupplier : function(val){
+            var vm = this;
+            vm.rateObj.supplier_code = val.customer_code;
+            vm.rateObj.supplier_name = val.name;
+            vm.rateObj.supplier_id = val.id;
             // vm.items.push(vm.item_ob)
             if(this.check_item_in_items(val.id)){
                     alert('duplicate item');
                     return;
                 }
-            $("#itemPopup").modal('toggle');
+            $("#SupplierPopup").modal('toggle');
         },
         add_ob : function(event){
 
             var vm = this;
 
-            if(event.code == 'Enter' ){
-                console.log(this.check_item_in_items(vm.item_ob.item_id),'trueeee')
-                if(this.check_item_in_items(vm.item_ob.item_id)){
-                    alert('duplicate item');
+            if(event.code == 'Enter' && !vm.update_flag){
+                console.log(this.check_item_in_items(vm.rateObj.item_id, vm.rateObj.supplier_code),'trueeee')
+                if(this.check_item_in_items(vm.rateObj.item_id, vm.rateObj.supplier_code)){
+                    alert('duplicate rate');
                     return;
                 }
-                if(! vm.item_ob.unit_id){
-                    alert('please provide an item');
+                if(! vm.rateObj.tax_value){
+                    alert('please provide tax');
                     return;
                 }
-                if(! vm.item_ob.qty){
-                    alert('please provide a quantity');
-                    return;
+                if(vm.rateObj.stock_unit != vm.rateObj.purchase_unit){
+
+                    if(! vm.rateObj.conversion_factor){
+                        alert('please provide conversion_factor');
+                        return;
+                    }
                 }
-                vm.items.push(vm.item_ob);
-                vm.item_ob = {};
+                vm.rates.push(vm.rateObj);
+                   vm.clearRate();
+                    
+            } else if(event.code == 'Enter' && vm.update_flag){
+
+                this.rates.forEach(function(rate){
+                    if(rate.item_id === vm.rateObj.item_id && rate.supplier_code == vm.rateObj.supplier_code){
+                        rate = vm.rateObj;
+                    }
+                });
             }
         },
-        check_item_in_items(check_item){
+        clearRate(){
+                    var vm = this;
+
+                    var oldRate = vm.rateObj;
+                    vm.rateObj = {
+                        part_no : oldRate.part_no,
+                        item_name:oldRate.item_name,
+                        item_id : oldRate.item_id,
+                        supplier_code :'',
+                        supplier_name : '',
+                        tax_code: '',
+                        tax_value: '',
+                        tax_name: '',
+                        currency: '',
+                        exchange_rate: '',
+                        stock_unit : oldRate.stock_unit,
+                        stock_unit_id : oldRate.stock_unit_id,
+                        purchase_unit : '',
+                    };
+                    
+        },
+        check_item_in_items(check_item, supplier){
             console.log(this.items, check_item)
             var valueArr = [];
-            valueArr = this.items.filter(function(item){ return item.item_id == check_item });
+            valueArr = this.rates.filter(function(item){ return item.item_id == check_item && item.supplier_code == supplier});
             return valueArr.length > 0;
         
+        },
+
+        checkDefault(dd,flag){
+            var vm = this;
+            if(flag){
+                 vm.rates.forEach(function(rate){
+                    rate.is_default = false;
+                    if(rate.item_id === dd.item_id && rate.supplier_code === dd.supplier_code ){
+                        rate.is_default = true;
+                    } 
+                });
+            } else {
+                vm.rates.forEach(function(rate){
+
+                    rate.is_default = false;
+
+                });
+            }
         },
        
         selectCustomer : function(event){
             if(event.code == 'Enter' ){
                 $("#chooseCustomer").modal('toggle');
             }
+        },
+        selectOb : function(obj){
+            this.update_flag = !this.update_flag;
+            if(this.update_flag){
+                this.rateObj = obj;
+
+            } else{
+                this.clearRate();
+
+            }
+            
         },
          
          /* get item
@@ -786,17 +951,15 @@
             // vm.errors = error.errors;
             });
         },
-        save_indent:function() {
+        save_rate:function() {
             var vm = this;
-            vm.indent.items = vm.items; 
-            if(vm.items.length <= 0){
-                alert('please provide item')
+            if(vm.rates.length <= 0){
+                alert('please provide any rate')
                 return;
             }
             
-            axios.post( '/company/indent',vm.indent).then(response => {
-                this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
-                alert('Succesfully Saved..!');
+            axios.post( '/company/rates',vm.rates).then(response => {
+                    alert('Succesfully Saved..!');
                 console.log(response.data)
 
             })
@@ -827,12 +990,7 @@
         }
      
      },
-     mounted(){
-        this.getIndentNo();
-     },
-     created(){
-        this.get_colors();
-     }
+     
     });
 </script>
 @endsection

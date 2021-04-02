@@ -125,7 +125,7 @@ class MenuTableSeeder extends Seeder
                'menu' => 'Vendor', 
                'role_id' => 3,
                'icon' => '',
-               'url' => '/company/customer',
+               'url' => '/company/customer/create',
                'status' => 'active',
 
            ],

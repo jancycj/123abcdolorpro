@@ -273,7 +273,7 @@
                                     <span v-if="ord.schedule"> <small class="tx-teal"> Scheduled</small></span> <span v-if="!ord.schedule"><input type="date" class="form-control" v-model="ord.date"></span>
                                 </td>
                                 <td class="tx-medium "> <input type="text" class="form-control" v-model="ord.quantity" @keydown="getItemRate($event, ord.item_id,ord.quantity,index)"></td>
-                                <td class="tx-medium ">@{{ord.pm_unit}}</td>
+                                <td class="tx-medium ">@{{ord.purchase_unit}}</td>
                                 <td class="tx-medium "> 
                                     
                                     <span v-if="ord.schedule"> <a href="#" ><i class="fa fa-calendar"></i></a></span> <span v-if="!ord.schedule">--</span>
@@ -302,7 +302,7 @@
                                 </td>
                                 
                                 <td class="tx-medium ">
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="Unit" name="unit" v-model="order_detail_ob.pm_unit" disabled>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Unit" name="unit" v-model="order_detail_ob.purchase_unit" disabled>
                                 </td>
                                 <td class="tx-medium ">
                                     <a  class="btn btn-white  btn-block" @click="make_schedule(1)"><i  :class="order_detail_ob.schedule?'fa fa-calendar-check-o tx-teal':'fa fa-calendar tx-teal'"></i>
@@ -331,8 +331,24 @@
                 </div><!-- card-body -->
                 <div class="card-footer ">
                     <div class="row order-ft">
-                        
-                        <div class="col-3 offset-10">
+                        <div class="col-2 " v-if="tax_name != ''">
+                            <div class="form-group">
+                                <label for="inputAddress">@{{tax_name}}:</label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="amount" v-model="tax_value" disabled>
+                            </div>   
+                        </div>
+                        <div class="col-2 " v-else>
+                            <div class="form-group">
+                                <label for="inputAddress">Tax</label>
+                                <select class="custom-select form-control"  v-model="tax_object" @change="get_tax(tax_object)" :disabled="final_sub_total == 0">
+                                    <option value="" disabled="" selected="" >select Tax</option>
+                                <option v-for="tax in taxes" :value="tax">@{{tax.lookup_value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-8"></div>
+
+                        <div class="col-2 ">
                             <div class="form-group">
                                     <label for="inputAddress">Basic total:</label>
                                 <input type="text" class="form-control" id="inputAddress" placeholder="1222" :value="calculate_basic_total()" disabled>
@@ -368,16 +384,8 @@
                     </div>
                    
                     <div class="row order-ft">
-                        <div class="col-2 ">
-                            <div class="form-group">
-                                <label for="inputAddress">Tax</label>
-                                <select class="custom-select form-control"  v-model="tax_object" @change="get_tax(tax_object)" :disabled="final_sub_total == 0">
-                                    <option value="" disabled="" selected="" >select Tax</option>
-                                <option v-for="tax in taxes" :value="tax">@{{tax.lookup_value}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-8"></div>
+                       
+                        <div class="col-10"></div>
                         <div class="col-2 ">
                             <div class="form-group">
                                 <label for="inputAddress">grant total:</label>
@@ -641,7 +649,6 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
            showMenu: false,
            order_flag:false,
            tax_class:{},
-           tax_value:0,
            order:{
                supplier_code : '',
                supplier_name : '',
@@ -685,6 +692,9 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
            order_id : 19,
            ind_qry : ind_qry,
            order_qry : order_qry,
+           tax_name : '',
+           tax_value:0,
+
        },
    methods: {
         has_permission: function(url) {
@@ -880,7 +890,12 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
             axios.get('/company/get_rate/'+evnt.id+'?supplier='+vm.order.supplier_id).then((response) => {
             console.log(response.data);
             var rateResOb = response.data;
-
+            if(vm.tax_name != '' && vm.tax_name != rateResOb.data.tax_name){
+                    alert('tax mismatched.!');
+                    return;
+                }
+            vm.tax_name = rateResOb.data.tax_name;
+            vm.tax_value = rateResOb.data.tax_value; 
             if(rateResOb.status == 'success'){
                  vm.order_detail_ob = rateResOb.data;
                 $("#itemPopup").modal('toggle');
@@ -900,6 +915,12 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 axios.get('/company/get_rate/'+item+'?supplier='+vm.order.supplier_id).then((response) => {
                 var rateResOb = response.data;
 
+                if(vm.tax_name != '' && vm.tax_name != rateResOb.tax_name){
+                    alert('tax mismatched.!');
+                    return;
+                }
+                vm.tax_name = rateResOb.tax_name;
+                vm.tax_value = rateResOb.tax_value; 
                 if(rateResOb.status == 'success'){
                     // vm.order_detail_array[index] = rateResOb.data;
                     // var result = vm.order_detail_array.map(function(a) {
@@ -1177,6 +1198,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 alert('please provide order details!');
                 return;
             }
+            this.order.tax_name = this.tax_name;
             this.order.tax_value = this.tax_value;
             this.order.sub_total = this.final_sub_total;
             this.order.basic_total = this.final_basic_total;
@@ -1244,6 +1266,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 alert('please provide order details!');
                 return;
             }
+            this.order.tax_name = this.tax_name;
             this.order.tax_value = this.tax_value;
             this.order.sub_total = this.final_sub_total;
             this.order.basic_total = this.final_basic_total;
@@ -1284,6 +1307,8 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
 
             axios.get('/company/orders/'+e.id).then((response) => {
             vm.order = response.data;
+            vm.tax_name = vm.order.tax_name;
+            vm.tax_value = vm.order.tax_percent;
             vm.order_detail_array = response.data.exact_details;
             console.log(vm.order_detail_array);
                 $("#poPopup").modal('toggle');

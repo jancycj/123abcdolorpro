@@ -27,6 +27,7 @@ class CreateOrderDetailsTable extends Migration
             $table->float('rework_quantity')->nullable();
             $table->float('rejected_quantity')->nullable();
             $table->float('returned_quantity')->nullable();
+            $table->float('item_weight')->nullable();
             $table->unsignedInteger('purchase_unit_id')->nullable();
             $table->unsignedInteger('primary_unit_id')->nullable();
             $table->float('conversion_factor')->nullable();

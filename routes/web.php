@@ -53,6 +53,7 @@ Route::prefix('company')->group(function() {
       Route::resource('assortment', 'AssortmentController');
       Route::resource('indent', 'IndentController');
       Route::resource('employees', 'EmployeeController');
+      Route::get('/rateByItem/{id}', 'RatesController@rateByItem')->name('company.rateByItem');
       Route::get('/user', 'EmployeeController@getUser')->name('company.user.index');
       Route::post('/user', 'EmployeeController@createUser')->name('company.user.create');
       Route::get('/user/{id}', 'EmployeeController@showUser')->name('company.user.show');

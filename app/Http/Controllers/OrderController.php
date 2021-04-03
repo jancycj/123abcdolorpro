@@ -78,13 +78,13 @@ class OrderController extends Controller
         // $order->order_number        = $company_id . mt_rand(100000,999999);
         $order->order_number        = DocNo::getDocNumberString('po',1);
         $order->order_date          = Carbon::now();
-        $order->order_type          = $order_ob['order_type'];
+        $order->order_type          = isset($order_ob['order_type'])?$order_ob['order_type'] :'' ;
         $order->indent_no           = $indent_no ;
         $order->indent_date         = isset($order_ob['indent_date'])?$order_ob['indent_date']:'';
         $order->shipto_customer_id  = $order_ob['ship_to_id'];
         $order->supplier_id         = $order_ob['supplier_id'];
         $order->billto_customer_id  = $company_id;
-        $order->quote_ref_no        = $order_ob['quotation_no'];
+        $order->quote_ref_no        = isset($order_ob['quotation_no'])?$order_ob['quotation_no'] :'';
         $order->department_id        = $order_ob['department_id'];
         // $order->quote_ref_date      = $order_ob
         $order->created_by          = Auth::id();
@@ -109,6 +109,8 @@ class OrderController extends Controller
         $doc = DocNo::updateDoc('po',1);
         $order_id = $order->id;
 
+        $currency = '';
+        $exchange_rate = '';
         foreach($order_details_ob as $od){
 
             $order_details                      = new OrderDetails;
@@ -122,9 +124,12 @@ class OrderController extends Controller
             // $order_details->primary_unit_id     = $od['primary_unit'];
             $order_details->purchase_unit_id    = $od['purchase_unit_id'];;
             $order_details->conversion_factor   = $od['conversion_factor'];
-            $order_details->delivery_date       = isset($od['date'])?$od['date']:null;
+            $order_details->need_by_date       = isset($od['need_by_date'])?$od['need_by_date']:null;
             $order_details->status              = 'pending';
             $order_details->save();
+
+            $currency = $od['currency'];
+            $exchange_rate = $od['exchange_rate'];
 
             $item_update = DB::table('items')
                 ->where('id', $od['item_id'])
@@ -153,6 +158,9 @@ class OrderController extends Controller
 
         }
 
+        $order->currency         = $currency;
+        $order->exchange_rate         = $exchange_rate;
+        $order->save();
 
         $customer = Costomers::where('id',$order->suppier_id)->first();
 
@@ -292,7 +300,7 @@ class OrderController extends Controller
             $order_details->purchase_unit_id    = $od['purchase_unit_id'];
             $order_details->conversion_factor   = $od['conversion_factor'];
             $order_details->item_weight         = $od['item_weight'];
-            $order_details->delivery_date       = isset($od['date'])?$od['date']:null;
+            $order_details->need_by_date       = isset($od['need_by_date'])?$od['need_by_date']:null;
             $order_details->status              = 'pending';
             $order_details->save();
             $currency = $od['currency'];
@@ -321,6 +329,7 @@ class OrderController extends Controller
 
         $order->currency         = $currency;
         $order->exchange_rate         = $exchange_rate;
+        $order->save();
 
         $customer = Costomers::where('id',$order->suppier_id)->first();
 
@@ -448,10 +457,10 @@ class OrderController extends Controller
         $this->validate($request, [
             'order_id'     => 'required|numeric',
         ]);
-        $id = $request->order_id;
+         $id = $request->order_id;
         try {
             
-            $order = Order::where('id',$id)->with('exact_details')
+             $order = Order::where('id',$id)->with('exact_details')
             ->with('exact_details.schedules')->with('exact_details.qc_details')->first();
 
             $bill_to = Company::where('id',$order->billto_customer_id)
@@ -460,7 +469,7 @@ class OrderController extends Controller
              $ship_to = Company::where('id',$order->shipto_customer_id)
             ->select('name','short_name','address_line1','address_line2','address_line3','post_code','place','phone_number','email')->first();
 
-            $supplier = Costomers::where('id',$order->suppier_id)
+             $supplier = Costomers::where('id',$order->supplier_id)
             ->select('name','customer_code','address_line1','address_line2','address_line3','post_code','place','phone_number','email')->first();
 
             $pdf = PDF::loadView('pdf.order',compact('order','bill_to' , 'ship_to', 'supplier'));

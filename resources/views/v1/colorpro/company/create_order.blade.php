@@ -270,7 +270,7 @@
                                 <td class="tx-medium ">@{{ord.part_no}}</td>
                                 <td class="tx-medium ">@{{ord.item}}</td>
                                 <td class="tx-medium ">
-                                    <span v-if="ord.schedule"> <small class="tx-teal"> Scheduled</small></span> <span v-if="!ord.schedule"><input type="date" class="form-control" v-model="ord.date"></span>
+                                    <span v-if="ord.schedule"> <small class="tx-teal"> Scheduled</small></span> <span v-if="!ord.schedule"><input type="date" class="form-control" v-model="ord.need_by_date"></span>
                                 </td>
                                 <td class="tx-medium "> <input type="text" class="form-control" v-model="ord.quantity" @keydown="getItemRate($event, ord.item_id,ord.quantity,index)"></td>
                                 <td class="tx-medium ">@{{ord.purchase_unit}}</td>
@@ -280,8 +280,8 @@
                                 </td>
                                 <td class="tx-medium tx-primary">@{{ord.rate}}</td>
                                 <td class=" tx-teal">- @{{ord.discount}}%</td>
-                                <td class=" tx-pink">@{{total_amount(ord.quantity,ord.rate)}}</td>
-                                <td class="tx-medium ">@{{get_discount(ord.discount,total_amount(ord.quantity,ord.rate))}}  </td> 
+                                <td class=" tx-pink">@{{ord.sub_total}}</td>
+                                <td class="tx-medium ">@{{ord.grant_total}}  </td> 
                                 <td>
                                     <a  class="action-icon " @click="remove_row(index)"><i class="fa fa-trash-o tx-danger"></i>
                                     </a>
@@ -295,10 +295,10 @@
                                     <input autocomplete="off" class="form-control"  v-model="order_detail_ob.item" disabled>
                                 </td>
                                 <td class="tx-medium ">
-                                    <input type="date" class="form-control" id="inputAddress" placeholder="Date" name="date" v-model="order_detail_ob.date">
+                                    <input type="date" class="form-control" id="inputAddress" placeholder="Date" name="date" v-model="order_detail_ob.need_by_date">
                                 </td>
                                 <td class="tx-medium ">
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="Quantity" name="quantity"  v-model="order_detail_ob.quantity" @keydown="add_ob($event)">
+                                    <input type="number" class="form-control" id="inputAddress" placeholder="Quantity" name="quantity"  v-model="order_detail_ob.quantity" autocomplete="off" @keydown="add_ob($event)">
                                 </td>
                                 
                                 <td class="tx-medium ">
@@ -315,10 +315,11 @@
                                     <input type="text" class="form-control" id="inputAddress" placeholder="Discount" name="disc" v-model="order_detail_ob.discount" :disabled="!order_flag"  @keydown="add_ob($event)">
                                 </td>
                                 <td class=" tx-pink">
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="Net" name="net" :value="total_amount(order_detail_ob.quantity,order_detail_ob.rate)" disabled>
+                                    <input type="hidden" :value="add_quantity(order_detail_ob.quantity)"/>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Net" name="net" v-model="order_detail_ob.sub_total" disabled>
                                 </td>
                                 <td class="tx-medium ">
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="Total" name="amount" :value="get_discount(order_detail_ob.discount,total_amount(order_detail_ob.quantity,order_detail_ob.rate))" disabled>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Total" name="amount" v-model="order_detail_ob.grant_total" disabled>
                                 </td> 
                                 <td>
                                     #
@@ -639,7 +640,7 @@
 var g_company_id = "{{$company_id}}";
 var g_company_name = "{{$company_name}}";
 var g_company_code = "{{$company_code}}";
-var ind_qry = `SELECT ind.indent_no, ind.department as department_id, lk.lookup_value as department,lk.lookup_description as department_name, ind.request_date, ite.default_supplier as supplier_id,co.name as supplier,co.customer_code as supplier_code FROM indent_details indd INNER JOIN items ite ON ite.id = indd.item_id INNER JOIN indents ind ON ind.id = indd.request_id   INNER JOIN costomers co ON co.id = ite.default_supplier LEFT JOIN lookup_masters lk ON lk.id = ind.department where indd.quantity - indd.puchased_qty > 0 AND co.name like "%$vrbl%" group by indd.id,co.id limit 5`;
+var ind_qry = `SELECT ind.indent_no, ind.department as department_id, lk.lookup_value as department,lk.lookup_description as department_name, ind.request_date, ite.default_supplier as supplier_id,co.name as supplier,co.customer_code as supplier_code FROM indent_details indd INNER JOIN items ite ON ite.id = indd.item_id INNER JOIN indents ind ON ind.id = indd.request_id   INNER JOIN costomers co ON co.id = ite.default_supplier LEFT JOIN lookup_masters lk ON lk.id = ind.department where indd.quantity - indd.puchased_qty > 0 AND co.name like "%$vrbl%" group by ind.indent_no,ite.default_supplier limit 5`;
 var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approved_by),'NOT APPROVED','APPROVED') as status ,co.name as vendor, co.customer_code FROM orders po LEFT JOIN costomers co on co.id = po.supplier_id  where po.order_number like "%$vrbl%" LIMIT 5`;
 
     var app = new Vue({
@@ -832,6 +833,17 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
 
             axios.get('/company/getIndentItem?indent_no='+e.indent_no+'&&party='+e.supplier_id).then((response) => {
             vm.order_detail_array = response.data;
+                // var tax_value = 0;
+                
+                // var result = vm.order_detail_array.map(function(a) {
+                //     tax_value = a.tax_value;
+                //     a.discount= 0;
+                //     a.sub_total= 0;
+                //     a.grant_total= 0;
+                // });
+            var ordObj = response.data[0];
+            vm.tax_name = ordObj.tax_name;
+            vm.tax_value = ordObj.tax_value; 
             console.log(vm.order_detail_array);
                 $("#indentPopup").modal('toggle');
 
@@ -952,32 +964,24 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 });
             }
         },
-        total_amount:function(quantity,amount){
+        get_amount:function(quantity,amount){
             
-            if(quantity&&amount){
-                this.total_amount_val = parseFloat(quantity)*parseInt(amount);
-                this.sub_total = parseFloat(quantity)*parseInt(amount);
-                return parseFloat(quantity)*parseInt(amount);
+            var t_quantity = quantity ? quantity : 0;
+            var t_amount = amount ? amount : 0;
+            console.log('get amount',quantity, amount)
+            return parseFloat(quantity) * parseFloat(amount);
 
-            }
-            return 0.00;
         },
-        get_discount:function(discount,amount){
+        get_subtotal:function(discount,amount){
             
-            if(discount&&amount){
-                var disc = parseFloat(discount/100);
-                var disc_amount = parseFloat(amount)*disc;
-                this.grant_total = parseFloat(amount) - disc_amount;
+            var t_discount = discount ? discount : 0;
+            var t_amount = amount ? amount : 0;
+            var disc = parseFloat(t_discount/100);
+            var disc_amount = parseFloat(t_amount)*disc;
+            console.log('get amount',discount, amount)
 
-                return parseFloat(amount) - disc_amount;
-
-            }else{
-                this.grant_total = parseFloat(amount);
-
-            }
-            return parseFloat(amount);
-
-
+            return parseFloat(t_amount) - disc_amount;
+            
         },
         make_schedule:function(id){
 
@@ -1004,6 +1008,15 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 vm.add_row();
             }
         },
+        add_quantity : function(qty){
+            if(qty){
+                var vm = this;
+                console.log(event)
+                vm.order_detail_ob.sub_total = vm.get_subtotal(vm.order_detail_ob.discount, vm.order_detail_ob.rate);
+                vm.order_detail_ob.grant_total = vm.get_amount(qty,  vm.order_detail_ob.sub_total);
+            }
+            
+        },
         add_row:function(){
              
             if(!this.order_detail_ob.date && !this.order_detail_ob.schedule){
@@ -1019,8 +1032,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 return;
             }
             
-            this.order_detail_ob.grant_total = this.grant_total;
-            this.order_detail_ob.sub_total = this.sub_total;
+            
             this.order_detail_array.push(this.order_detail_ob);
             this.order_detail_ob = {};
             this.grant_total = 0;
@@ -1094,7 +1106,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
             var vm = this;
             var calc_basic_total = 0;
                 this.order_detail_array.forEach(function(obj){
-                    calc_basic_total = calc_basic_total+vm.get_discount(obj.discount,parseFloat(obj.rate)*parseFloat(obj.quantity));
+                    calc_basic_total = calc_basic_total+parseFloat(obj.grant_total);
 
                 });
             // return this.order_detail_array.sum("grant_total");
@@ -1177,22 +1189,22 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 alert('please select Supplier');
                 return;
             }
-            if(!this.order.order_type){
+            // if(!this.order.order_type){
                 
-                alert('please select order type!');
-                return;
-            }
+            //     alert('please select order type!');
+            //     return;
+            // }
             if(this.order.order_type === 'O'){
                 if(!this.order.currency){
                     alert('please select the currency!');
                     return;
                 }
             }
-            if(!this.order.quotation_no){
+            // if(!this.order.quotation_no){
                 
-                alert('please provide a quatation no!');
-                return;
-            }
+            //     alert('please provide a quatation no!');
+            //     return;
+            // }
             if(this.order_detail_array.length <= 0){
                 
                 alert('please provide order details!');
@@ -1337,7 +1349,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 method: "POST",
                 responseType: "blob",
                 data: {
-                order_id: this.order_id,
+                order_id: this.order.id,
                 }
             }).then(response => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));

@@ -164,31 +164,40 @@ class IndentController extends Controller
             ->join('indents as ind', 'indd.request_id', '=', 'ind.id')
             ->join('items as ite', 'indd.item_id', '=', 'ite.id')
             ->leftJoin('rates as rt', 'indd.item_id', '=', 'rt.item_id')
-            ->leftJoin('lookup_masters as lk', 'rt.currency_id', '=', 'lk.lookup_value')
-            ->leftJoin('lookup_masters as lkv', 'rt.purchase_unit', '=', 'lkv.id')
+            // ->leftJoin('lookup_masters as lk', 'rt.currency_id', '=', 'lk.lookup_value')
+            ->leftJoin('lookup_masters as lkv', 'rt.purchase_unit_id', '=', 'lkv.id')
             ->where('ind.indent_no', '=',$indent_no)
             ->where('ite.default_supplier', '=',$party)
             ->select(
                 'ind.indent_no',
                 'indd.item_id',
                 'ite.name as item',
+                'ite.name as item_name',
                 'ite.part_no',
                 'ite.default_supplier',
                 'indd.need_by_date',
-                'indd.uom as pr_unit',
                 'rt.discount',
                 'rt.specifications',
-                'rt.currency_id',
-                'rt.primary_unit',
-                'rt.purchase_unit',
+                'rt.currency',
+                'rt.rate as basic_rate',
+                'rt.stock_unit_id',
+                // 'rt.primary_unit',
+                'rt.purchase_unit_id',
                 'rt.conversion_factor',
-                'lk.genaral_value as currency',
-                'lkv.lookup_value as pm_unit',
+                'rt.exchange_rate',
+                'rt.tax_name',
+                'rt.tax_code',
+                'rt.tax_value',
+                'rt.rate',
+                // 'lk.genaral_value as currency',
+                'lkv.lookup_value as purchase_unit',
                 DB::raw("IFNULL(indd.need_by_date,DATE_ADD(CURDATE() , INTERVAL 15 DAY)) as date"),
                 DB::raw("(IFNULL(indd.quantity,0)) - (IFNULL(indd.puchased_qty,0)) as quantity"),
-                DB::raw(" rt.rate * (IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) as rate"),
-                DB::raw("indd.quantity * rt.rate * (IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) as sub_total"),
-                DB::raw("(indd.quantity * rt.rate * (IFNULL(lk.genaral_value,1))* (IFNULL(rt.conversion_factor,1)) )  - (indd.quantity * rt.rate *(IFNULL(lk.genaral_value,1)) * (IFNULL(rt.conversion_factor,1)) ) * ((IFNULL(rt.discount,0))/100)  as grant_total")
+                DB::raw(" rt.rate * (IFNULL(rt.exchange_rate,1)) * (IFNULL(rt.conversion_factor,1)) * (IFNULL(rt.item_weight,1)) as rate_with_exchange"),
+                // DB::raw("indd.quantity * rt.rate * (IFNULL(rt.exchange_rate,1)) * (IFNULL(rt.conversion_factor,1)) * (IFNULL(rt.item_weight,1)) as sub_total"),
+                // DB::raw("(indd.quantity * rt.rate * (IFNULL(rt.exchange_rate,1))* (IFNULL(rt.conversion_factor,1)) * (IFNULL(rt.item_weight,1)) )  - (indd.quantity * rt.rate *(IFNULL(rt.exchange_rate,1)) * (IFNULL(rt.conversion_factor,1)) * (IFNULL(rt.item_weight,1)) ) * ((IFNULL(rt.discount,0))/100)  as grant_total")
+                DB::raw(" rt.rate - (rt.rate * ((IFNULL(rt.discount,0))/100))  as sub_total"),
+                DB::raw(" (rt.rate - (rt.rate * ((IFNULL(rt.discount,0))/100))) * indd.quantity   as grant_total")
 
 
                 )

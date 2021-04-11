@@ -125,7 +125,7 @@
                     <div class="card-header ">
                         <div class="row">
                             
-                            <div class="col-md-5 col-lg-5 col-sm-6" @keydown="getItemPopup($event)">
+                            <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getItemPopup($event)">
                                 <div class="form-group row">
                                     <label class="col-5 form-control-label">part_no* </label>
                                     <div class="col-7 input-group">
@@ -133,10 +133,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="col-md-8 col-lg-8 col-sm-6">
                                 <div class="form-group row">
-                                    <label class="col-5 form-control-label">Item name*</label>
-                                    <div class="col-7 input-group">
+                                    <label class="col-2 form-control-label">Item name*</label>
+                                    <div class="col-10 input-group">
                                         <input autocomplete="off" class="form-control" v-model="item_obj.name" >
                                     </div>
                                 </div>
@@ -487,7 +487,7 @@
             <div class="modal-body">
 
                 <div class="card-body card-block">
-                    <choose-component :id="'items'" :table="'items'" :fields="['id','name','part_no']" :search_filed="'part_no'" @selected="getItem($event)"></choose-component>
+                    <choose-component :id="'items'" :table="'items'" :fields="['part_no','name','id']" :search_filed="'part_no'" @selected="getItem($event)"></choose-component>
 
                 </div>
             </div>

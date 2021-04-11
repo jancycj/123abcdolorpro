@@ -130,7 +130,7 @@
                                     <div class="form-group row">
                                         <label class="col-5 form-control-label">MIR No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.indent_no" >
+                                            <input autocomplete="off" class="form-control"  v-model="mir.mir_no" >
                                         </div>
                                     </div>
                                 </div>
@@ -138,18 +138,18 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">MIR Date* </label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.indent_date" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="mir.mir_date" disabled>
                                         </div>
                                     </div>
                                 </div>
                                 
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getItemPopup($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getOrderPopup($event)" >
                                     <div class="form-group row">
                                         <label class="col-5 form-control-label">PO No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.indent_no" >
+                                            <input autocomplete="off" class="form-control"  v-model="mir.order_no" >
                                         </div>
                                     </div>
                                 </div>
@@ -157,34 +157,34 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">PO Date </label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.indent_date" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="mir.order_date" disabled>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getFamilyPopup($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getSupplierPopup($event)" >
                                     <div class="form-group row">
                                         <label class=" col-5 form-control-label">Supplier*</label>
                                         <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="mir.family">
+                                            <input autocomplete="off" class="form-control" v-model="mir.vendor_code">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                     <div class="form-group row">
                                         <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="mir.family_des" disabled>
+                                            <input autocomplete="off" class="form-control" name="unit" v-model="mir.vendor_name" disabled>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getMIR($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" >
                                     <div class="form-group row">
                                         <label class="col-5 form-control-label">Gate entry No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.indent_no" >
+                                            <input autocomplete="off" class="form-control"  v-model="mir.gate_entry_no" >
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">Gate entry Date </label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.indent_date" disabled>
+                                            <input autocomplete="off" type="date" class="form-control"  v-model="mir.gate_entry_date" >
                                         </div>
                                     </div>
                                 </div>
@@ -202,18 +202,11 @@
                                     <div class="form-group row">
                                         <label class="col-3 form-control-label">Remarks</label>
                                         <div class="col-9 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remarks">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remark">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-lg-4 col-sm-6" >
-                                    <div class="form-group row">
-                                        <label class="col-6 form-control-label">Total Amount</label>
-                                        <div class="col-6 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remarks">
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -222,7 +215,7 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">DC No</label>
                                         <div class="col-8 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remarks">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.vendor_dc_no">
                                         </div>
                                     </div>
                                 </div>
@@ -230,7 +223,7 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">DC Date</label>
                                         <div class="col-8 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remarks">
+                                            <input autocomplete="off" class="form-control" type="date"  v-model="mir.vendor_dc_date">
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +233,7 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">Invoice No</label>
                                         <div class="col-8 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remarks">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.vendor_invoice_no">
                                         </div>
                                     </div>
                                 </div>
@@ -248,15 +241,15 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">Invoice Date</label>
                                         <div class="col-8 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remarks">
+                                            <input autocomplete="off" class="form-control" type="date"  v-model="mir.vendor_invoice_date">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-sm-12" >
                                     <div class="form-group row">
-                                        <label class="col-4 form-control-label">Invoice Rcvd Date</label>
+                                        <label class="col-4 form-control-label">Total Amount</label>
                                         <div class="col-8 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.remarks">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="mir.total_bill_amount">
                                         </div>
                                     </div>
                                 </div>
@@ -273,19 +266,32 @@
                             <label for="erorr" class="text-danger"> @{{error[0]}}</label>
                         </div>
                     </div>
+
+                    <div class="row" v-if="searched_details.length > 0">
+                        <div class="col-3 input-group">
+                            <div class="input-group mg-b-10">
+                                <input type="text" class="form-control" placeholder="search item" v-model="search_text">
+                            </div>
+                        </div>
+                        <div class="col-3 " v-if="selected_array.length > 0">
+                            <button class="btn btn-xs btn-danger" @click="remove_others()"> remove others</button>
+                        </div>
+                    
+                    </div>
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-sm-12">
                             <div class="table-responsive">
                                 <table class="table table-bordered mg-b-0">
                                 <thead>
                                     <tr>
-                                    <th scope="col"><input type="checkbox"></th>
+                                    <th scope="col"></th>
                                     <th scope="col">SiNo</th>
                                     <th scope="col">PO No</th>
                                     <th scope="col">Po date</th>
                                     <th scope="col">Part No *</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Po Qty</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Rate</th>
                                     <th scope="col">UOM</th>
                                     <th scope="col">Rcvd Qty</th>
                                     
@@ -293,8 +299,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(d,index) in mir_details">
-                                        <td><input type="checkbox"></td>
+                                    <tr v-for="(d,index) in searched_details">
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" :id="d.id" v-model="selected_array"  :value="d.id">
+                                                <label class="custom-control-label" :for="d.id"></label>
+                                            </div>
+                                        </td>
                                         <td scope="row">@{{index+1}}</td>
                                         <td>
                                              @{{d.order_no}} 
@@ -309,10 +320,13 @@
                                              @{{d.item}} 
                                         </td>
                                         <td>
-                                            @{{d.quantity}} 
+                                            @{{d.mir_quantity}} 
                                         </td>
                                         <td>
-                                             @{{d.unit}} 
+                                            @{{d.sub_total}} 
+                                        </td>
+                                        <td>
+                                             @{{d.uom}} 
                                         </td>
                                         <td>
                                         <input autocomplete="off" class="form-control"  v-model="d.recieved_quantity" > 
@@ -333,6 +347,7 @@
                                     </tr> -->
                                 </tbody>
                                 </table>
+                                
                             </div>
                         </div>
                        
@@ -340,21 +355,58 @@
                     
                 </div><!-- card-body -->
                 <div class="card-footer ">
+                    <div class="row mg-b-10">
+                        <div class="col-md-3 col-lg-3 col-sm-6"  >
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">MIR total*</label>
+                                <div class="col-7 input-group">
+                                    <input autocomplete="off" class="form-control"  :value="get_mir_total()" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-4 form-control-label">Other charges* </label>
+                                <div class="col-7 input-group">
+                                    <input autocomplete="off" class="form-control"  :value="get_mir_other_charges()" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-4 form-control-label">Tax Amount* </label>
+                                <div class="col-7 input-group">
+                                    <input autocomplete="off" class="form-control"  :value="get_mir_tax_amount()" disabled>
+                                </div>
+                                <label class="col-4 form-control-label">TCS%* </label>
+                                <div class="col-7 input-group">
+                                    <input autocomplete="off" class="form-control"  v-model="mir.tcs_percent">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-4 form-control-label">Grant total* </label>
+                                <div class="col-7 input-group">
+                                    <input autocomplete="off" class="form-control"  v-model="mir.grant_total" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
                     <div class="row order-ft">
                         <div class="col-md-2 col-lg-2 col-sm-6 offset-8 mg-t-5" v-if="print_flag">
                                 <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
-                                <button class="btn btn-primary btn-block " @click="save_indent()">Save</button>
+                                <button class="btn btn-primary btn-block " @click="save_mir()">Save</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
-                                <button class="btn btn-primary btn-block " @click="update_indent()">Update</button>
+                                <button class="btn btn-primary btn-block " @click="update_mir()">Update</button>
                         </div>
+                       
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
-                                <button class="btn btn-warning btn-block " @click="clear_indent()">Delete</button>
-                        </div>
-                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
-                                <button class="btn btn-secondary btn-block " @click="clear_indent()">Cancel</button>
+                                <button class="btn btn-secondary btn-block " @click="clear_mir()">Cancel</button>
                         </div>
                     </div>
                     
@@ -414,7 +466,7 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="familyPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+        <div class="modal fade" id="supplierPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -423,15 +475,12 @@
                     <div class="modal-body">
                             
                         <div class="card-body card-block">
-                            <choose-component 
-                            :id ="'family'"
-                            :table="'lookup_masters'" 
-                            :fields="['id','lookup_value','lookup_description']" 
-                            :search_filed="'lookup_value'" 
-                            :where_field="'lookup_key'"
-                            :where_value="'PRODUCT FAMILY'"
-                            @selected="getFamily($event)"
-                            ></choose-component>
+                        <raw-component 
+                                :id="'polist'"
+                                :query="co_qry" 
+                                @selected="getSupplier($event)"
+                                >
+                            </raw-component>
                                 
                         </div>
                     </div>
@@ -442,7 +491,7 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="itemPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+        <div class="modal fade" id="orderPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -454,7 +503,7 @@
                             <raw-component 
                                 :id="'polist'"
                                 :query="po_qry" 
-                                @selected="getOrderDetails($event)"
+                                @selected="getOrder($event)"
                                 >
                             </raw-component>
                                 
@@ -541,13 +590,16 @@
        
   </script>
 <script>
-    var po_qry = `SELECT ord.order_number as po_no, ord.order_date as date, co.name as supplier, co.customer_code as supplier_code FROM order_details ordd INNER JOIN orders ord ON ord.id = ordd.order_id INNER JOIN costomers co ON co.id = ord.supplier_id where IFNULL(ordd.quantity,0) - IFNULL(ordd.recieved_quantity,0) > 0 AND co.name like "%$vrbl%" group by ord.order_number,ord.order_date,co.name,co.id limit 5`;
+    var po_qry = `SELECT ord.order_number as po_no, ord.order_date as date, co.name as supplier, co.customer_code as supplier_code, co.id FROM order_details ordd INNER JOIN orders ord ON ord.id = ordd.order_id INNER JOIN costomers co ON co.id = ord.supplier_id where IFNULL(ordd.quantity,0) - IFNULL(ordd.recieved_quantity,0) > 0 AND ord.comapny_id = {{DocNo::companyId()}} AND co.name like "%$vrbl%" group by ord.order_number,ord.order_date,co.name,co.id order by ord.order_number limit 10`;
+
+    var co_qry = `SELECT  co.name as supplier, co.customer_code, co.id FROM order_details ordd INNER JOIN orders ord ON ord.id = ordd.order_id INNER JOIN costomers co ON co.id = ord.supplier_id where IFNULL(ordd.quantity,0) - IFNULL(ordd.recieved_quantity,0) > 0 AND ord.comapny_id = {{DocNo::companyId()}} AND co.name like "%$vrbl%" group by co.name,co.id order by 1 limit 10`;
     var app = new Vue({
        el: '#app',
        data: {
            assortment:{},
            errors:[],
            po_qry : po_qry,
+           co_qry : co_qry,
            shades : [],
            selected_customer : {},
            update_flag : false,
@@ -555,14 +607,12 @@
            url :'',
            items : [ ],
            mir : {
-               indent_no : '',
-                indent_date:'',
-                department :'',
-                product_group : '',
-                section : '',
-                section_des : '',
-                family : '',
-                family_des : '',
+                mir_no : '',
+                mir_date:'',
+                vendor_code : '',
+                vendor_name : '',
+                order_no : '',
+                order_date : '',
             },
            mir_details : [],
            item_ob : {sl_no : 1, shade_code:'', colour: ''},
@@ -573,8 +623,17 @@
            indent_section : '',
             indent_section_description : '',
             indent_details : {},
+            selected_array : [],
+            search_text :'',
             
        },
+       computed: {
+            searched_details() {
+                return this.mir_details.filter(detail => {
+                    return detail.item.toLowerCase().includes(this.search_text.toLowerCase()) || detail.part_no.toLowerCase().includes(this.search_text.toLowerCase())
+                })
+            },
+        },
        
    methods: {
         getOrderDetails:function(event){
@@ -599,7 +658,10 @@
         },
         deleteRow : function(ind){
             this.removeFlag = true;
-            this.assortment_shades.splice(ind, 1);
+            this.mir_details.splice(ind, 1);
+        },
+        remove_others : function(){
+
         },
         addRow : function(ind){
             this.removeFlag = true;
@@ -642,47 +704,141 @@
                 // this.get_article_by_number();
             // }
         },
-        getFamilyPopup : function(event){
+        getSupplierPopup : function(event){
              console.log(event)
             if(event.code == 'F1' || event.code == 'F2'){
-                $("#familyPopup").modal('toggle');
+                $("#supplierPopup").modal('toggle');
                 // this.get_article_by_number();
             }
         },
          
-        getFamily : function(event){
+        getSupplier : function(event){
              console.log(event)
-             this.indent.family = event.lookup_value;
-            this.indent.family_des = event.lookup_description;
-            this.indent.product_group = event.id;
+             var vm = this;
+            vm.mir.vendor_id = event.id;
+            vm.mir.vendor_code = event.customer_code;
+            vm.mir.vendor_name = event.supplier;
+            vm.mir.order_no = "";
+            vm.mir.order_date = "";
+            axios.get('/company/order/recieptData?party='+event.id).then((response) => {
+               vm.mir_details = response.data;
+                // vm.shade.customer_name
+                // code
+                // colour
+                // priory
+                // program_code
+                // customer_code
 
+                $("#supplierPopup").modal('toggle');
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
             // if(event.code == 'F1' || event.code == 'F2'){
-                $("#familyPopup").modal('toggle');
                 // this.get_article_by_number();
             // }
         },
+        get_mir_total(){
+
+            var vm = this;
+            var calc_basic_total = 0;
+                this.mir_details.forEach(function(obj){
+                    if(obj.recieved_quantity){
+                        let ttl = parseFloat(obj.sub_total) * parseFloat(obj.recieved_quantity);
+                        calc_basic_total = calc_basic_total+parseFloat(ttl);
+                        calc_basic_total = calc_basic_total.toFixed(2);
+                    }
+                    
+
+                });
+            // return this.order_detail_array.sum("grant_total");
+            // this.final_basic_total = calc_basic_total;
+            // return amount;
+            vm.mir.mir_total = calc_basic_total;
+            return calc_basic_total;
+        },
+        get_mir_other_charges(){
+
+            var vm = this;
+            var other_charges = 0;
+               
+                if(vm.mir_details.length > 0){
+                    let mobj = vm.mir_details[0];
+                    other_charges = parseFloat(mobj.pnf_total)+parseFloat(mobj.courrier_charge);
+                    other_charges =other_charges.toFixed(2);
+                }
+            // return this.order_detail_array.sum("grant_total");
+            // this.final_basic_total = calc_basic_total;
+            // return amount;
+            vm.mir.other_charges = other_charges;
+
+            return other_charges;
+        },
+        get_mir_tax_amount(){
+
+            var vm = this;
+            var tax_amount = 0;
+            var grant_total = 0;
+            
+                if(vm.mir_details.length > 0){
+                    var tax_obj = vm.mir_details[0];
+                    var total_amnt = parseFloat(vm.mir.mir_total)+parseFloat(vm.mir.other_charges);
+                    var tax_value = parseFloat(tax_obj.tax_percent/100);
+                    tax_amount = parseFloat(total_amnt)*tax_value;
+                    
+
+                    tax_amount = tax_amount.toFixed(2);
+                    
+                    grant_total = parseFloat(total_amnt)+ parseFloat(tax_amount);
+                    if(vm.mir.tcs_percent){
+                        let tcs_percent =  parseFloat(vm.mir.tcs_percent/100);
+                        let tcs_amount = tax_amount*tcs_percent;
+                        grant_total+tcs_amount;
+                    }
+                    grant_total = grant_total.toFixed(2);
+                }
+            // return this.order_detail_array.sum("grant_total");
+            // this.final_basic_total = calc_basic_total;
+            // return amount;
+            vm.mir.tax_amount = tax_amount;
+            vm.mir.grant_total = grant_total;
+
+            return tax_amount;
+        },
+        
          keyEvent : function(event){
              console.log(event)
             // if(event.code == 'F1' || event.code == 'F2'){
                 $("#chooseCustomer").modal('toggle');
             // }
         },
-        getItemPopup : function(event, obj){
+        getOrderPopup : function(event, obj){
             if(event.code == 'F1' || event.code == 'F2'){
-                $("#itemPopup").modal('toggle');
+                $("#orderPopup").modal('toggle');
             }
         },
-        getItem : function(val){
+        getOrder : function(event){
             var vm = this;
-            vm.item_ob = val;
-            vm.item_ob.item_id = val.id;
-            console.log('val', vm.item_ob);
+            vm.mir.vendor_id = event.id;
+            vm.mir.vendor_code = event.supplier_code;
+            vm.mir.vendor_name = event.supplier;
+            vm.mir.order_no = event.po_no;
+            vm.mir.order_date = event.date;
+            axios.get('/company/order/recieptData?order_no='+event.po_no+'&&party='+event.id).then((response) => {
+               vm.mir_details = response.data;
+                // vm.shade.customer_name
+                // code
+                // colour
+                // priory
+                // program_code
+                // customer_code
+
+                $("#orderPopup").modal('toggle');
+
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
             // vm.items.push(vm.item_ob)
-            if(this.check_item_in_items(val.id)){
-                    alert('duplicate item');
-                    return;
-                }
-            $("#itemPopup").modal('toggle');
         },
         add_ob : function(event){
 
@@ -791,29 +947,18 @@
             this.url = URL.createObjectURL(this.selected_file);
             
         },
-        getIndentNo(){
-            axios.get('/company/indent?details=true').then((response) => {
-                this.indent_details = response.data;
-                var dateObj = new Date();
-                var month = dateObj.getUTCMonth() + 1; //months from 1-12
-                var day = dateObj.getUTCDate();
-                var year = dateObj.getUTCFullYear();
-
-                this.indent.indent_date = day + "-" + month + "-" + year
-            }, (error) => {
-            // vm.errors = error.errors;
-            });
-        },
-        save_indent:function() {
+        
+        save_mir:function() {
             var vm = this;
-            vm.indent.items = vm.items; 
-            if(vm.items.length <= 0){
+            vm.mir.details = vm.mir_details; 
+            if(vm.mir_details.length <= 0){
                 alert('please provide item')
                 return;
             }
             
-            axios.post( '/company/indent',vm.indent).then(response => {
-                this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
+            axios.post( '/company/mir_recipt',vm.mir).then(response => {
+                this.mir.mir_no = response.data.mir_no;
+                this.mir.mir_date = response.data.mir_date;
                 alert('Succesfully Saved..!');
                 console.log(response.data)
 
@@ -846,7 +991,7 @@
      
      },
      mounted(){
-        this.getIndentNo();
+        // this.getIndentNo();
      },
      created(){
         this.get_colors();

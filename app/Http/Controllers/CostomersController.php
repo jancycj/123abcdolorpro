@@ -13,6 +13,7 @@ use App\QCPlan;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CostomersController extends Controller
 {
@@ -120,10 +121,9 @@ class CostomersController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'          => 'required',
-            'email'         => 'required|email',
-            'short_name'    => 'required',
-            'address_line1'      => 'required',
+            'name'              => 'required',
+            'username'          => 'required',
+            'address_line1'     => 'required',
         ]);
 
         $company                        = Costomers::find($id);
@@ -150,6 +150,20 @@ class CostomersController extends Controller
         $company->pan_gir_no            = $request->pan_gir_no;
         $company->terms_n_condition     = $request->terms_n_condition;
         $company->save();
+
+        $user = User::find($request->user_id);
+        if($user->username != $request->username){
+            if(User::where('username',$request->username)->first()){
+                throw ValidationException::withMessages(['username' => 'duplicate username']);
+            } else {
+                $user->username = $request->username;
+            }
+        }
+        $user->name = $request->name;
+        if($request->has('password') && $request->password != ''){
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
         return 'true';
     }
 
@@ -204,14 +218,16 @@ class CostomersController extends Controller
     {
         $this->validate($request, [
             'name'     => 'required',
-            'email'    => 'required|email|unique:users',
+            'username'    => 'required|unique:users',
             'password'            => 'required',
             'address1'           => 'required',
         ]);
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $user = new User;
         $user->name = $request->name;
-        $user->email = $request->email;
+        $user->username = $request->username;
         $user->password = Hash::make($request->password);
+        $user->company_id = $company_id;
         $user->save();
 
         $customer = new Costomers;
@@ -220,17 +236,20 @@ class CostomersController extends Controller
         $customer->gst_no = $request->gst_no;
         $customer->autherized_person = $request->autherized_person;
         $customer->autherized_person_phone = $request->autherized_person_phone;
-        $customer->phone_number = $request->phone;
+        $customer->phone_number = $request->phone_number;
         $customer->email = $request->email;
-        $customer->address_line1 = $request->address1;
-        $customer->address_line2 = $request->address2;
+        $customer->address_line1 = $request->address_line1;
+        $customer->address_line2 = $request->address_line2;
         $customer->district_id           = $request->district_id;
         $customer->state_id              = $request->state_id;
         $customer->country_id            = $request->country_id;
         $customer->type            = $request->type;
-        $customer->company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+        $customer->company_id = $company_id;
+        $customer->terms_n_condition     = $request->terms_n_condition;
+
         $customer->save();
-        $customer->customer_code = 'CSTMR-'.$customer->id;
+        $prefix = $request->type == 'vendor' ? 'VNDR-': 'CSTMR-';
+        $customer->customer_code = $prefix.$customer->id;
         $customer->save();
 
         $customer_user = new CustomerUser;

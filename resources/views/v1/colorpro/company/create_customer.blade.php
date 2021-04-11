@@ -122,9 +122,9 @@
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-6" >
                             <div class="form-group row">
-                                <label class="col-5 form-control-label">email</label>
+                                <label class="col-5 form-control-label">username</label>
                                 <div class="col-7 input-group">
-                                    <input type="email"  class="form-control" type="number"  v-model="client.email">
+                                    <input type="text"  class="form-control" v-model="client.username">
                                 </div>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">address1</label>
                                 <div class="col-7 input-group">
-                                    <textarea autocomplete="off" class="form-control" type="number"  v-model="client.address1"> </textarea>
+                                    <textarea autocomplete="off" class="form-control"  v-model="client.address_line1"> </textarea>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">address2</label>
                                 <div class="col-7 input-group">
-                                    <textarea autocomplete="off" class="form-control"  v-model="client.address2"> </textarea>
+                                    <textarea autocomplete="off" class="form-control"  v-model="client.address_line2"> </textarea>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">phone</label>
                                 <div class="col-7 input-group">
-                                    <input autocomplete="off" class="form-control" type="number"  v-model="client.phone">
+                                    <input autocomplete="off" class="form-control" type="number"  v-model="client.phone_number">
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@
                             <div class="form-group row">
                                 <label class="col-5 form-control-label">company_email</label>
                                 <div class="col-7 input-group">
-                                    <input autocomplete="off" class="form-control"  v-model="client.company_email">
+                                    <input autocomplete="off" class="form-control"  v-model="client.email">
                                 </div>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
                                 <div class="col-7 input-group">
                                      <select data-placeholder="Choose a company..." class="standardSelect form-control" tabindex="1" name="type" v-model="client.type">
                                           <option value="vendor">Vendor</option>
-                                          <option value="reseller">Customer</option>
+                                          <option value="customer">Customer</option>
                                       </select>
                                 </div>
                             </div>
@@ -251,6 +251,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-10 col-lg-10 col-sm-6" >
+                            <div class="form-group row">
+                                <label class="col-2 form-control-label">po terms</label>
+                                <div class="col-9 input-group">
+                                    <textarea autocomplete="off" class="form-control" rows="6"  v-model="client.terms_n_condition"> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                 </div><!-- card-header -->
                 
@@ -265,9 +275,9 @@
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
                                 <button class="btn btn-primary btn-block " @click="update_customer()">Update</button>
                         </div>
-                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
+                        <!-- <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-warning btn-block " @click="clear_customer()">Delete</button>
-                        </div>
+                        </div> -->
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_customer()">Cancel</button>
                         </div>
@@ -410,10 +420,10 @@ aria-hidden="true">
                     <choose-component 
                         :id="'customer'"
                         :table="'costomers'" 
-                        :fields="['id','name','short_name']" 
+                        :fields="['name','customer_code','short_name','id']" 
                         :where_field="'type'"
                         :where_value="'vendor'"
-                        :search_filed="'short_name'" 
+                        :search_filed="'name'" 
                         @selected="getCustomer($event)"
                         ></choose-component>
                         

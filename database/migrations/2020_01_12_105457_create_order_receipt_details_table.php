@@ -16,16 +16,21 @@ class CreateOrderReceiptDetailsTable extends Migration
         
         Schema::create('order_receipt_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('order_details_id')->nullable();
+            $table->unsignedInteger('order_receipt_header_id')->nullable();
+            $table->unsignedInteger('order_id')->nullable();
             $table->float('accepted_quantity')->nullable();
             $table->float('recieved_quantity')->nullable();
             $table->float('rework_quantity')->nullable();
             $table->float('rejected_quantity')->nullable();
-            $table->date('delivery_date')->nullable();
+            $table->float('store_accepted_quantity')->nullable();
+            $table->float('conversion_factor')->nullable();
+            $table->float('rate')->nullable();
+            $table->string('tax_name')->nullable();
+            $table->float('tax_value')->nullable();
+            $table->float('tcs')->nullable();
             $table->text('rework_reason')->nullable();
             $table->text('reject_reason')->nullable();
-            $table->string('dc_no')->nullable();
-            $table->date('dc_date')->nullable();
+            $table->string('uom')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['pending','active','inactive', 'blocked','completed','stocked']);
             $table->timestamps();

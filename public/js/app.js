@@ -2518,6 +2518,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // @keyup.down="getSelected($event)"
   name: 'navBar',
   props: ['query', 'fields', 'search_filed', 'table', 'where_value', 'where_field'],
   data: function data() {
@@ -2544,10 +2545,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     /* get item
     **/
-    selectWithTab: function selectWithTab(val) {
+    getSelected: function getSelected(val) {
       console.log(val);
 
-      if (val.key == 'Tab') {
+      if (val.key == 'Tab' || val.key == 'down') {
         if (this.customers.length > this.selected_index + 1) {
           this.selected_index = this.selected_index + 1;
         } else {

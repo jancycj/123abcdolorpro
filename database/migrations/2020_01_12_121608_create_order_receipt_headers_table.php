@@ -15,16 +15,19 @@ class CreateOrderReceiptHeadersTable extends Migration
     {
         Schema::create('order_receipt_headers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('order_id')->nullable();
-            $table->date('order_date')->nullable();
-            $table->unsignedInteger('billto_customer_id')->nullable();
-            $table->unsignedInteger('ship_customer_id')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
+            $table->string('mir_no')->nullable();
+            $table->date('mir_date')->nullable();
             $table->text('remark')->nullable();
+            $table->string('vendor_id')->nullable();
             $table->string('vendor_dc_no')->nullable();
             $table->date('vendor_dc_date')->nullable();
             $table->string('vendor_invoice_no')->nullable();
             $table->date('vendor_invoice_date')->nullable();
             $table->string('gate_entry_no')->nullable();
+            $table->float('p_and_f')->nullable();
+            $table->float('courrier')->nullable();
+            $table->float('total_bill_amount')->nullable();
             $table->date('gate_entry_date')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['active','inactive', 'blocked']);

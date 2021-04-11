@@ -504,7 +504,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">Basic pay</label>
                                                     <div class="col-7 input-group">
-                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_ob.basic_pay" >
+                                                        <input autocomplete="off" class="form-control" name="unit" v-model="employee.basic_pay" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -512,7 +512,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">DA</label>
                                                     <div class="col-7 input-group">
-                                                        <input class="form-control" v-model="item_ob.da" >
+                                                        <input class="form-control" v-model="employee.da" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -522,7 +522,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">HRA</label>
                                                     <div class="col-7 input-group">
-                                                        <input autocomplete="off" class="form-control" name="unit" v-model="item_ob.hra" >
+                                                        <input autocomplete="off" class="form-control" name="unit" v-model="employee.hra" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -530,7 +530,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-5 form-control-label">Special Allowance</label>
                                                     <div class="col-7 input-group">
-                                                        <input class="form-control" v-model="item_ob.special_allowance" >
+                                                        <input class="form-control" v-model="employee.special_allowance" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -845,11 +845,29 @@ LIMIT 5`;
 
             },
             cancelOb(){
-                this.item_obj = {};
-                this.unit = '';
-                this.unit_name = '';
-                this.category = '';
-                this.category_name = '';
+                var vm = this;
+                vm.employee = {
+                    blood_group_name : '',
+                    blood_group : '',
+                    status_name : '',
+                    status : '',
+                    department_name : '',
+                    department : '',
+                    section : '',
+                    section_name : '',
+                    designation : '',
+                    designation_name : '',
+                    class : '',
+                    class_name : '',
+                    district : '',
+                    district_name : '',
+                    state : '',
+                    state_name : '',
+                    country : '',
+                    country_name : '',
+                };
+                vm.print_flag = true;
+                vm.update_flag = true;
             },
             save_item: function() {
                 console.log(this.item_obj);

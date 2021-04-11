@@ -2,11 +2,13 @@
 
 namespace App\Helpers;
 
+use App\CompanyUser;
 use App\DocNumber;
 use Exception;
 use Session;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class DocNo {
 
@@ -44,6 +46,11 @@ class DocNo {
 		
 		
 
+	}
+
+	public static function companyId()
+	{
+		return CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first();
 	}
 
 

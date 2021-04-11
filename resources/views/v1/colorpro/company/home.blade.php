@@ -61,7 +61,7 @@
               <div class="row no-gutters mg-t-10">
                   <div class=" col-sm-5 col-md-6 col-lg-5 bg-primary rounded-left">
                     <div class="wd-150p ht-100p">
-                      <img src="{{asset('new_assets/assets/img/cmpny.jpeg')}}" class="wd-100p img-fit-cover img-object-top rounded-left" alt="">
+                      <img src="{{asset('images/ERP_logo.png')}}" class="wd-100p img-object-top rounded-left" alt="">
                     </div>
                   </div><!-- col -->
                   <div class=" col-sm-7 col-md-6 col-lg-7 bg-white rounded-right">

@@ -7,7 +7,7 @@ use DB;
 
 class Costomers extends Model
 {
-    public $appends = ['country','country_name', 'district', 'district_name', 'state', 'state_name'];
+    public $appends = ['username','user_id','country','country_name', 'district', 'district_name', 'state', 'state_name'];
     /**
      * [Item]
      */
@@ -39,6 +39,20 @@ class Costomers extends Model
     public function getStateNameAttribute() {
        
         return DB::table('lookup_masters')->where('id',$this->state_id)->pluck('lookup_description')->first();
+
+    }
+    public function getUsernameAttribute() {
+       
+        return DB::table('users as u')
+        ->join('customer_users as cu', 'u.id', '=', 'cu.user_id')
+        ->where('cu.customer_id',$this->id)->pluck('u.username')->first();
+
+    }
+
+    public function getUserIdAttribute() {
+       
+        return DB::table('customer_users')
+        ->where('customer_id',$this->id)->pluck('user_id')->first();
 
     }
 }

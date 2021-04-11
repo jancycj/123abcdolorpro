@@ -54,7 +54,7 @@
             <div class="row no-gutters mg-t-10">
                 <div class="col-3 col-sm-5 col-md-6 col-lg-5 bg-primary rounded-left">
                   <div class="wd-150p ht-100p">
-                    <img src="{{asset('new_assets/assets/img/cmpny.jpeg')}}" class="wd-100p img-fit-cover img-object-top rounded-left" alt="">
+                  <img src="{{asset('images/ERP_logo.png')}}" class="wd-100p  img-object-top rounded-left" alt="">
                   </div>
                 </div><!-- col -->
                 <div class="col-9 col-sm-7 col-md-6 col-lg-7 bg-white rounded-right">
@@ -69,7 +69,7 @@
                     @if($company->customer->website)
                       <p><a href="{{$company->customer->website}}" target="_blank" >Website</a></p>
                     @endif
-                    <a href="#" class="btn btn-primary btn-block btn-uppercase" @click="get_company_profile({{$company->customer->id}})">Edit</a>
+                    <!-- <a href="#" class="btn btn-primary btn-block btn-uppercase" @click="get_company_profile({{$company->customer->id}})">Edit</a> -->
                   </div>
                 </div><!-- col -->
               </div>

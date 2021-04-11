@@ -39,6 +39,7 @@
 
 <script>
     export default {
+        // @keyup.down="getSelected($event)"
         name: 'navBar',
         props:['query','fields','search_filed','table','where_value','where_field'],
         data(){
@@ -67,11 +68,13 @@
             }
         },
         methods: {
+
+            
             /* get item
          **/
-            selectWithTab(val){
+            getSelected(val){
                 console.log(val)
-                if(val.key == 'Tab'){
+                if(val.key == 'Tab' || val.key == 'down'){
                     if(this.customers.length > this.selected_index+1){
                         this.selected_index = this.selected_index+1;
                     } else{

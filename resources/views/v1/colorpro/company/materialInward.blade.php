@@ -126,7 +126,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getMIR($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getMir($event)" >
                                     <div class="form-group row">
                                         <label class="col-5 form-control-label">MIR No*</label>
                                         <div class="col-7 input-group">
@@ -138,7 +138,7 @@
                                     <div class="form-group row">
                                         <label class="col-4 form-control-label">MIR Date* </label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.mir_date" disabled>
+                                            <input autocomplete="off"  type="date" class="form-control"  v-model="mir.mir_date" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                     <div class="form-group row">
                                         <label class="col-5 form-control-label">PO No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="mir.order_no" >
+                                            <input autocomplete="off" class="form-control"  v-model="mir.order_no" :disabled="update_flag">
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                                     <div class="form-group row">
                                         <label class=" col-5 form-control-label">Supplier*</label>
                                         <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="mir.vendor_code">
+                                            <input autocomplete="off" class="form-control" v-model="mir.vendor_code" :disabled="update_flag">
                                         </div>
                                     </div>
                                 </div>
@@ -290,7 +290,7 @@
                                     <th scope="col">Po date</th>
                                     <th scope="col">Part No *</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Qty</th>
+                                    <th scope="col">Order Qty</th>
                                     <th scope="col">Rate</th>
                                     <th scope="col">UOM</th>
                                     <th scope="col">Rcvd Qty</th>
@@ -329,7 +329,7 @@
                                              @{{d.uom}} 
                                         </td>
                                         <td>
-                                        <input autocomplete="off" class="form-control"  v-model="d.recieved_quantity" > 
+                                        <input autocomplete="off" class="form-control"  v-model="d.recieved_qty"> 
                                         </td>
                                         
 
@@ -368,7 +368,7 @@
                             <div class="form-group row">
                                 <label class="col-4 form-control-label">Other charges* </label>
                                 <div class="col-7 input-group">
-                                    <input autocomplete="off" class="form-control"  :value="get_mir_other_charges()" disabled>
+                                    <input autocomplete="off" class="form-control" v-model="mir.other_charges" >
                                 </div>
                             </div>
                         </div>
@@ -541,7 +541,7 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="IndentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+        <div class="modal fade" id="mirPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -550,14 +550,12 @@
                     <div class="modal-body">
                             
                         <div class="card-body card-block">
-                            <choose-component 
-                            :id="'indents'"
-                            :table="'indents'" 
-                            :fields="['id','indent_no','department']" 
-                            :search_filed="'indent_no'" 
-                            @selected="getIndentEdit($event)"
-                            ></choose-component>
-                                
+                            <raw-component 
+                                :id="'mir_list'"
+                                :query="mir_qry" 
+                                @selected="mirEdit($event)"
+                                >
+                            </raw-component>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -593,6 +591,8 @@
     var po_qry = `SELECT ord.order_number as po_no, ord.order_date as date, co.name as supplier, co.customer_code as supplier_code, co.id FROM order_details ordd INNER JOIN orders ord ON ord.id = ordd.order_id INNER JOIN costomers co ON co.id = ord.supplier_id where IFNULL(ordd.quantity,0) - IFNULL(ordd.recieved_quantity,0) > 0 AND ord.comapny_id = {{DocNo::companyId()}} AND co.name like "%$vrbl%" group by ord.order_number,ord.order_date,co.name,co.id order by ord.order_number limit 10`;
 
     var co_qry = `SELECT  co.name as supplier, co.customer_code, co.id FROM order_details ordd INNER JOIN orders ord ON ord.id = ordd.order_id INNER JOIN costomers co ON co.id = ord.supplier_id where IFNULL(ordd.quantity,0) - IFNULL(ordd.recieved_quantity,0) > 0 AND ord.comapny_id = {{DocNo::companyId()}} AND co.name like "%$vrbl%" group by co.name,co.id order by 1 limit 10`;
+
+    var mir_qry =`SELECT  orh.mir_no, co.name, orh.id FROM order_receipt_headers orh  INNER JOIN costomers co ON co.id = orh.vendor_id where orh.company_id = {{DocNo::companyId()}} AND co.name like "%$vrbl%" order by orh.mir_no DESC limit 10`;
     var app = new Vue({
        el: '#app',
        data: {
@@ -600,6 +600,7 @@
            errors:[],
            po_qry : po_qry,
            co_qry : co_qry,
+           mir_qry : mir_qry,
            shades : [],
            selected_customer : {},
            update_flag : false,
@@ -613,6 +614,7 @@
                 vendor_name : '',
                 order_no : '',
                 order_date : '',
+                other_charges:0,
             },
            mir_details : [],
            item_ob : {sl_no : 1, shade_code:'', colour: ''},
@@ -625,6 +627,7 @@
             indent_details : {},
             selected_array : [],
             search_text :'',
+            mir_message : '',
             
        },
        computed: {
@@ -634,6 +637,11 @@
                 })
             },
         },
+        // watch:{
+        //     'mir.other_charges': function (newVal, oldVal){
+        //         this.get_mir_tax_amount();
+        //     }
+        // },
        
    methods: {
         getOrderDetails:function(event){
@@ -649,7 +657,8 @@
                 // priory
                 // program_code
                 // customer_code
-
+                vm.isTaxSame();
+                vm.get_mir_other_charges();
                 $("#itemPopup").modal('toggle');
             }, (error) => {
             // vm.errors = error.errors;
@@ -661,7 +670,24 @@
             this.mir_details.splice(ind, 1);
         },
         remove_others : function(){
+            var vm = this;
+            var res_array = [];
+            vm.selected_array.forEach( id => {
+                vm.mir_details.map( m => {
+                    if(m.id === id){
+                        res_array.push(m);
+                    }
+                })
+            })
+            vm.mir_details = res_array;
+            
+            // vm.selected_array.forEach( id =>{
+            //     let index = vm.mir_details.findIndex(item => item.id ===id);
+            //      vm.mir_details.splice(index, 1);
 
+            // })
+            vm.get_mir_other_charges();
+            vm.selected_array = [];
         },
         addRow : function(ind){
             this.removeFlag = true;
@@ -684,7 +710,6 @@
             $("#chooseCustomer").modal('toggle');
          },
          getSectionPopup : function(event){
-             console.log(event)
             if(event.code == 'F1' || event.code == 'F2'){
                 $("#sectionPopup").modal('toggle');
                 // this.get_article_by_number();
@@ -692,9 +717,8 @@
         },
          
         getSection : function(event){
-             console.log(event)
-             this.indent.section = event.lookup_value;
-             this.indent.department = event.id;
+            this.indent.section = event.lookup_value;
+            this.indent.department = event.id;
             this.indent.section_des = event.lookup_description;
             this.indent_section = event.lookup_value;
             this.indent_section_description = event.lookup_description;
@@ -705,15 +729,46 @@
             // }
         },
         getSupplierPopup : function(event){
-             console.log(event)
             if(event.code == 'F1' || event.code == 'F2'){
                 $("#supplierPopup").modal('toggle');
                 // this.get_article_by_number();
             }
         },
-         
+        isTaxSame : function(){
+            var vm = this;
+            var t_array = vm.$uniqArray(vm.mir_details,'tax_percent')
+            if(t_array.length > 1){
+                    alert('tax missmatch')
+                }
+
+            // var uniq_arr = vm.mir_details.filter((itm, idx, arr) => arr.indexOf(itm) === idx);
+            //     if(uniq_arr.length > 1){
+            //         alert('tax missmatch')
+            //     }
+        },
+        isValidMir : function(){
+            this.mir_details.forEach(function(obj){
+                    if(obj.recieved_qty == null || obj.recieved_qty == 0){
+                        
+                        alert('recieved_quantity required for '+ obj.part_no)
+                        return false;
+                    } 
+
+                    let ovp = obj.over_reciept_percentage ? obj.over_reciept_percentage : 0;
+                    let limit = parseFloat(obj.quantity) + (obj.quantity * (ovp/100))
+                    let total_qty = parseFloat(obj.cumlative_qty) + parseFloat(obj.recieved_qty)
+                    console.log('limit', limit, ovp, total_qty)
+                    if(Math.round(limit) < total_qty){
+                        alert('can not recieved_quantity greater than allowed for '+ obj.part_no)
+                        return false;
+                    }
+                    
+
+                });
+                return true;
+
+        },
         getSupplier : function(event){
-             console.log(event)
              var vm = this;
             vm.mir.vendor_id = event.id;
             vm.mir.vendor_code = event.customer_code;
@@ -722,6 +777,8 @@
             vm.mir.order_date = "";
             axios.get('/company/order/recieptData?party='+event.id).then((response) => {
                vm.mir_details = response.data;
+               vm.isTaxSame();
+               vm.get_mir_other_charges();
                 // vm.shade.customer_name
                 // code
                 // colour
@@ -742,19 +799,18 @@
 
             var vm = this;
             var calc_basic_total = 0;
-                this.mir_details.forEach(function(obj){
-                    if(obj.recieved_quantity){
-                        let ttl = parseFloat(obj.sub_total) * parseFloat(obj.recieved_quantity);
-                        calc_basic_total = calc_basic_total+parseFloat(ttl);
-                        calc_basic_total = calc_basic_total.toFixed(2);
-                    }
-                    
-
-                });
+            this.mir_details.forEach(function(obj){
+                if(obj.recieved_qty){
+                    let ttl = parseFloat(obj.sub_total) * parseFloat(obj.recieved_qty);
+                    calc_basic_total = parseFloat(calc_basic_total) + parseFloat(ttl);
+                    calc_basic_total = calc_basic_total.toFixed(2);
+                }
+            });
             // return this.order_detail_array.sum("grant_total");
             // this.final_basic_total = calc_basic_total;
             // return amount;
             vm.mir.mir_total = calc_basic_total;
+            
             return calc_basic_total;
         },
         get_mir_other_charges(){
@@ -765,13 +821,12 @@
                 if(vm.mir_details.length > 0){
                     let mobj = vm.mir_details[0];
                     other_charges = parseFloat(mobj.pnf_total)+parseFloat(mobj.courrier_charge);
-                    other_charges =other_charges.toFixed(2);
-                }
-            // return this.order_detail_array.sum("grant_total");
-            // this.final_basic_total = calc_basic_total;
-            // return amount;
-            vm.mir.other_charges = other_charges;
+                    other_charges = other_charges.toFixed(2);
+                    vm.mir.p_and_f = mobj.pnf_total;
+                    vm.mir.courrier = mobj.courrier_charge;
 
+                }
+            vm.mir.other_charges = other_charges;
             return other_charges;
         },
         get_mir_tax_amount(){
@@ -780,9 +835,13 @@
             var tax_amount = 0;
             var grant_total = 0;
             
+                
                 if(vm.mir_details.length > 0){
                     var tax_obj = vm.mir_details[0];
+                    
+
                     var total_amnt = parseFloat(vm.mir.mir_total)+parseFloat(vm.mir.other_charges);
+
                     var tax_value = parseFloat(tax_obj.tax_percent/100);
                     tax_amount = parseFloat(total_amnt)*tax_value;
                     
@@ -791,9 +850,10 @@
                     
                     grant_total = parseFloat(total_amnt)+ parseFloat(tax_amount);
                     if(vm.mir.tcs_percent){
+
                         let tcs_percent =  parseFloat(vm.mir.tcs_percent/100);
                         let tcs_amount = tax_amount*tcs_percent;
-                        grant_total+tcs_amount;
+                        grant_total = parseFloat(grant_total) + parseFloat(tcs_amount);
                     }
                     grant_total = grant_total.toFixed(2);
                 }
@@ -802,12 +862,12 @@
             // return amount;
             vm.mir.tax_amount = tax_amount;
             vm.mir.grant_total = grant_total;
+            vm.mir.total_bill_amount = grant_total;
 
             return tax_amount;
         },
         
          keyEvent : function(event){
-             console.log(event)
             // if(event.code == 'F1' || event.code == 'F2'){
                 $("#chooseCustomer").modal('toggle');
             // }
@@ -845,7 +905,6 @@
             var vm = this;
 
             if(event.code == 'Enter' ){
-                console.log(this.check_item_in_items(vm.item_ob.item_id),'trueeee')
                 if(this.check_item_in_items(vm.item_ob.item_id)){
                     alert('duplicate item');
                     return;
@@ -863,7 +922,6 @@
             }
         },
         check_item_in_items(check_item){
-            console.log(this.items, check_item)
             var valueArr = [];
             valueArr = this.items.filter(function(item){ return item.item_id == check_item });
             return valueArr.length > 0;
@@ -931,16 +989,33 @@
 
             
         },
-        getIndent : function(val){
+        getMir : function(val){
             if(event.code == 'F1' || event.code == 'F2'){
-                $("#IndentPopup").modal('toggle');
+                $("#mirPopup").modal('toggle');
                 // this.get_article_by_number();
             }
+        },
+        mirEdit : function(evnt){
+            
             var vm = this;
-            // $("#IndentPopup").modal('toggle');
+            vm.update_flag = true;
+            axios.get('/company/mir_recipt/'+evnt.id).then((response) => {
+               vm.mir = response.data.header;
+               vm.mir_details = response.data.details;
+            //    vm.get_mir_other_charges();
 
-            // vm.assortment.article_no =val.article_no;
-            // vm.assortment.billing_name =val.billing_name;
+               console.log('vm.mir_details',vm.mir_details)
+                // vm.shade.customer_name
+                // code
+                // colour
+                // priory
+                // program_code
+                // customer_code
+
+                $("#mirPopup").modal('toggle');
+            }, (error) => {
+            // vm.errors = error.errors;
+            });
         },
         onFileChange(e) {
             this.selected_file = e.target.files[0];
@@ -955,16 +1030,51 @@
                 alert('please provide item')
                 return;
             }
+            if(!vm.isValidMir()){
+                // alert(vm.mir_message)
+                return;
+            }
             
+            if((vm.mir.vendor_dc_no && vm.mir.vendor_dc_date) || (vm.mir.vendor_invoice_no && vm.mir.vendor_invoice_date)){
+
+            } else{
+                alert('vendor_dc_no and date or vendor_invoice_no and date are required')
+                return;
+            }
             axios.post( '/company/mir_recipt',vm.mir).then(response => {
                 this.mir.mir_no = response.data.mir_no;
                 this.mir.mir_date = response.data.mir_date;
                 alert('Succesfully Saved..!');
-                console.log(response.data)
 
             })
             .catch((error)=>{
-                console.log('FAILURE!!');
+            });
+         },
+         update_mir:function() {
+            var vm = this;
+            vm.mir.details = vm.mir_details; 
+            if(vm.mir_details.length <= 0){
+                alert('please provide item')
+                return;
+            }
+            if(!vm.isValidMir()){
+                // alert(vm.mir_message)
+                return;
+            }
+            
+            if((vm.mir.vendor_dc_no && vm.mir.vendor_dc_date) || (vm.mir.vendor_invoice_no && vm.mir.vendor_invoice_date)){
+
+            } else{
+                alert('vendor_dc_no and date or vendor_invoice_no and date are required')
+                return;
+            }
+            axios.put( '/company/mir_recipt/'+vm.mir.id,vm.mir).then(response => {
+                // this.mir.mir_no = response.data.mir_no;
+                // this.mir.mir_date = response.data.mir_date;
+                alert('Succesfully Updated..!');
+
+            })
+            .catch((error)=>{
             });
          },
          update_indent:function() {
@@ -974,7 +1084,6 @@
             })
             .catch((err) =>{
                 this.errors = err.response.data.errors;
-                console.log(this.errors)
             });
          },
          getIndentEdit : function(val){

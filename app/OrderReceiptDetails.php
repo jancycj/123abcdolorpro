@@ -8,7 +8,13 @@ class OrderReceiptDetails extends Model
 {
     
 
-    public $appends = ['balance'];
+    public $appends = [
+        'balance',
+        'item',
+        'item_name',
+        'part_no',
+        'recieved_qty'
+    ];
     
     /**
      * [Item]
@@ -18,7 +24,26 @@ class OrderReceiptDetails extends Model
         return $this->recieved_quantity - ($this->rework_quantity+$this->accepted_quantity+$this->rejected_quantity);
  
     }
+    public function getRecievedQtyAttribute() {
+       
+        return $this->recieved_quantity;
 
+    }
+    public function getItemAttribute() {
+       
+        return Item::where('id',$this->item_id)->pluck('name')->first();
+
+    }
+    public function getItemNameAttribute() {
+       
+        return Item::where('id',$this->item_id)->pluck('name')->first();
+
+    }
+    public function getPartNoAttribute() {
+       
+        return Item::where('id',$this->item_id)->pluck('part_no')->first();
+
+    }
      /*Schedule relation*/
      public function order_details()
      {

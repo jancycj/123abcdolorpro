@@ -18,6 +18,8 @@ class CreateOrderReceiptDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('order_receipt_header_id')->nullable();
             $table->unsignedInteger('order_id')->nullable();
+            $table->unsignedInteger('order_detail_id')->nullable();
+            $table->unsignedInteger('item_id')->nullable();
             $table->float('accepted_quantity')->nullable();
             $table->float('recieved_quantity')->nullable();
             $table->float('rework_quantity')->nullable();

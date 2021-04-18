@@ -222,6 +222,19 @@ class CompanyController extends Controller
 
     }
     
+    public function get_purchase_inspection()
+    {
+
+        return view('v1.colorpro.company.purchase_inspection');
+
+    }
+
+    public function get_purchase_stock()
+    {
+
+        return view('v1.colorpro.company.purchase_stock');
+
+    }
     
 
 

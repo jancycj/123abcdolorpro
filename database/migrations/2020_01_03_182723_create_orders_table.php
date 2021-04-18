@@ -33,7 +33,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('approved_by')->nullable();
             $table->date('approved_date')->nullable();
-            $table->unsignedInteger('currency')->nullable();
+            $table->string('currency')->nullable();
             $table->double('exchange_rate', 8, 2)->nullable();
             $table->float('basic_total')->nullable();
             $table->float('sub_total')->nullable();

@@ -270,17 +270,19 @@ class ReportController extends Controller
         }
 
         $company = CompanyUser::where('user_id',Auth::id())->first();
-        $orders = Order::where('comapny_id',$company->company_id)
+         $orders = Order::where('comapny_id',$company->company_id)
             ->where(function ($query) use ($vendor_id) {
                 if($vendor_id != ''){
                     $query->where('suppier_id',  $vendor_id);
                 }
             })
-            ->with('exact_details.exact_reciept')->whereHas('exact_details.exact_reciept', function($q) use($from, $to) {
+            ->with('exact_details.exact_reciept')
+            ->whereHas('exact_details.exact_reciept', function($q) use($from, $to) {
                 if($from != '' && $to != ''){
                     $q->whereBetween('delivery_date', [$from, $to]);
                 }
-            })->get();
+            })
+            ->get();
          $orders = $orders->groupBy('suppier_id');
         
         $date = Carbon::now()->format('d/m/Y');

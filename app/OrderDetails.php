@@ -139,17 +139,17 @@ class OrderDetails extends Model
     /*Schedule relation*/
     public function schedules()
     {
-        return $this->hasMany('App\OrderSchedules','order_details_id');
+        return $this->hasMany('App\OrderSchedules','order_detail_id');
     }
     /*Schedule relation*/
     public function reciept()
     {
-        return $this->hasMany('App\OrderReceiptDetails','order_details_id')->whereIn('status',['pending','processing']);
+        return $this->hasMany('App\OrderReceiptDetails','order_detail_id')->whereIn('status',['pending','processing']);
     }
     /*Schedule relation*/
     public function exact_reciept()
     {
-        return $this->hasMany('App\OrderReceiptDetails','order_details_id');
+        return $this->hasMany('App\OrderReceiptDetails','order_detail_id');
     }
     /*Schedule relation*/
     // public function stock_update()

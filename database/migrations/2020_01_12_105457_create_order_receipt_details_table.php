@@ -21,6 +21,7 @@ class CreateOrderReceiptDetailsTable extends Migration
             $table->unsignedInteger('order_detail_id')->nullable();
             $table->unsignedInteger('item_id')->nullable();
             $table->float('accepted_quantity')->nullable();
+            $table->float('conditionally_accepted_quantity')->nullable();
             $table->float('recieved_quantity')->nullable();
             $table->float('rework_quantity')->nullable();
             $table->float('rejected_quantity')->nullable();
@@ -31,7 +32,7 @@ class CreateOrderReceiptDetailsTable extends Migration
             $table->float('tax_value')->nullable();
             $table->float('tcs')->nullable();
             $table->text('rework_reason')->nullable();
-            $table->text('reject_reason')->nullable();
+            $table->text('rejected_reason')->nullable();
             $table->string('uom')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->enum('status',['pending','active','inactive', 'blocked','completed','stocked']);

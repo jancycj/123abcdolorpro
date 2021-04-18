@@ -83,7 +83,12 @@ Route::prefix('company')->group(function() {
       Route::get('/search_order', 'OrderController@search_order')->name('order.search');
       Route::post('/order/pdf', 'OrderController@exportPdf')->name('order.pdf');
       Route::get('/getIndentItem', 'IndentController@getIndentItem')->name('order.getIndentItem');
-
+      Route::get('/purchase/getInspectionData/{id}','OrderReceiptHeaderController@getInspectionData')->name('purchase.getInspectionData');
+      Route::get('/purchase/inspection','CompanyController@get_purchase_inspection')->name('purchase.inspection');
+      Route::post('/purchase/inspection','OrderReceiptHeaderController@purchase_inspection')->name('purchase.inspection.post');
+      Route::get('/purchase/getStockUpdateData/{id}','OrderReceiptHeaderController@getStockUpdateData')->name('purchase.getStockUpdateData');
+      Route::get('/purchase/stock','CompanyController@get_purchase_stock')->name('purchase.stock');
+      Route::post('/purchase/stock','OrderReceiptHeaderController@post_purchase_stock')->name('purchase.stock.post');
       
         Route::prefix('report')->group(function() {
 

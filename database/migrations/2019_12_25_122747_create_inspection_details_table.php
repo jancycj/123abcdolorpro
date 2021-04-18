@@ -15,16 +15,17 @@ class CreateInspectionDetailsTable extends Migration
     {
         Schema::create('inspection_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('ref_no')->nullable();
-            $table->unsignedInteger('material_transfers_id')->nullable();
-            $table->integer('accepted_quantity')->nullable();
-            $table->integer('reworked_quantity')->nullable();
+            $table->unsignedInteger('order_receipt_details_id')->nullable();
+            $table->float('conditionally_accepted_quantity')->nullable();
+            $table->float('accepted_quantity')->nullable();
+            $table->float('reworked_quantity')->nullable();
             $table->float('rejected_quantity')->nullable();
             $table->enum('status', ['active', 'inactive']);
-            $table->enum('type', ['mt', 'oa']);
+            $table->enum('type', ['p', 's']);
             $table->date('inspection_date')->nullable();
             $table->unsignedInteger('inspected_by')->nullable();
-            $table->text('reason')->nullable();
+            $table->text('rework_reason')->nullable();
+            $table->text('rejected_reason')->nullable();
             $table->timestamps();
         });
     }

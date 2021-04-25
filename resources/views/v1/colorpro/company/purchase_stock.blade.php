@@ -295,7 +295,6 @@
                                     <th scope="col">Rate</th>
                                     <th scope="col">UOM</th>
                                     <th scope="col">Accpt.Qty</th>
-                                    <th scope="col">Cond.Accpt.Qty</th>
                                     <th scope="col">Stock take.Qty</th>
                                     </tr>
                                 </thead>
@@ -321,11 +320,9 @@
                                              @{{d.uom}} 
                                         </td>
                                         <td class="number-field">
-                                            @{{d.mir_accepted_quantity}} 
+                                            @{{d.total_accepted_qty}} 
                                         </td class="number-field">
-                                        <td class="number-field">
-                                            @{{d.mir_conditionally_accepted_quantity}}  
-                                        </td class="number-field">
+                                        
                                         <td class="number-field">
                                             <input autocomplete="off" class="form-control"  v-model="d.stock_take_qty" > 
                                         </td>

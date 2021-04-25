@@ -89,6 +89,9 @@ Route::prefix('company')->group(function() {
       Route::get('/purchase/getStockUpdateData/{id}','OrderReceiptHeaderController@getStockUpdateData')->name('purchase.getStockUpdateData');
       Route::get('/purchase/stock','CompanyController@get_purchase_stock')->name('purchase.stock');
       Route::post('/purchase/stock','OrderReceiptHeaderController@post_purchase_stock')->name('purchase.stock.post');
+      Route::get('/bin-card','CompanyController@getBin')->name('company.getBin');
+      Route::get('/stock-correction','CompanyController@stockCorrection')->name('stock.correction');
+      Route::put('/updateStock/{id}','CompanyController@updateStock')->name('stock.correct');
       
         Route::prefix('report')->group(function() {
 
@@ -100,6 +103,7 @@ Route::prefix('company')->group(function() {
             Route::get('/register', 'ReportController@register_orders')->name('report.register');
             Route::get('/mir', 'ReportController@mir')->name('report.mir');
             Route::get('/mir_pdf', 'ReportController@mir_pdf')->name('report.mir.pdf');
+            Route::get('/mir_single_pdf/{id}', 'ReportController@mir_single_pdf')->name('report.mir_single.pdf');
 
            
             

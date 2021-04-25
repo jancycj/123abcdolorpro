@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Bincard;
 use App\Company;
 use App\CompanyUser;
 use App\Costomers;
+use App\Item;
 use App\Order;
 use App\OrderDetails;
 use App\OrderReceiptDetails;
@@ -14,10 +16,12 @@ use App\Traits\OrderTrait;
 use App\User;
 use App\UserRole;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 // use Barryvdh\DomPDF\PDF;
 use PDF;
+use DB;
 
 class CompanyController extends Controller
 {
@@ -236,7 +240,7 @@ class CompanyController extends Controller
 
     }
     
-
+    
 
     
 
@@ -264,4 +268,100 @@ class CompanyController extends Controller
     //     $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
 
     // }
+
+    public function getBin(Request $request)
+    {
+        if($request->has('json')){
+
+            
+        $item_id = $request->has('item_id') ? $request->item_id : '';
+        $from = $request->has('from') ? $request->from : '';
+        $to = $request->has('to') ? $request->to : '';
+        return DB::table('bincards as b')
+            ->join('lookup_masters as lc', function ($join) {
+                $join->on('b.transaction_code', '=', 'lc.lookup_value')
+                     ->where('lc.lookup_key', '=', 'BIN TRANSACTIONS');
+            })
+            ->select('b.*','lc.lookup_description as bincard_type')
+            ->where(function ($q) use($item_id, $from, $to){
+                if($to != '' && $from != ''){
+                        $q->whereBetween('b.transaction_date', [$from, $to]);
+                }
+                if($item_id != ''){
+                    $q->where('b.item_id', '=', $item_id);
+
+                }
+            })
+            ->orderBy('b.id')
+            ->limit(5)->get();
+        }
+        $year = Carbon::now()->format('Y');
+        $month = Carbon::now()->format('m') < 04 ? 1 : 4;
+        $start = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d'); //returns 2020-03-01
+        $end = Carbon::now()->format('Y-m-d'); 
+        return view('v1.colorpro.company.bin-card',compact('start','end'));
+    }
+
+    public function stockCorrection(Request $request)
+    {
+
+        if($request->has('json')){
+            $item_id = $request->has('item_id') ? $request->item_id : '';
+            $store_id = $request->has('store_id') ? $request->store_id : '';
+            $data =  DB::table('stocks as s')
+            ->join('lookup_masters as lu', 's.unit_id', '=', 'lu.id')
+            ->select('s.*','lu.lookup_value as unit')
+            ->where(['item_id' => $item_id, 'warehouse_id' => $store_id])
+            ->get();
+            return $data;
+
+        }
+        $t_date = Carbon::now()->format('Y-m-d');
+        return view('v1.colorpro.company.stock_correction',compact('t_date'));
+      
+    }
+    public function updateStock(Request $request, $id)
+    {
+        $stock = Stock::find($id);
+        $stock->quantity = $stock->quantity + $request->increment_qty;
+        $stock->quantity = $stock->quantity - $request->decrement_qty;
+        $stock->save();
+        $last_bin =  Bincard::where('item_id', $stock->item_id)->latest()->first();
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+
+        $item = Item::find($stock->item_id);
+
+            $bincard            = new Bincard;
+            $bincard->company_id                    = $company_id ;
+            $bincard->transaction_date              = Carbon::now();
+            $bincard->transaction_code              = 10;
+            $bincard->item_id                       = $item->id;
+            // $bincard->item_slno                 = ;
+            $bincard->reference_no                  = '';
+            $bincard->reference_date                = '';
+            $bincard->opening_stock                 = isset($last_bin->closing_stock) ? $last_bin->closing_stock : 0 ;
+            $bincard->opening_value                 = isset($last_bin->closing_value) ? $last_bin->closing_value:0 ;
+            if($request->increment_qty <= 0) {
+                //decrement block
+                $bincard->transanction_type             = 'I';
+                $bincard->transaction_qty               = $request->decrement_qty;
+                $bincard->trasaction_value              = $bincard->opening_value == 0 ? $request->decrement_qty * $item->list_price: ($bincard->opening_value / $bincard->opening_stock) * $request->decrement_qty;
+                $bincard->closing_stock                 = $bincard->opening_stock - $bincard->transaction_qty ;
+                $bincard->closing_value                 = $bincard->opening_value  - $bincard->trasaction_value;
+
+            } else{
+                //increment block
+                $bincard->transanction_type             = 'R';
+                $bincard->transaction_qty               = $request->increment_qty;
+                $bincard->trasaction_value              = $bincard->opening_value == 0 ? $request->increment_qty * $item->list_price: ($bincard->opening_value / $bincard->opening_stock) * $request->increment_qty;
+                $bincard->closing_stock                 = $bincard->opening_stock + $bincard->transaction_qty ;
+                $bincard->closing_value                 = $bincard->opening_value  + $bincard->trasaction_value;
+
+            }
+            $bincard->transaction_by                = Auth::id();
+            $bincard->store_code                    = $stock->warehouse_id;
+            $bincard->remarks                       = $request->remarks;
+            $bincard->save();
+        return 'Successfully Updated';
+    }
 }

@@ -6,6 +6,7 @@ use App\Bincard;
 use App\CompanyUser;
 use App\Helpers\DocNo;
 use App\InspectionDetails;
+use App\Item;
 use App\OrderDetails;
 use App\OrderReceiptDetails;
 use App\OrderReceiptHeader;
@@ -385,7 +386,8 @@ class OrderReceiptHeaderController extends Controller
                 'orcd.recieved_quantity as recieved_qty',
                 'orcd.id as order_receipt_id',
                 'stk.warehouse_id',
-                DB::raw(" IFNULL(orcd.accepted_quantity,0) + IFNULL(orcd.conditionally_accepted_quantity,0) as stock_take_qty")
+                DB::raw(" IFNULL(orcd.accepted_quantity,0) + IFNULL(orcd.conditionally_accepted_quantity,0) - IFNULL(orcd.store_accepted_quantity,0) as total_accepted_qty"),
+                DB::raw(" IFNULL(orcd.accepted_quantity,0) + IFNULL(orcd.conditionally_accepted_quantity,0) - IFNULL(orcd.store_accepted_quantity,0) as stock_take_qty")
                 )->get();
         // $details = OrderReceiptDetails::where('order_receipt_header_id',$orderReceiptHeader)->get();
 
@@ -420,9 +422,10 @@ class OrderReceiptHeaderController extends Controller
             $bincard->opening_stock                 = isset($last_bin->closing_stock) ? $last_bin->closing_stock : 0 ;
             $bincard->opening_value                 = isset($last_bin->closing_value) ? $last_bin->closing_value:0 ;
             $bincard->transaction_qty               = $mird->store_accepted_quantity / $mird->conversion_factor;
-            $bincard->trasaction_value              = $mird->conversion_factor * $mird->rate * $exchage_rate;
-            $bincard->closing_stock                 = $bincard->opening_stock + $mird->store_accepted_quantity;
-            $bincard->closing_value                 = $bincard->closing_stock * $bincard->trasaction_value;
+            $bincard->trasaction_value              = $mird->store_accepted_quantity * $mird->rate * $exchage_rate;
+
+            $bincard->closing_stock                 = $bincard->opening_stock + $bincard->transaction_qty ;
+            $bincard->closing_value                 = $bincard->opening_value  + $bincard->trasaction_value;
             $bincard->transaction_by                = Auth::id();
             // $bincard->computer_name                 = $mir_header->mir_date ;
             $bincard->store_code                    = isset($mir_header['warehouse_id']) ? $mir_header['warehouse_id'] : '01';
@@ -433,9 +436,12 @@ class OrderReceiptHeaderController extends Controller
             $bincard->save();
 
             $stock = Stock::where('item_id',$bincard->item_id)->first();
-            $stock->quantity = $stock->quantity+$bincard->transaction_qty ;
+            $stock->quantity = $stock->quantity + $bincard->transaction_qty ;
             $stock->save();
-        // return ['header' => $mird, 'details' => $bincard, 'stock' => $stock];
+
+            $item = Item::find($bincard->item_id);
+            $item->weight_average_rate = $bincard->closing_value / $bincard->closing_stock ;
+            $item->save();
 
         }
         return 'true';

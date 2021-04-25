@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\CompanyUser;
 use App\Costomers;
 use App\LookupMaster;
 use App\Order;
 use App\OrderDetails;
+use App\OrderReceiptHeader;
 use App\Stock;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
 use PDF;
+use DB;
 
 
 
@@ -255,7 +258,7 @@ class ReportController extends Controller
      */
     public function mir_pdf(Request $request)
     {
-
+        
         $vendor_id = '';
         $from = '';
         $to = '';
@@ -289,6 +292,64 @@ class ReportController extends Controller
 
         // return $company;
         $pdf = PDF::loadView('pdf.mir', compact('orders','company','date','from','to') );
+        $pdf->setPaper('A4', 'landscape'); 
+        return $pdf->stream('customers.pdf');
+    }
+
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
+    public function mir_single_pdf(Request $request, $id)
+    {
+        $header = OrderReceiptHeader::find($id);
+        $details = DB::table('order_receipt_details as orcd')
+            ->join('orders as ord', 'orcd.order_id', '=', 'ord.id')
+            ->join('order_details as ordd', 'orcd.order_detail_id', '=', 'ordd.id')
+            ->join('items as ite', 'ordd.item_id', '=', 'ite.id')
+            ->join('costomers as co', 'ord.supplier_id', '=', 'co.id')
+            ->leftJoin('lookup_masters as lkv', 'ordd.purchase_unit_id', '=', 'lkv.id')
+            ->where('orcd.order_receipt_header_id', '=',$id)
+            // ->whereRaw('IFNULL(orcd.recieved_quantity,0) - (IFNULL(orcd.accepted_quantity,0) + IFNULL(orcd.conditionally_accepted_quantity,0) + IFNULL(orcd.rework_quantity,0) + IFNULL(orcd.rejected_quantity,0)) > 0')
+            ->select(
+                'orcd.*',
+                'ordd.id as order_detail_id',
+                'ordd.quantity as quantity',
+                'ordd.discount',
+                'ordd.rate as po_rate',
+                'ord.order_number as order_no',
+                'ord.order_date',
+                'ord.tax_percent',
+                'ord.tax_name',
+                'ord.pnf_total',
+                'ord.courrier_charge',
+                'ite.part_no',
+                'ite.over_reciept_percentage',  
+                'ite.name as item',
+                'lkv.lookup_value as uom',
+                'orcd.recieved_quantity as recieved_qty',
+                'orcd.id as order_receipt_id',
+                DB::raw(" IFNULL(ordd.quantity,0) - IFNULL(ordd.recieved_quantity,0) as po_quantity"),
+                )->get();
+                 $order_details = $details->groupBy('order_no');
+                $resArr = [];
+                foreach($order_details as $poKey => $poVal){
+                    foreach($poVal as $item){
+                        $total = $item->rate * (floatval($item->accepted_quantity) + floatval($item->conditionally_accepted_quantity));
+                        $item->subtotal = $total;
+                        $resObj = ['order_no' => $poKey, 'order_date' => $item->order_date, 'detail_data' => $item];
+                    }
+                    array_push($resArr,$resObj);
+                }
+                $header->t_date = Carbon::now()->format('d-m-Y');
+                 
+
+                //  return $mir_data = ['header' => $header, 'details' => $resArr];
+        // return view('pdf.demo');
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
+         $company = Company::where('id',$company_id)->first();
+        $pdf = PDF::loadView('pdf.mir_single',compact('header','resArr','company'));
         $pdf->setPaper('A4', 'landscape'); 
         return $pdf->stream('customers.pdf');
     }

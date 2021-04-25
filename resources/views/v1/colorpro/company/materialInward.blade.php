@@ -395,9 +395,7 @@
                         
                     </div>
                     <div class="row order-ft">
-                        <div class="col-md-2 col-lg-2 col-sm-6 offset-8 mg-t-5" v-if="print_flag">
-                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
-                        </div>
+                        
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
                                 <button class="btn btn-primary btn-block " @click="save_mir()">Save</button>
                         </div>
@@ -407,6 +405,9 @@
                        
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_mir()">Cancel</button>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-sm-6  mg-t-5" v-if="update_flag">
+                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf(mir.id)">Print PO</button>
                         </div>
                     </div>
                     
@@ -1096,6 +1097,26 @@
             }, (error) => {
             // vm.errors = error.errors;
             });
+        },
+        /** download pdf */
+        downloadPdf: function(id) {
+            
+            window.open('/company/report/mir_single_pdf/'+id, '_blank');
+            // axios({
+            //     url: "/company/mir_recipt/pdf",
+            //     method: "POST",
+            //     responseType: "blob",
+            //     data: {
+            //     order_id: id,
+            //     }
+            // }).then(response => {
+            //     const url = window.URL.createObjectURL(new Blob([response.data]));
+            //     const link = document.createElement("a");
+            //     link.href = url;
+            //     link.setAttribute("download","purchase_order.pdf");
+            //     document.body.appendChild(link);
+            //     link.click();
+            // });
         }
      
      },

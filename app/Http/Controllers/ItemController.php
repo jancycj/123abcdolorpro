@@ -75,6 +75,7 @@ class ItemController extends Controller
         $stock->company_id  = $company_id ;
         $stock->item_id     = $item->id;
         $stock->unit_id     = $item->unit_id;
+        // $stock->warehouse_id     = $request->warehouse_id;
         $stock->created_by  = Auth::id();
         
         $stock->save();

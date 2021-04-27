@@ -98,7 +98,7 @@ class RatesController extends Controller
                     $rateob->is_default             = isset($rate['is_default'])?$rate['is_default']:'';
                     $rateob->quatation_no           = isset($rate['quatation_no'])?$rate['quatation_no']:'';
                     $rateob->quatation_date         = isset($rate['quatation_date'])?$rate['quatation_date']:null;
-                    $rateob->remarks             = $rate['remarks'];
+                    $rateob->remarks             = isset($rate['remarks'])?$rate['remarks']:''; 
 
                     $rateob->save();
                     if(isset($rate['is_default']) && $rate['is_default'] == true){

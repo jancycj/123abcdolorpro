@@ -50,9 +50,9 @@ class CostomersController extends Controller
     {
         $this->validate($request, [
             'name'     => 'required',
-            'email'    => 'required|email|unique:users',
+            'username'    => 'required|unique:users',
             'password'            => 'required',
-            'address1'           => 'required',
+            'address_line1'           => 'required',
         ]);
         $user = new User;
         $user->name = $request->name;
@@ -220,7 +220,7 @@ class CostomersController extends Controller
             'name'     => 'required',
             'username'    => 'required|unique:users',
             'password'            => 'required',
-            'address1'           => 'required',
+            'address_line1'           => 'required',
         ]);
         $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $user = new User;

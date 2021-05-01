@@ -45,7 +45,7 @@ class VendorReportController extends Controller
         $orders = Order::where('comapny_id',$company_id)
             ->where(function ($query) use ($vendor_id) {
                 if($vendor_id != ''){
-                    $query->where('suppier_id',  $vendor_id);
+                    $query->where('supplier_id',  $vendor_id);
                 }
             })
             ->with('exact_details')->whereHas('exact_details', function($q) use($from, $to) {
@@ -53,7 +53,7 @@ class VendorReportController extends Controller
                     $q->whereBetween('delivery_date', [$from, $to]);
                 }
             })->get();
-        $orders = $orders->groupBy('suppier_id');
+        $orders = $orders->groupBy('supplier_id');
         
         $categories = Costomers::where('company_id',$company_id)->get();
         return view('v1.colorpro.customer.reports.po',compact('orders','categories'));
@@ -76,7 +76,7 @@ class VendorReportController extends Controller
         $orders = Order::where('comapny_id',$this->company_id())
             ->where(function ($query) use ($vendor_id) {
                 if($vendor_id != ''){
-                    $query->where('suppier_id',  $vendor_id);
+                    $query->where('supplier_id',  $vendor_id);
                 }
             })
             ->with('exact_details')->whereHas('exact_details', function($q) use($from, $to) {
@@ -84,7 +84,7 @@ class VendorReportController extends Controller
                     $q->whereBetween('delivery_date', [$from, $to]);
                 }
             })->get();
-            $orders = $orders->groupBy('suppier_id');
+            $orders = $orders->groupBy('supplier_id');
 
             $date = Carbon::now()->format('d/m/Y');
 
@@ -119,7 +119,7 @@ class VendorReportController extends Controller
         $orders = Order::where('comapny_id',$company_id)
             ->where(function ($query) use ($vendor_id) {
                 if($vendor_id != ''){
-                    $query->where('suppier_id',  $vendor_id);
+                    $query->where('supplier_id',  $vendor_id);
                 }
             })
             ->with('details')->whereHas('details', function($q) use($from, $to) {
@@ -127,7 +127,7 @@ class VendorReportController extends Controller
                     $q->whereBetween('delivery_date', [$from, $to]);
                 }
             })->get();
-        $orders = $orders->groupBy('suppier_id');
+        $orders = $orders->groupBy('supplier_id');
         
         $categories = Costomers::where('company_id',$company_id)->get();
         return view('v1.colorpro.customer.reports.pending',compact('orders','categories'));
@@ -150,7 +150,7 @@ class VendorReportController extends Controller
         $orders = Order::where('comapny_id',$this->company_id())
             ->where(function ($query) use ($vendor_id) {
                 if($vendor_id != ''){
-                    $query->where('suppier_id',  $vendor_id);
+                    $query->where('supplier_id',  $vendor_id);
                 }
             })
             ->with('details')->whereHas('details', function($q) use($from, $to) {
@@ -158,7 +158,7 @@ class VendorReportController extends Controller
                     $q->whereBetween('delivery_date', [$from, $to]);
                 }
             })->get();
-            $orders = $orders->groupBy('suppier_id');
+            $orders = $orders->groupBy('supplier_id');
 
             $date = Carbon::now()->format('d/m/Y');
             $company = CompanyUser::where('company_id',$this->company_id())->first();
@@ -193,7 +193,7 @@ class VendorReportController extends Controller
         $orders = Order::where('comapny_id',$company_id)
             ->where(function ($query) use ($vendor_id) {
                 if($vendor_id != ''){
-                    $query->where('suppier_id',  $vendor_id);
+                    $query->where('supplier_id',  $vendor_id);
                 }
             })
             ->with('exact_details.exact_reciept')->whereHas('exact_details.exact_reciept', function($q) use($from, $to) {
@@ -201,7 +201,7 @@ class VendorReportController extends Controller
                     $q->whereBetween('delivery_date', [$from, $to]);
                 }
             })->get();
-         $orders = $orders->groupBy('suppier_id');
+         $orders = $orders->groupBy('supplier_id');
         
         $categories = Costomers::where('company_id',$company_id)->get();
         return view('v1.colorpro.customer.reports.mir',compact('orders','categories'));
@@ -230,7 +230,7 @@ class VendorReportController extends Controller
         $orders = Order::where('comapny_id',$this->company_id())
             ->where(function ($query) use ($vendor_id) {
                 if($vendor_id != ''){
-                    $query->where('suppier_id',  $vendor_id);
+                    $query->where('supplier_id',  $vendor_id);
                 }
             })
             ->with('exact_details.exact_reciept')->whereHas('exact_details.exact_reciept', function($q) use($from, $to) {
@@ -238,7 +238,7 @@ class VendorReportController extends Controller
                     $q->whereBetween('delivery_date', [$from, $to]);
                 }
             })->get();
-         $orders = $orders->groupBy('suppier_id');
+         $orders = $orders->groupBy('supplier_id');
         
         $date = Carbon::now()->format('d/m/Y');
         $company = CompanyUser::where('company_id',$this->company_id())->first();

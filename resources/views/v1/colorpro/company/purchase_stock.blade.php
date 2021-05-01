@@ -380,9 +380,7 @@
                         
                     </div>
                     <div class="row order-ft">
-                        <div class="col-md-2 col-lg-2 col-sm-6 offset-8 mg-t-5" v-if="print_flag">
-                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
-                        </div>
+                        
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
                                 <button class="btn btn-primary btn-block " @click="save_mir()">Save</button>
                         </div>
@@ -392,6 +390,9 @@
                        
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_mir()">Cancel</button>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-sm-6 mg-t-5" v-if="update_flag">
+                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf(mir.id)">Print</button>
                         </div>
                     </div>
                     
@@ -693,6 +694,10 @@ order by orh.mir_no  DESC limit 10`;
             .catch((error)=>{
             });
          },
+         downloadPdf: function(id) {
+            
+            window.open('/company/report/mir_single_pdf/'+id, '_blank');
+        }
          
      
      },

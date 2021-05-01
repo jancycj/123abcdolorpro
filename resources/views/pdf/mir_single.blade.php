@@ -10,7 +10,7 @@
         background-color: #00c9ff45;
       color: #001737;
       text-align: center;
-      padding: 6px;
+      padding: 1px;
     }
     thead {
       display: table-header-group;
@@ -22,7 +22,7 @@
     }
     #products td, #products th {
       border: 1px solid black;
-      padding: 8px;
+      padding: 1px;
       font-size:13px !important
 
     }
@@ -34,8 +34,8 @@
       background-color: #00c9ff45;
     }
     #products th {
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding-top: 1px;
+      padding-bottom: 1px;
       text-align: left;
       background-color: #00c9ff45;
       color: #001737;
@@ -65,6 +65,20 @@
   </head>
 
   <body>
+  <script type="text/php">
+    if (isset($pdf)) {
+        $x = 250;
+        $y = 10;
+        $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
+        $font = null;
+        $size = 12;
+        $color = array(18,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+    }
+</script>
   <!-- <div id="watermark">
     Watermark
   </div> -->
@@ -164,7 +178,7 @@
       <thead>
         <tr>
           <td>PoNO</td>
-          <td> Po date </td>
+          <td>Pur. &nbsp;&nbsp;&nbsp; date </td>
           <td colspan="6">  </td>
         </tr>
         
@@ -195,11 +209,20 @@
                   <td>Total</td>
                 </tr>
                 
-                @php($mir = $detail['detail_data'])
+                @php($mirs = $detail['detail_data'])
+                @foreach($mirs as $mir)
+                <tr>
+                  <td colspan="6">
+                  {{$mir->part_no}}
+                  </td>
+                  <td colspan="7">
+                  {{$mir->item}}
+                  </td>
+                </tr>
 
                 <tr>
-                  <td>{{$mir->part_no}} </td>
-                  <td>{{$mir->item}}</td>
+                  <td></td>
+                  <td></td>
                   <td>{{$mir->quantity}}</td>
                   <td>{{$mir->uom}}</td>
                   <td>{{$mir->recieved_quantity}}</td>
@@ -212,11 +235,15 @@
                   <td>{{$mir->discount}}</td>
                   <td>{{$mir->subtotal}}</td>
                 </tr>
+
+                
+                
                 @php($grant_total = $grant_total+$mir->subtotal)
                 @php(
                   [$tax = $mir->tax_percent,
                   $tax_name = $mir->tax_name]
                   )
+                  @endforeach
 
               </table>
             </td>
@@ -226,10 +253,42 @@
     </table>
     <table style="width: 100%;">
         <thead>
+                  
+            <tr>
+                <td colspan="3" align="right">Total : {{$grant_total}} </td>
+                
+            </tr>
             <tr >
-                <td style="border-bottom: 1px solid black;" colspan="3"></td>
+              <td></td>
+              <td></td>
+                <td style="border-bottom: 1px solid black;" ></td>
             </tr>
             <tr>
+                <td colspan="3" align="right">Other Charges : {{ $header->other_charges}}</td>
+                
+            </tr>
+            <!-- <tr >
+                  <td style="border-bottom: 1px solid black;" colspan="3"></td>
+              </tr> -->
+            <tr>
+                @php(
+                  [$tt = $grant_total + $header->other_charges,
+                  $txa = $tt * ($tax/100)]
+
+                )
+                <td colspan="3" align="right">{{$tax_name}}  : {{ $txa }}</td>
+                
+            </tr>
+                <tr >
+                  <td></td>
+                  <td></td>
+                    <td style="border-bottom: 1px solid black;" ></td>
+                </tr>
+                <tr >
+                    <td  colspan="3" align="right">Grant Total : {{$txa+$tt}}</td>
+
+                </tr>
+            <!-- <tr>
                 <td>Total : {{$grant_total}} </td>
                 <td>Other Charges : {{ $header->other_charges}}</td>
                 @php(
@@ -245,11 +304,12 @@
                     <td style="text-align:end;">Grant Total : {{$txa+$tt}}</td>
 
                 </tr>
-            </tr>
+            </tr> -->
         </thead>
         <tbody>
 
         </tbody>
     </table>
+    
   </body>
 </html>

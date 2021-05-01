@@ -332,16 +332,23 @@ class ReportController extends Controller
                 'orcd.id as order_receipt_id',
                 DB::raw(" IFNULL(ordd.quantity,0) - IFNULL(ordd.recieved_quantity,0) as po_quantity"),
                 )->get();
-                 $order_details = $details->groupBy('order_no');
+                $order_details = $details->groupBy('order_no');
                 $resArr = [];
                 foreach($order_details as $poKey => $poVal){
+                    $detail_array = [];
                     foreach($poVal as $item){
+                        // dd($item);
                         $total = $item->rate * (floatval($item->accepted_quantity) + floatval($item->conditionally_accepted_quantity));
                         $item->subtotal = $total;
-                        $resObj = ['order_no' => $poKey, 'order_date' => $item->order_date, 'detail_data' => $item];
+                        array_push($detail_array,$item);
+                        
+
                     }
+                    $resObj = ['order_no' => $poKey, 'order_date' => $item->order_date, 'detail_data' => $detail_array];
                     array_push($resArr,$resObj);
+
                 }
+                // return $resArr;
                 $header->t_date = Carbon::now()->format('d-m-Y');
                  
 
@@ -349,8 +356,11 @@ class ReportController extends Controller
         // return view('pdf.demo');
         $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
          $company = Company::where('id',$company_id)->first();
-        $pdf = PDF::loadView('pdf.mir_single',compact('header','resArr','company'));
-        $pdf->setPaper('A4', 'landscape'); 
+         $pdf = PDF::loadView('pdf.mir_single',compact('header','resArr','company'));
+         $pdf->getDomPDF()->set_option("enable_php", true);
+         $pdf->setPaper('A4', 'landscape'); 
+        // $pdf->page_text(0, 0, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+        
         return $pdf->stream('customers.pdf');
     }
 }

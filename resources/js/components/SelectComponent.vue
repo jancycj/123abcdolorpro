@@ -40,7 +40,7 @@
 <script>
     export default {
         // @keyup.down="getSelected($event)"
-        name: 'navBar',
+        name: 'Select Component',
         props:['query','fields','search_filed','table','where_value','where_field'],
         data(){
             return {

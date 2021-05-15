@@ -15,6 +15,7 @@ class CreateIndentsTable extends Migration
     {
         Schema::create('indents', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('company_id')->nullable();
             $table->string('indent_no')->nullable();
             $table->date('request_date')->nullable();
             $table->string ('department')->nullable();

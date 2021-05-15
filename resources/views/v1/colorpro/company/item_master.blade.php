@@ -158,15 +158,15 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" id="main-tab" data-toggle="tab" href="#main" role="tab" aria-controls="home" aria-selected="true">Main</a>
                                     </li>
-                                    <!-- <li class="nav-item">
+                                    <li class="nav-item">
                                         <a class="nav-link" id="inventory-tab" data-toggle="tab" href="#inventory" role="tab" aria-controls="profile" aria-selected="false">Inventory</a>
-                                    </li> -->
+                                    </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="purchasing-tab" data-toggle="tab" href="#purchasing" role="tab" aria-controls="contact" aria-selected="false">Purchasing</a>
                                     </li>
-                                    <!-- <li class="nav-item">
+                                    <li class="nav-item">
                                         <a class="nav-link" id="planning-tab" data-toggle="tab" href="#planning" role="tab" aria-controls="contact" aria-selected="false">Planning</a>
-                                    </li> -->
+                                    </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="costing-tab" data-toggle="tab" href="#costing" role="tab" aria-controls="contact" aria-selected="false">Costing</a>
                                     </li>
@@ -291,10 +291,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="tab-pane fade" id="inventory" role="inventory" aria-labelledby="profile-tab">
-                                        <h6>Profile</h6>
+                                    <div class="tab-pane fade" id="inventory" role="inventory" aria-labelledby="profile-tab">
+                                        <h6>Inventory</h6>
                                         <p>...</p>
-                                    </div> -->
+                                    </div>
                                     <div class="tab-pane fade" id="purchasing" role="purchasing" aria-labelledby="contact-tab">
                                         <div class="row">
                                             <div class="col-md-4 col-lg-4 col-sm-6">
@@ -349,10 +349,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="tab-pane fade" id="planning" role="planning" aria-labelledby="contact-tab">
-                                        <h6>Contact</h6>
+                                    <div class="tab-pane fade" id="planning" role="planning" aria-labelledby="contact-tab">
+                                        <h6>Planning</h6>
                                         <p>...</p>
-                                    </div> -->
+                                    </div>
                                     <div class="tab-pane fade" id="costing" role="costing" aria-labelledby="contact-tab">
                                         <div class="row">
                                             <div class="col-md-4 col-lg-4 col-sm-6">
@@ -487,7 +487,13 @@
             <div class="modal-body">
 
                 <div class="card-body card-block">
-                    <choose-component :id="'items'" :table="'items'" :fields="['part_no','name','id']" :search_filed="'part_no'" @selected="getItem($event)"></choose-component>
+                    <choose-component :id="'items'" 
+                    :table="'items'" 
+                    :fields="['part_no','name','id']" 
+                    :search_filed="'part_no'" 
+                    :where_field="'company_id'" 
+                    :where_value="{{DocNo::companyId()}}"
+                    @selected="getItem($event)"></choose-component>
 
                 </div>
             </div>

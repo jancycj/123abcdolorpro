@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\CompanyUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Throwable;
+use Auth;
 
 class QuickController extends Controller
 {    
@@ -42,6 +44,7 @@ class QuickController extends Controller
      */
     public function items(Request $request)
     {
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $limit = $request->has('limit') ? $request->limit : 10;
         $code = $request->has('code') ? $request->code : '';
         $name = $request->has('name') ? $request->name : '';
@@ -66,6 +69,7 @@ class QuickController extends Controller
            }
            
         })
+        ->where('items.company_id',$company_id)
         ->limit($limit)->get();
     }  
     /**
@@ -81,6 +85,7 @@ class QuickController extends Controller
                 'table'         => 'required',
                 'fields'                => 'required | array',
             ]);
+            
             $search = $request->has('search')?$request->search: '';
             $where_value = $request->has('where_value')?$request->where_value: '';
             $where_field = $request->has('where_field')?$request->where_field: '';

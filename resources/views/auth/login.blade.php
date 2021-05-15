@@ -23,7 +23,12 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
+    <style>
+        b, strong {
+            color: red;
+            font-weight: bolder;
+        }
+    </style>
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 </head>
 <body class="bg-dark">
@@ -43,9 +48,7 @@
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username">
                             @error('username')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <strong>{{ $errors->first('username') }}</strong>
                             @enderror
                         </div>
                         <div class="form-group">
@@ -53,9 +56,7 @@
                             <input type="password" name="password" class="form-control" placeholder="Password">
 
                             @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <strong>{{ $errors->first('password') }}</strong>
                             @enderror
                         </div>
                         <!-- <div class="checkbox">

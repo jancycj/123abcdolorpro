@@ -400,7 +400,7 @@
                                 <button class="btn btn-primary btn-block " @click="save_mir()">Save</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
-                                <button class="btn btn-primary btn-block " @click="update_mir()">Update</button>
+                                <button class="btn btn-primary btn-block " @click="update_mir()">Update/Approve</button>
                         </div>
                        
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
@@ -972,6 +972,22 @@
             // vm.errors = error.errors;
             });
 
+        },
+        clear_mir : function(){
+            this.mir =  {
+                mir_no : '',
+                mir_date:'',
+                vendor_code : '',
+                vendor_name : '',
+                order_no : '',
+                order_date : '',
+                other_charges:0,
+            },
+            this.mir_details = [],
+            this.print_flag = false;
+            this.update_flag= false;
+
+            
         },
         clear_indent : function(){
             this.items =  [];

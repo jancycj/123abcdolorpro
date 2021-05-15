@@ -30,8 +30,9 @@ class OrderReceiptHeader extends Model
         return  DB::table('costomers')->where('id',$this->vendor_id)->pluck('name')->first();
     }
     public function getVendorAddressAttribute() {
-       $vendor =  DB::table('costomers')->where('id',$this->vendor_id)->first();
+       if( $vendor =  DB::table('costomers')->where('id',$this->vendor_id)->first()){
         return  $vendor->address_line1.'<br>'.$vendor->address_line2;
+       }
     }
     public function getVendorPostCodeAttribute() {
         return  DB::table('costomers')->where('id',$this->vendor_id)->pluck('post_code')->first();

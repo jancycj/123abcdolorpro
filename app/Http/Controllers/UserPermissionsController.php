@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\UserPermissions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserPermissionsController extends Controller
 {
@@ -14,7 +17,8 @@ class UserPermissionsController extends Controller
      */
     public function index()
     {
-        //
+        return view('v1.password-reset');
+
     }
 
     /**
@@ -35,7 +39,11 @@ class UserPermissionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        $user = User::find(Auth::id());
+        $user->password = Hash::make($request->c_password);
+        $user->save();
+        return 'true';
     }
 
     /**

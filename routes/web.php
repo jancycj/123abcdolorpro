@@ -17,9 +17,6 @@ Route::get('/dash', function () {
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::get('/', function () {
-    return view('auth.login');
-});
 
 Auth::routes();
 
@@ -59,6 +56,8 @@ Route::prefix('company')->group(function() {
       Route::post('/user', 'EmployeeController@createUser')->name('company.user.create');
       Route::get('/user/{id}', 'EmployeeController@showUser')->name('company.user.show');
       Route::put('/user/{id}', 'EmployeeController@updateUser')->name('company.user.update');
+      Route::get('/password-reset', 'UserPermissionsController@index')->name('company.passwordReset.show');
+      Route::post('/password-reset', 'UserPermissionsController@store')->name('company.passwordReset.store');
 
       Route::post('/updateOrders', 'OrderController@updateOrders')->name('company.order.updateOrders');
       Route::get('/item', 'ItemController@company_item')->name('company.item');

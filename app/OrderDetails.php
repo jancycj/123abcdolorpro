@@ -139,7 +139,7 @@ class OrderDetails extends Model
     /*Schedule relation*/
     public function schedules()
     {
-        return $this->hasMany('App\OrderSchedules','order_detail_id');
+        return $this->hasMany('App\OrderSchedules','order_details_id');
     }
     /*Schedule relation*/
     public function reciept()

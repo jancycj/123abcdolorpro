@@ -337,9 +337,6 @@
                                 <button class="btn btn-primary btn-block " @click="update_indent()">Update</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
-                                <button class="btn btn-warning btn-block " @click="clear_indent()">Delete</button>
-                        </div>
-                        <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_indent()">Cancel</button>
                         </div>
                     </div>
@@ -743,7 +740,7 @@
         clear_indent : function(){
             this.items =  [];
             this.indent =   {
-               indent_no : '',
+                indent_no : '',
                 indent_date:'',
                 department :'',
                 product_group : '',
@@ -752,7 +749,9 @@
                 family : '',
                 family_des : '',
             };
-           this.item_ob = {sl_no : 1, shade_code:'', colour: ''},
+            this.update_flag = false;
+            this.print_flag = false;
+            this.item_ob = {sl_no : 1, shade_code:'', colour: ''},
             this.getIndentNo();
 
             

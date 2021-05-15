@@ -50,25 +50,7 @@
 @section('content')
 <div class="content content-fixed">
     <div class="container pd-20">
-      <div class="import-sec-white">
-      <div class="d-sm-flex align-items-center justify-content-between ">
-        <div>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-style1 mg-b-10">
-              <li class="breadcrumb-item"><a href="#" >Supplier</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Orders</li>
-            </ol>
-          </nav>
-          <h4 class="mg-b-0 tx-spacing--1">Order List</h4>
-        </div>
-        <div class="d-none d-md-block">
-          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save" class="wd-10 mg-r-5"></i> Save</button>
-          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload" class="wd-10 mg-r-5"></i> Export</button>
-          <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2" class="wd-10 mg-r-5"></i> Share</button>
-          <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders" class="wd-10 mg-r-5"></i> Settings</button>
-        </div>
-      </div>
-    </div>
+      
 
       <div class="row row-xs">
        
@@ -145,7 +127,7 @@
                             <div class="col-4 offset-4">
                                     <div class="pd-t-20    bd-b-0 pd-b-0">
                                         <div class="order-cap">
-                                        <h3 class=" tx-teal mg-b-10">Quality checking</h3> 
+                                        <h3 class=" tx-teal mg-b-10">Order Update</h3> 
                                         </div> 
                                         
                                     </div>
@@ -154,11 +136,25 @@
                         <div class="row">
                             <div class="col-2">
                                 <div class="form-group">
+                                    <label for="inputAddress">MIR No:</label>
+                                    <input type="text" class="form-control"  placeholder="MIR NO" v-model="mir_no" disabled>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="inputAddress">MIR Date:</label>
+                                    <input type="date" class="form-control"  placeholder="MIR date" v-model="mir_date" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-2">
+                                <div class="form-group">
                                     <label for="inputAddress">Order No:</label>
                                     <input type="text" class="form-control" id="inputAddress" placeholder="ORD1234" v-model="order.order_number" disabled>
                                 </div>
                             </div>
-                            
                             
                             <div class="col-2 ">
                                 <div class="form-group">
@@ -184,7 +180,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="inputAddress">Ship To:</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="INR" v-model="order.ship_to_company_name" disabled>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Ship to" v-model="order.ship_to_name" disabled>
                                         
                                     </select>
                                 </div>
@@ -231,13 +227,13 @@
                                     </thead>
                                     <tbody>
                                        
-                                        <tr v-for="ord in order.details" v-if="ord.balance > 0 ">
+                                        <tr v-for="ord in order.details" >
                                             <td class="tx-medium ">@{{ord.item}}</td>
                                             <td class="tx-medium ">
-                                                <span v-if="ord.schedules.length > 0"> <small class="tx-teal"> Scheduled</small></span> <span v-if="ord.schedules.length <= 0">@{{ord.delivery_date}}</span>
+                                                 @{{ord.need_by_date}}
                                             </td>
-                                            <td class="tx-medium ">@{{ord.balance}}</td>
-                                            <td class="tx-medium ">@{{ord.unit}}</td>
+                                            <td class="tx-medium ">@{{ord.mir_quantity}}</td>
+                                            <td class="tx-medium ">@{{ord.uom}}</td>
                                             <td class="tx-medium "> 
                                                 
                                                 <span v-if="ord.schedule"> <a href="#" ><i class="fa fa-calendar"></i></a></span> <span v-if="!ord.schedule">--</span>
@@ -375,7 +371,11 @@
     data: {
       items:[],
       item:{},
-      order : {},
+      order : {
+          
+      },
+      mir_no :'',
+          mir_date :'',
       customers : [],
       company_id : {{$company_id}},
       qc_array: [],
@@ -406,6 +406,8 @@
             var vm = this;
             axios.get('/customer/order/'+id+'?json=true').then((response) => {
             vm.order = response.data;
+            vm.order.mir_no = ''; 
+            vm.order.mir_date = ''; 
             // vm.reciept = vm.order.details.reciept;
             console.log(vm.order.details)
              $("#view_order").modal('toggle');
@@ -471,10 +473,13 @@
             }
             axios.post('/customer/OrderReceiptDetails',vm.order)
             .then(response => {
-                vm.order = {};
-                $("#view_order").modal('toggle');
+                console.log('mir result',response.data)
+                alert('mir registered successfully')
+                vm.mir_no = response.data.mir_no;
+                vm.mir_date = response.data.mir_date;
+                // $("#view_order").modal('toggle');
                
-                location.reload();
+                // location.reload();
             })
             .catch((err) =>{
                 this.errors = err.response.data.errors;

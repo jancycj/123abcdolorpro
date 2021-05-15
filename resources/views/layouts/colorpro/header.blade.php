@@ -6,26 +6,9 @@
      <div class="navbar-brand">
        <!-- <a href="/" class="df-logo">Log<span>ezy</span></a> -->
        <!-- <a href="#"><h2 class="logo-new ">Tech-Pro:</h2></a> -->
-       <a href="#"><h5 class="logo-new ">{{ session('user_name') }}</h5></a>
+       <!-- <a href="#"><h5 class="logo-new ">{{ session('user_name') }}</h5></a> -->
        
-       @if(Session::has('agencies'))
-        <ul class="nav navbar-menu ">
-         <!-- <navigation-bar></navigation-bar> -->
-         <li class="nav-item with-sub">
-           <a href="" class="nav-link"> <i data-feather="package"></i></a>
-           <ul class="navbar-menu-sub">
-             @foreach(\Session::get('agencies') as $agency)
-             <li class="nav-sub-item agency">
-               <a href="#" ><i data-feather="calendar"></i>{{ $agency->name }}</a>
-             </li>
-             @endforeach
-             <li class="nav-sub-item">
-               <a href=""><i data-feather="plus"></i>Add Agency</a>
-             </li>
-           </ul>
-         </li>
-       </ul>
-       @endif
+       
      </div>
      <div id="navbarMenu" class="navbar-menu-wrapper">
          <div class="navbar-menu-header">

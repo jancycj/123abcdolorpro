@@ -82,7 +82,10 @@ class MenuTableSeeder extends Seeder
                'status' => 'active',
 
            ],
+           
 
+
+//supply chain
 
             [   'side_menu' => 'Supply chain', 
                'parent_slug' => 'parent', 
@@ -900,6 +903,7 @@ class MenuTableSeeder extends Seeder
                'status' => 'active',
 
            ] ,
+
           
            
            ]);

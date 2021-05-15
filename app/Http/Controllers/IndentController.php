@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CompanyUser;
 use App\Helpers\DocNo;
 use App\Indent;
 use App\IndentDetails;
@@ -50,9 +51,10 @@ class IndentController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $company_id = CompanyUser::where('user_id',Auth::id())->pluck('company_id')->first();
         $indent = new Indent();
         $indent->request_date = now();
+        $indent->company_id   = $company_id;
         $indent->department   = $request->department;
         $indent->product_group   = $request->product_group;
         $indent->indent_no   =  DocNo::getDocNumberString('ind',1);

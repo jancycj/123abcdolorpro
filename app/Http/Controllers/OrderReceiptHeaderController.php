@@ -261,6 +261,7 @@ class OrderReceiptHeaderController extends Controller
             // $mird->tcs = isset($mir_detail['order_id']) ? $mir_detail['order_id'] : '';
             $mird->uom                      = isset($mir_detail['uom']) ? $mir_detail['uom'] : '';
             $mird->created_by               = Auth::id();
+            $mird->status                   = 'completed';
             $mird->save();
             if(isset($mir_detail['order_detail_id'])){
                 $ordd = OrderDetails::where('id',$mir_detail['order_detail_id'])->first();

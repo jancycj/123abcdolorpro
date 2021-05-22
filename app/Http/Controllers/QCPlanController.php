@@ -24,7 +24,7 @@ class QCPlanController extends Controller
             return QCPlan::where('comapny_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
         }
         $items= Stock::where('company_id',CompanyUser::where('user_id', Auth::id())->pluck('company_id')->first())->get();
-        return view('v1.colorpro.company.qc_plans',compact('customers','items','units'));
+        return view('v1.colorpro.company.qc_plans',compact('items'));
     }
 
     /**

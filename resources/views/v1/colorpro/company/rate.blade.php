@@ -824,6 +824,27 @@ tr.clickable:hover{
                     };
                     
         },
+        clear_rate(){
+            var vm = this;
+
+            var oldRate = vm.rateObj;
+            vm.rateObj = {
+                part_no : '',
+                item_name:'',
+                item_id : '',
+                supplier_code :'',
+                supplier_name : '',
+                tax_code: '',
+                tax_value: '',
+                tax_name: '',
+                currency: '',
+                exchange_rate: '',
+                stock_unit : '',
+                stock_unit_id : '',
+                purchase_unit : '',
+            };
+            vm.rates = [];
+        },
         check_item_in_items(check_item, supplier){
             console.log(this.items, check_item)
             var valueArr = [];

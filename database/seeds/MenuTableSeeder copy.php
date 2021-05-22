@@ -85,7 +85,7 @@ class MenuTableSeeder extends Seeder
            
 // end of Admin
 [       
-    'side_menu' => 'Customer Order Processing ', 
+    'side_menu' => 'Customer  Order Processing ', 
     'parent_slug' => 'parent', 
     'slug' => 'cop_master', 
     'menu' => 'Masters', 
@@ -96,7 +96,7 @@ class MenuTableSeeder extends Seeder
  ],
 
 [
-    'side_menu' => 'Customer Order Processing ', 
+    'side_menu' => ' Customer  Order Processing ', 
     'parent_slug' => 'cop_master', 
     'slug' => 'customer_master', 
     'menu' => 'Customers', 
@@ -109,7 +109,7 @@ class MenuTableSeeder extends Seeder
 
 
  [
-    'side_menu' => 'Customer Order Processing ', 
+    'side_menu' => ' Customer  Order Processing ', 
     'parent_slug' => 'cop_master', 
     'slug' => 'cop_rates', 
     'menu' => 'Sales Rates', 
@@ -121,7 +121,7 @@ class MenuTableSeeder extends Seeder
 ],
 
  [
-    'side_menu' => 'Customer Order Processing ', 
+    'side_menu' => ' Customer  Order Processing ', 
     'parent_slug' => 'cop_master', 
     'slug' => 'quote_terms', 
     'menu' => 'Sales Quotation Terms', 
@@ -133,7 +133,7 @@ class MenuTableSeeder extends Seeder
 ],
 
 [    
- 'side_menu' => 'Customer Order Processing ', 
+ 'side_menu' => ' Customer  Order Processing ', 
     'parent_slug' => 'parent', 
     'slug' => 'cop_Trans', 
     'menu' => 'Transanctions', 
@@ -240,9 +240,6 @@ class MenuTableSeeder extends Seeder
     'status' => 'active',
 
 ],
-   
-  
-
 
    [
 
@@ -316,7 +313,104 @@ class MenuTableSeeder extends Seeder
 
 ],
 
-  
+   [
+    'side_menu' => 'Production', 
+    'parent_slug' => 'parent', 
+    'slug' => 'shope_floor', 
+    'menu' => 'Mahine  Shope Production', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+   [
+    'side_menu' => 'Production', 
+    'parent_slug' => 'parent', 
+    'slug' => 'assy_productin', 
+    'menu' => 'Assembly Production', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+[
+   'side_menu' => 'Production', 
+    'parent_slug' => 'parent', 
+    'slug' => 'prodn_reports', 
+    'menu' => 'Reports', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+ [
+   'side_menu' => 'Finance  and  Accounts', 
+    'parent_slug' => 'parent', 
+    'slug' => 'fba_masters', 
+    'menu' => 'Masters', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+[
+    'side_menu' => 'Finance  and  Accounts', 
+    'parent_slug' => 'parent', 
+    'slug' => 'fba_trans', 
+    'menu' => 'Transanctions', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+[
+    'side_menu' => 'Finance and Accounts', 
+    'parent_slug' => 'parent', 
+    'slug' => 'fba_reports', 
+    'menu' => 'Reports', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+[
+   'side_menu' => 'HR and  PayRoll', 
+    'parent_slug' => 'parent', 
+    'slug' => 'hr_master', 
+    'menu' => 'Masters', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+[
+    'side_menu' => 'HR and  PayRoll', 
+    'parent_slug' => 'parent', 
+    'slug' => 'hr_transanctions', 
+    'menu' => 'Transanctions', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
+
+[
+    'side_menu' => 'HR and  PayRoll', 
+    'parent_slug' => 'parent', 
+    'slug' => 'hr_reports', 
+    'menu' => 'Reports', 
+    'role_id' => 3,
+    'icon' => '',
+    'url' => '#',
+    'status' => 'active',
+],
 
 //supply chain
 
@@ -1137,105 +1231,7 @@ class MenuTableSeeder extends Seeder
 
            ] ,
 
-          // end of ppc
-          [
-            'side_menu' => 'Production', 
-            'parent_slug' => 'parent', 
-            'slug' => 'shope_floor', 
-            'menu' => 'Mahine  Shope Production', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-           [
-            'side_menu' => 'Production', 
-            'parent_slug' => 'parent', 
-            'slug' => 'assy_productin', 
-            'menu' => 'Assembly Production', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-        [
-           'side_menu' => 'Production', 
-            'parent_slug' => 'parent', 
-            'slug' => 'prodn_reports', 
-            'menu' => 'Reports', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-         [
-           'side_menu' => 'Finance and Accounts', 
-            'parent_slug' => 'parent', 
-            'slug' => 'fba_masters', 
-            'menu' => 'Masters', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-        [
-            'side_menu' => 'Finance and Accounts', 
-            'parent_slug' => 'parent', 
-            'slug' => 'fba_trans', 
-            'menu' => 'Transanctions', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-        [
-            'side_menu' => 'Finance and Accounts', 
-            'parent_slug' => 'parent', 
-            'slug' => 'fba_reports', 
-            'menu' => 'Reports', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-        [
-           'side_menu' => 'HR and PayRoll', 
-            'parent_slug' => 'parent', 
-            'slug' => 'hr_master', 
-            'menu' => 'Masters', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-        [
-            'side_menu' => 'HR and PayRoll', 
-            'parent_slug' => 'parent', 
-            'slug' => 'hr_transanctions', 
-            'menu' => 'Transanctions', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
-        
-        [
-            'side_menu' => 'HR and PayRoll', 
-            'parent_slug' => 'parent', 
-            'slug' => 'hr_reports', 
-            'menu' => 'Reports', 
-            'role_id' => 3,
-            'icon' => '',
-            'url' => '#',
-            'status' => 'active',
-        ],
+          
            
            ]);
       

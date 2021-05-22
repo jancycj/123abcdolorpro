@@ -1019,7 +1019,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
         },
         add_row:function(){
              
-            if(!this.order_detail_ob.date && !this.order_detail_ob.schedule){
+            if(!this.order_detail_ob.need_by_date && !this.order_detail_ob.schedule){
                 alert('please select a date or make scheduled')
                 return;
             }
@@ -1141,8 +1141,8 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
             if(this.courrier_amount > 0){
                 sub_total = sub_total + parseFloat(this.courrier_amount);
             }
-            this.final_sub_total = sub_total;
-            return sub_total;
+            this.final_sub_total = sub_total.toFixed(2);
+            return sub_total.toFixed(2);
          },
 
          get_tax(tax_ob){
@@ -1161,11 +1161,11 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                     var tax_value = parseFloat(this.tax_value);
                     var disc = parseFloat(tax_value/100);
                     var tax_amount = parseFloat(this.final_sub_total)*disc;
-                    this.order.tax_amount = tax_amount;
+                    this.order.tax_amount = tax_amount.toFixed(2);
 
                     var grant_total = parseFloat(this.final_sub_total + tax_amount);
-                    this.final_grant_total = grant_total;
-                    return grant_total;
+                    this.final_grant_total = grant_total.toFixed(2);
+                    return grant_total.toFixed(2);
                
                 
 
@@ -1333,7 +1333,8 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
             this.order = {};
             this.order_detail_array = [];
             // this.scheduled_array
-            this.print_flag = true;
+            this.print_flag = false;
+            this.print_flag = false;
 
          },
 

@@ -15,7 +15,7 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('side_menu',['Admin','Supply chain','Out Side Processing','Production Planning and Control','Production','Order Management','Costing','Shopfloor','other']);
+            $table->enum('side_menu',['Admin','Supply chain','Out Side Processing','Production Planning and Control','Production','Order Management','Costing','Shopfloor','Finance and Accounts','HR and PayRoll','Customer Order Processing','other']);
             $table->string('parent_slug')->nullable();
             $table->string('slug')->unique();
             $table->string('menu')->nullable();

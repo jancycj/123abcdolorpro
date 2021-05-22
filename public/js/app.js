@@ -2519,7 +2519,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   // @keyup.down="getSelected($event)"
-  name: 'navBar',
+  name: 'Select Component',
   props: ['query', 'fields', 'search_filed', 'table', 'where_value', 'where_field'],
   data: function data() {
     return {

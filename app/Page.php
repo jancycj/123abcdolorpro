@@ -39,13 +39,14 @@ class Page extends Model
         $page_slugs = Permissions::groupBy('page_slug')->pluck('page_slug');
         // $page_slugs = ['admin_master','employee','user','scm_master','scm_lookup'];
         $menus = Page::where('parent_slug','parent')->get();
+        // return $menus;
           $pages = [];
         foreach($menus as $menu){
            $menu->sub_menus = collect($menu->submenus_list);
-           if(count($menu->sub_menus) > 0){
-            array_push($pages,$menu->only(['side_menu', 'menu', 'icon','url','sub_menus'])) ;
+          //  if(count($menu->sub_menus) > 0){
+            array_push($pages, $menu->only(['side_menu', 'menu', 'icon','url','sub_menus'])) ;
 
-           }
+          //  }
         }
         return collect($pages)->groupBy('side_menu');
     }

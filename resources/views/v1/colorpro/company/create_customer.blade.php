@@ -573,6 +573,8 @@ aria-hidden="true">
             this.state =  '';
             this.district_name =  '';
             this.district =  '';
+            this.update_flag = false;
+            this.print_flag = false;
         }
      
      },

@@ -143,6 +143,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-2 col-lg-2 col-sm-6">
+                                    <div class="form-group row">
+                                        <button class="btn btn-primary btn-block " @click="amendment()" v-if="order.approved_by != null ">Amendment</button>
+                                    </div>
+                                </div>
                                 
                             </div>
 
@@ -395,14 +400,19 @@
                         </div>
                     </div>
                     <div class="row order-ft">
-                        <div class="col-2 offset-6 mg-t-5" v-if="print_flag">
+                        <div class="col-2 offset-4 mg-t-5" v-if="print_flag">
                                 <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
                         </div>
-                        <div class="col-2  mg-t-5" v-if="print_flag">
+                        <div class="col-2  mg-t-5" v-if="print_flag && order.approved_by == null">
                                 <button class="btn btn-primary btn-block " @click="update_order()">Update Order</button>
                         </div>
-                        <div class="col-2 offset-8 mg-t-5" v-if="!print_flag">
+                        <div class="col-2 offset-6 mg-t-5" v-if="!print_flag">
                                 <button class="btn btn-primary btn-block " v-if="has_permission('company.lookup.post')" @click="save_oreder()">Create Order</button>
+                        </div>
+                        <div class="col-2  mg-t-5" v-if="print_flag">
+                                <button class="btn btn-primary btn-block " @click="approve(0)" v-if="order.approved_by != null ">De Approve</button>
+                                <button class="btn btn-primary btn-block " @click="approve(1)" v-else> Approve</button>
+
                         </div>
                         <div class="col-2  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_order()">Cancel</button>
@@ -628,6 +638,50 @@
                 </div>
             </div>
         </div><!-- department popup modal end -->
+        <div class="modal fade" id="amendmentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+  aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+                <div class="modal-content tx-14 card">
+
+                    <div class="modal-body">
+                            
+                        <div class="card-body card-block">
+                        <table class="table table-bordered table-dashboard mg-b-0">
+                        <thead>
+                            <tr>
+                                <th class="">Amendment No</th>
+                                <th class="">Remark</th>
+                                <th class="">Date</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td class="tx-medium ">
+                                    <input autocomplete="off" class="form-control"  v-model="order.amendment_no" disabled>
+                                </td>
+                                <td class="tx-medium ">
+                                    <textarea autocomplete="off" class="form-control"  v-model="order.amendment_remarks"></textarea>
+                                </td>
+                                <td class="tx-medium ">
+                                    <input type="date" class="form-control"  placeholder="Date" name="date" v-model="order.amendment_date" disabled>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                        </table>
+                                
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_amendment()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- department popup modal end -->
 
     </div><!-- container -->
   </div><!-- content -->
@@ -698,6 +752,20 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
 
        },
    methods: {
+       amendment(){
+            $("#amendmentPopup").modal('toggle');
+       },
+       save_amendment(){
+                axios.post('/company/amendmentOrder',this.order)
+                .then(response => {
+                    alert(response.data.message);
+
+                })
+                .catch((err) =>{
+                    this.errors = err.response.data.errors;
+                    console.log(this.errors)
+                });
+       },
         has_permission: function(url) {
             return this.permissions.includes(url);
         },
@@ -1268,11 +1336,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                     return;
                 }
             }
-            if(!this.order.quotation_no){
-                
-                alert('please provide a quatation no!');
-                return;
-            }
+           
             if(this.order_detail_array.length <= 0){
                 
                 alert('please provide order details!');
@@ -1307,6 +1371,23 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 this.errors = err.response.data.errors;
                 console.log(this.errors)
             });
+        },
+        approve : function(flag){
+                axios.post('/company/approveOrder',{
+                    order_id:this.order.id,
+                    approve:flag,
+                })
+                .then(response => {
+                    if(response.data.status){
+                        this.order.approved_by = response.data.data.approved_by;
+                    }
+                    alert(response.data.message);
+
+                })
+                .catch((err) =>{
+                    this.errors = err.response.data.errors;
+                    console.log(this.errors)
+                });
         },
          getPoPopup : function(event, obj){
             if(event.code == 'F1' || event.code == 'F2'){
@@ -1356,7 +1437,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement("a");
                 link.href = url;
-                link.setAttribute("download","purchase_order.pdf");
+                link.setAttribute("download","purchase_order"+ this.order.order_no+".pdf");
                 document.body.appendChild(link);
                 link.click();
             });

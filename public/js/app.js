@@ -1966,6 +1966,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'url'],
   data: function data() {
@@ -39990,7 +39994,47 @@ var render = function() {
                                         [_vm._v(_vm._s(pre.type))]
                                       )
                                     ]
-                                  )
+                                  ),
+                                  _vm._v(" "),
+                                  pre.has_limit == 1
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "custom-control custom-checkbox"
+                                        },
+                                        [
+                                          pre.has_limit == 1
+                                            ? _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: pre.limit,
+                                                    expression: "pre.limit"
+                                                  }
+                                                ],
+                                                attrs: { type: "text" },
+                                                domProps: { value: pre.limit },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      pre,
+                                                      "limit",
+                                                      $event.target.value
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    : _vm._e()
                                 ])
                               })
                             ],

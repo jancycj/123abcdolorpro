@@ -59,11 +59,11 @@
                         <tr>
                             <td>
                                 <h5>
-                                        {{$item[0]->supplier_name}}
+                                        {{$item[0]->vendor_name}}
 
                                 </h5>
                                 <p>
-                                        {{$item[0]->supplier_name}}
+                                        {{$item[0]->vendor_name}}
                                 </p>
                             </td>
                         </tr>
@@ -87,22 +87,33 @@
                     </thead>
                     <tbody>
                         @php($p_t = 0)
-                        @foreach ($item as $it)
-                            @foreach ($it->details as $detail)
+                        @foreach ($item as $detail)
+                          
                             <tr>
                                 <td>{{$detail->order_no}}</td>
-                                <td>{{$detail->delivery_date}}</td>
+                                <td>{{$detail->need_by_date}}</td>
                                 <td>{{$detail->item}}</td>
                                 <td>{{$detail->quantity}}</td>
-                                <td>{{$detail->unit}}</td>
+                                <td>{{$detail->uom}}</td>
                                 <td>{{$detail->recieved_quantity}}</td>
-                                <td>{{$detail->balance}}</td>
+                                <td>{{$detail->quantity - $detail->recieved_quantity}}</td>
                                 <td>{{$detail->rate}}</td>
                                 <td>{{$detail->discount}}</td>
+                                <?php 
+                                $qty = $detail->quantity - $detail->recieved_quantity;
+                                    $total = $qty*$detail->rate;
+
+                                    if($detail->discount){
+                                        $total = $total - ($total*$detail->discount/100);
+
+                                    }
+                                    $detail->pending_amount = $total;
+                                ?>
                                 <td  style="text-align:right;">{{$detail->pending_amount}}</td>
+                                
                                 @php($p_t = $p_t +$detail->pending_amount)
                             </tr>
-                            @endforeach
+                            
                         @endforeach
                         <tr>
                             <td colspan="9" style="text-align:right;"> Total </td>

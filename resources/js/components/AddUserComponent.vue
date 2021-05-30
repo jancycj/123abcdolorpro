@@ -22,6 +22,10 @@
                                     <input type="checkbox" class="custom-control-input" :id="pre.id" v-model="pre.status" @change="emitValue()" value="1">
                                     <label class="custom-control-label" :for="pre.id">{{pre.type}}</label>
                                 </div>
+                                <div class="custom-control custom-checkbox" v-if="pre.has_limit==1">
+                                    <input type="text"  v-if="pre.has_limit==1" v-model="pre.limit">
+                                </div>
+                                
                             </td>
                         </tr>
                         

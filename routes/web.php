@@ -60,6 +60,8 @@ Route::prefix('company')->group(function() {
       Route::post('/password-reset', 'UserPermissionsController@store')->name('company.passwordReset.store');
 
       Route::post('/updateOrders', 'OrderController@updateOrders')->name('company.order.updateOrders');
+      Route::post('/approveOrder', 'OrderController@approveOrder')->name('company.order.approveOrder');
+      Route::post('/amendmentOrder', 'OrderController@amendmentOrder')->name('company.order.amendmentOrder');
       Route::get('/item', 'ItemController@company_item')->name('company.item');
       Route::get('/item_import', 'ItemController@import')->name('company.item.import');
       Route::post('/item_import', 'ItemController@importPost')->name('company.item.import.post');

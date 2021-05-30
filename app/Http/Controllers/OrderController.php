@@ -15,8 +15,11 @@ use App\Order;
 use App\OrderDetails;
 use App\OrderReceiptDetails;
 use App\OrderSchedules;
+use App\Permissions;
 use App\Stock;
 use App\Traits\OrderTrait;
+use App\User;
+use App\UserPermissions;
 use Auth;
 use Carbon\Carbon;
 use Exception;
@@ -348,6 +351,63 @@ class OrderController extends Controller
         
         
         
+    }
+
+    public function approveOrder(Request $request)
+    {
+        try{
+            $user = User::where('id',Auth::id())->with('roles')->first();
+        
+            $role = $user->roles[0]->name;
+            if($role == 'employee'){
+                $permission_id = Permissions::where('title','Purchase Order Approval')->pluck('id')->first();
+                 UserPermissions::where(['permission_id' => $permission_id, 'user_id'=> $user->id])->pluck('limit')->first();
+                if($limit = UserPermissions::where(['permission_id' => $permission_id, 'user_id'=> $user->id])->pluck('limit')->first()){
+                    
+                    $orders =  Order::find($request->order_id);
+                    if($limit >= $orders->grant_total){
+                        if($request->approve == 1){
+                            $orders->approved_by = Auth::id();
+            
+                        } else {
+                            $orders->approved_by = null; 
+                        }
+                        $orders->approved_date       = Carbon::now();
+                        $orders->save();
+                        return response(['message' => 'Approved','status' => true, 'data' => $orders],200);
+
+                    } else{
+                        return response(['message' => 'amount exeeded','status' => false],200);
+                    }
+                    
+                    
+
+
+                } else {
+                    return response(['message' => 'permission required','status' => false],200);
+                }
+            }
+
+        } catch(Exception $e){
+
+        }
+    }
+    public function amendmentOrder(Request $request)
+    {
+        try{
+            $orders =  Order::find($request->id);
+            $amend_no = $orders->amendment_no ?? 0;
+            $orders->amendment_no = $amend_no+1;
+            $orders->amendment_remarks       = $request->amendment_remarks;
+            $orders->amendment_date       = Carbon::now();
+            $orders->save();
+            return response(['message' => 'Amendment updated!','status' => true, 'data' => $orders],200);
+
+                   
+
+        } catch(Exception $e){
+
+        }
     }
 
     /**

@@ -13,7 +13,9 @@ class OrderReceiptDetails extends Model
         'item',
         'item_name',
         'part_no',
-        'recieved_qty'
+        'recieved_qty',
+        'dc_no',
+        'dc_date'
     ];
     
     /**
@@ -42,6 +44,16 @@ class OrderReceiptDetails extends Model
     public function getPartNoAttribute() {
        
         return Item::where('id',$this->item_id)->pluck('part_no')->first();
+
+    }
+    public function getDcNoAttribute() {
+       
+        return OrderReceiptHeader::where('id',$this->order_receipt_header_id)->pluck('vendor_dc_no')->first();
+
+    }
+    public function getDcDateAttribute() {
+       
+        return OrderReceiptHeader::where('id',$this->order_receipt_header_id)->pluck('vendor_dc_date')->first();
 
     }
      /*Schedule relation*/

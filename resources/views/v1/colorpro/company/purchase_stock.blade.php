@@ -515,7 +515,20 @@ order by orh.mir_no  DESC limit 10`;
        
    methods: {
          
-         
+        clear_mir : function(){
+            this.mir = {
+                mir_no : '',
+                mir_date:'',
+                vendor_code : '',
+                vendor_name : '',
+                order_no : '',
+                order_date : '',
+                other_charges:0,
+            };
+           this.mir_details = [];
+           this.update_flag = false;
+           this.print_flag = false;
+        },
         isTaxSame : function(){
             var vm = this;
             var t_array = vm.$uniqArray(vm.mir_details,'tax_percent')

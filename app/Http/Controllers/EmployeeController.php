@@ -268,8 +268,11 @@ class EmployeeController extends Controller
                 $value['status']=false;
                 return $value;
             });
-             $applied_permissions->map(function ($value, $key) {
+             $applied_permissions->map(function ($value, $key) use($id) {
                 $value['status']=true;
+                if($value['has_limit'] == 1){
+                    $value['limit'] = UserPermissions::where(['user_id' => $id, 'permission_id' => $value['id']])->pluck('limit')->first();
+                }
                 return $value;
             });
             $all_permission                         = $not_applied_permissions

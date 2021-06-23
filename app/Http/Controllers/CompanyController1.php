@@ -194,8 +194,7 @@ class CompanyController extends Controller
 
             }
             else{
-           
-               return response(['status' => 'error'],200);
+                return response(['status' => 'error', 'data' => ['no rates found']],200);
     
             }
         }
@@ -204,8 +203,8 @@ class CompanyController extends Controller
             return response(['status' => 'success', 'data' => $rates],200);
 
         } else{
-           
-            return response(['status' => 'error'],200);
+            return response(['status' => 'error', 'data' => ['no rates found']],200);
+
         }
 
     }

@@ -66,9 +66,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-         
+
         var_dump($request->post());
-      /*  $this->validate($request, [
+        $this->validate($request, [
             'order'     => 'required',
             'order_details'    => 'required',
         ]);
@@ -113,7 +113,7 @@ class OrderController extends Controller
        $order->save();
         $doc = DocNo::updateDoc('po',1);
         $order_id = $order->id;
-/*
+
         $currency = '';
         $exchange_rate = '';
         foreach($order_details_ob as $od){
@@ -183,7 +183,7 @@ class OrderController extends Controller
         return response(['order_no' => $order->order_number],200);
         
         
-        */
+        
     }
 
     /**

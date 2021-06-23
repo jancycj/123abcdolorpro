@@ -48,11 +48,16 @@ class RatesController extends Controller
      */
     public function store(Request $request)
     {
-
-        $rates = $request->all();
-       
-            foreach($rates as $rate){
-                if($rateob = Rates::where('item_id',$rate['item_id'])->where('supplier_id',$rate['supplier_id'])->first()){
+echo "in store";
+       // $rates = $request->all();
+$rate = $request->all();
+       var_dump($rate);
+       $itm =1;
+          // foreach($rates as $rate){
+           // echo $itm.$rate['item_id'];
+            $itm = $itm +1;
+         
+               if($rateob = Rates::where('item_id',$rate['item_id'])->where('supplier_id',$rate['supplier_id'])->first()){
                     $rateob->item_id                = $rate['item_id'];
                     $rateob->rate                   = $rate['rate'];
                     $rateob->conversion_factor      = $rate['conversion_factor'];
@@ -70,6 +75,7 @@ class RatesController extends Controller
                     $rateob->remarks             = $rate['remarks'];
                     $rateob->quatation_no           = isset($rate['quatation_no'])?$rate['quatation_no']:'';
                     $rateob->quatation_date         = isset($rate['quatation_date'])?$rate['quatation_date']:'';
+                    $rateob->status                 = 'active';
                     $rateob->save();
 
                     if(isset($rate['is_default']) && $rate['is_default'] == true){
@@ -99,7 +105,7 @@ class RatesController extends Controller
                     $rateob->quatation_no           = isset($rate['quatation_no'])?$rate['quatation_no']:'';
                     $rateob->quatation_date         = isset($rate['quatation_date'])?$rate['quatation_date']:null;
                     $rateob->remarks             = isset($rate['remarks'])?$rate['remarks']:''; 
-
+                    $rateob->status                 = 'active'; 
                     $rateob->save();
                     if(isset($rate['is_default']) && $rate['is_default'] == true){
                         $item = Item::find($rate->item_id);
@@ -107,7 +113,7 @@ class RatesController extends Controller
                         $item->save();
                     }
                 }
-            }
+          //  }
         //end of foreach
         
         

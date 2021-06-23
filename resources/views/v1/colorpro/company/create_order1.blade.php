@@ -294,7 +294,7 @@
                             </tr>
                             <tr>
                                 <td class="tx-medium ">
-                                    <input autocomplete="off" class="form-control"  v-model="order_detail_ob.part_no" name="part_no" @keydown="getItemPopup($event)">
+                                    <input autocomplete="off" class="form-control"  v-model="order_detail_ob.part_no" @keydown="getItemPopup($event)">
                                 </td>
                                 <td class="tx-medium ">
                                     <input autocomplete="off" class="form-control"  v-model="order_detail_ob.item" disabled>
@@ -963,40 +963,32 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
         get_item_rates:function(evnt){
             
             var vm = this;
-      /****** partno  with no rates display on 11-06-2021 ******/
-           if(!vm.order.supplier_id){
+            if(!vm.order.supplier_id){
                 alert("please select a supplier");
                 return;
             }
-          
-            vm.order_detail_ob = evnt;
-            vm.order_detail_ob.part_no = evnt.part_no;
-            vm.order_detail_ob.item = evnt.name;
-            vm.order_detail_ob.rate = evnt.list_price;
-            vm.order_detail_ob.purchase_unit = evnt.unit;
-            vm.order_detail_ob.item_id = evnt.id;
-       
-           axios.get('/company/get_rate/'+evnt.id+'?supplier='+vm.order.supplier_id).then((response) => {
+            axios.get('/company/get_rate/'+evnt.id+'?supplier='+vm.order.supplier_id).then((response) => {
             console.log(response.data);
             var rateResOb = response.data;
-           
-            if(vm.tax_name != '' && vm.tax_name != rateResOb.data.tax_name){
+            alert('tax'+vm.tax_name+'res'+rateResOb.data.tax_name);
+          /*  if(vm.tax_name != '' && vm.tax_name != rateResOb.data.tax_name){
                     alert('tax mismatched.!');
                     return;
-                }
+                }*/
             vm.tax_name = rateResOb.data.tax_name;
             vm.tax_value = rateResOb.data.tax_value; 
-
             if(rateResOb.status == 'success'){
-                vm.order_detail_ob = rateResOb.data;
-               
+                 vm.order_detail_ob = rateResOb.data;
+                $("#itemPopup").modal('toggle');
+            } else{
+                alert('no rates found..!')
             }
-                      
+                
+            
             }, (error) => {
             // vm.errors = error.errors;
             });
 
-         $("#itemPopup").modal('toggle');
         },
         getItemRate(event,item, qty, index){
             if(event.code == 'F1' || event.code == 'F2'){
@@ -1197,7 +1189,6 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
             // }
          },
          calc_sub_total(){
-
              if(this.pf_percentage !=0 ){
                 // var pf_amount = 
 
@@ -1254,7 +1245,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
          /* save order 
          **/
         save_oreder: function(){
-           alert('save');
+           
             if(!this.order.department){
                 alert('please select a department');
                 return;
@@ -1298,7 +1289,7 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
 
              console.log(this.order);
              console.log(this.order_detail_array);
-                       // var post_data = {};
+            // var post_data = {};
             // post_data.order = this.order;
             // post_data.order_details = this.order_detail_array;
              axios.post('/company/orders',{
@@ -1311,8 +1302,6 @@ var order_qry = `SELECT po.id, po.order_number,po.order_date,if(ISNULL(po.approv
                 // this.order = {};
                 // this.order_detail_array = [];
                 // this.order_id = response.data;
-                alert(response.data);
-                document.write(response.data);
                 this.print_flag = true;
                 alert('successfully created!');
             })

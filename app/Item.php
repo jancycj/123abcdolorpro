@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     
-    public $appends = ['unit', 'category','created_date','updated_date','default_supplier_name','default_supplier_code'];
+    public $appends = ['unit', 'category','created_date','updated_date','default_supplier_name','default_supplier_code','parent_item'];
     
      /**
      * [Item]

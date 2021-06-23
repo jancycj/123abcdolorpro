@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-6" >
                 <div class="form-group">
-                    <label class=" form-control-label">Search</label>
+                    <label class=" form-control-label">Search Product</label>
                     <div class="input-group">
                         <input class="form-control" name="part_no" v-model="search" autocomplete="off" ref="search">
                     </div>

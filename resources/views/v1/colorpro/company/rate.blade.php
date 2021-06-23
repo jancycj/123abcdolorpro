@@ -145,7 +145,7 @@ tr.clickable:hover{
                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                     <div class="form-group row">
                                         <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="rateObj.item_name" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="rateObj.item_name" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@ tr.clickable:hover{
                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                     <div class="form-group row">
                                         <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="rateObj.supplier_name" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="rateObj.supplier_name" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -974,14 +974,18 @@ tr.clickable:hover{
         },
         save_rate:function() {
             var vm = this;
-            if(vm.rates.length <= 0){
+          /*  if(vm.rates.length <= 0){
                 alert('please provide any rate')
                 return;
             }
-            
-            axios.post( '/company/rates',vm.rates).then(response => {
+            */
+
+            alert(this.rateObj.purchase_unit);
+           // alert(vm.rates.part_no);
+            axios.post( '/company/rates',vm.rateObj).then(response => {
                     alert('Succesfully Saved..!');
                 console.log(response.data)
+                document.write(response.data);
 
             })
             .catch((error)=>{

@@ -113,7 +113,7 @@
             <div class="d-sm-flex align-items-center justify-content-between ">
                 <div>
                     <div >
-                        <h5 class="hd">#Purchase Indent </h5> 
+                        <h5 class="hd">#Sales Quotation </h5> 
                     </div> 
                 </div>
                 
@@ -128,98 +128,278 @@
                             <div class="row">
                                 <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getIndent($event)" >
                                     <div class="form-group row">
-                                        <label class="col-5 form-control-label">Indent No*</label>
+                                        <label class="col-5 form-control-label">Quote No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_no" >
+                                            <input autocomplete="off" class="form-control"  v-model="sal_qot.quote_no" >
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-6">
                                     <div class="form-group row">
-                                        <label class="col-4 form-control-label">Request Date* </label>
+                                        <label class="col-4 form-control-label">Quote Date* </label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_date" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="sal_qot.quote_date" disabled>
                                         </div>
                                     </div>
                                 </div>
                                 
                             </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getSectionPopup($event)" >
-                                    <div class="form-group row">
-                                        <label class=" col-5 form-control-label">section*</label>
-                                        <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.section">
-                                        </div>
-                                    </div>
-                                </div>
-                                
 
-                                <div class="col-md-6 col-lg-6 col-sm-12">
-                                    <div class="form-group row">
-                                        <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.section_des" disabled>
-                                        </div>
-                                    </div>
+
+           <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-6" 
+                        @keydown="getCustomerPopup($event)" 
+                        
+                        >
+                            <div class="form-group row">
+                                <label class=" col-5 form-control-label">Customer</label>
+                                <div class=" col-7 input-group">
+                            <input autocomplete="off" class="form-control" v-model="sal_qot.customer_id">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getFamilyPopup($event)" >
-                                    <div class="form-group row">
-                                        <label class=" col-5 form-control-label">family*</label>
-                                        <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.family">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-sm-12">
-                                    <div class="form-group row">
-                                        <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.family_des" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-lg-6 col-sm-6" >
-                                    <div class="form-group row">
-                                        <label class="col-3 form-control-label">Remarks</label>
-                                        <div class="col-9 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="indent.remarks">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="col-3">
-                                    <div class="form-group row">
-                                        <a href="#" class="btn btn-white btn-block">Copy Assortment</a>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <!-- <div data-label="Sort By" class="df-example demo-forms">
-                                <div class="row row-sm">
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Part No</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Part name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Party</label>
+                        <div class="col-md-7 col-lg-7 col-sm-6">
+                            <div class="form-group row">
+                                <div class="col-12 input-group">
+                                  <input autocomplete="off" class="form-control" name="unit" v-model="sal_qot.customer_name" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                          <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getEnquiryPopup($event)" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">Enquiry No*</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control"  v-model="sal_qot.enquiry_no" >
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                                <div class="col-md-5 col-lg-5 col-sm-6">
+                                    <div class="form-group row">
+                                        <label class="col-4 form-control-label">Enquiry Date* </label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control"  v-model="sal_qot.enquiry_date" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+  <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">Contact Person </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.contact_person">
+                                </div>
+                            </div>
                         </div>
+                         <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">Contact No</label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.contact_no">
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                         
+                          <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getIndent($event)" >
+                                    <div class="form-group row">
+                                        <label class="col-5 form-control-label">Prepared_by</label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control"  v-model="sal_qot.prepared_by" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-lg-5 col-sm-6">
+                                    <div class="form-group row">
+                                        <label class="col-4 form-control-label">Authorized by </label>
+                                        <div class="col-7 input-group">
+                                            <input autocomplete="off" class="form-control"  v-model="sal_qot.authorized_by" >
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+
+                             <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">GST Tariff </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.gst_tariff">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-6"  @keydown="getTaxPopup($event)">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">GST % </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.gst_perc">
+                                </div>
+                            </div>
+                        </div>
+
+                          <div class="col-md-4 col-lg-4 col-sm-6" >
+                            <div class="form-group row">
+                            
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.gst_value">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">PF %</label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.pf_perc">
+                                </div>
+                            </div>
+                        </div>
+
+                                             
+                    </div>
+
+                <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">TCS % </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.tcs_perc">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getCurrencyPopup($event)" >
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">Currency </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.currency">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">Exchange Rate</label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.exchange_rate">
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+
+                     <div class="row">
+                       
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">PF Amount </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.pf_amount">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">Courier Charge</label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.courier_charge">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label"> GST Amount </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.gst_amount">
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                    <div class="row">
+                     
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">TCS Amount</label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.tcs_amount">
+                                </div>
+                            </div>
+                        </div>
+                            <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label"> Performa no </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.performa_no">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">Performa Date</label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" type="date"  class="form-control" v-model="sal_qot.performa_date">
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+               
+
+                       <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">Customer order no </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" class="form-control" v-model="sal_qot.customr_order_no">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label"> Customer Order Date </label>
+                                <div class="col-7 input-group">
+                                   <input autocomplete="off" type="date" class="form-control" v-model="sal_qot.customer_order_date">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="form-group row">
+                                <label class="col-5 form-control-label">status</label>
+                                 <select  class="standardSelect col-7 form-control"  name="status"  v-model="sal_qot.status">
+                                       <option value='active'>active</option>
+                                       <option value='pending'>pending</option>
+                                       <option value='completed'>completed</option>
+                                       <option value='processing'>processing</option>
+                                       <option value='accepted'>accepted</option>
+                                       <option value='inactive'>inactive</option>
+                                       <option value='closed'>closed</option>
+                                       <option value='short_closed'>short_closed</option>
+                                       
+                               </select>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                       
+                        </div>
+                     
                     </div>
                     
                     
@@ -242,10 +422,9 @@
                                     <th scope="col">Qty</th>
                                     <th scope="col">UOM</th>
                                     <th scope="col">Nd By date</th>
-                                    <th scope="col">Remarks</th>
-                                    <th scope="col">stat</th>
-                                    <th scope="col">mode</th>
-                                    <th scope="col">action</th>
+                                    <th scope="col">Rate</th>
+                                    <th scope="col">Discount</th>
+                                    <th scope="col">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -267,13 +446,13 @@
                                              @{{d.need_by_date}} 
                                         </td>
                                         <td>
-                                             @{{d.remark}} 
+                                             @{{d.rate}} 
                                         </td>
                                         <td>
-                                             @{{d.status}} 
+                                             @{{d.discount}} 
                                         </td>
                                         <td>
-                                             @{{d.mode}} 
+                                             
                                         </td>
 
                                         <td>
@@ -299,13 +478,13 @@
                                             <input autocomplete="off" type="date" class="form-control"  v-model="item_ob.need_by_date" >
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.remark" @keydown="add_ob($event)">
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.rate" disabled @keydown="add_ob($event)">
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.status" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.discount" >
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.mode" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.sub_amt" disabled>
                                         </td>
                                         <td>
                                             #
@@ -331,7 +510,7 @@
                                 <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
-                                <button class="btn btn-primary btn-block " @click="save_indent()">Save</button>
+                                <button class="btn btn-primary btn-block " @click="save_quote()">Save</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
                                 <button class="btn btn-primary btn-block " @click="update_indent()">Update</button>
@@ -347,7 +526,82 @@
         </div><!-- col -->
         
       </div><!-- row row-xs -->
+  <div class="modal fade" id="customerPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
+        <div class="modal-content tx-14 card">
+
+            <div class="modal-body">
+
+                <div class="card-body card-block">
+                    <choose-component :id="'costomers'" :table="'costomers'" :fields="['id','name']" :search_filed="'name'" @selected="getCustomer($event)"></choose-component>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade" id="currencyPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+  aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+                <div class="modal-content tx-14 card">
+
+                    <div class="modal-body">
+                            
+                        <div class="card-body card-block">
+                            <choose-component 
+                            :id="'section'"
+                            :table="'lookup_masters'" 
+                            :fields="['id','lookup_value','lookup_description','genaral_value']" 
+                            :search_filed="'lookup_value'" 
+                            :where_field="'lookup_key'"
+                            :where_value="'CURRENCY'"
+                            @selected="getCurrency($event)"
+                            ></choose-component>
+                                
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- yarn popup modal end -->
+
+         <div class="modal fade" id="taxPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+  aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+                <div class="modal-content tx-14 card">
+
+                    <div class="modal-body">
+                            
+                        <div class="card-body card-block">
+                            <choose-component 
+                            :id="'section'"
+                            :table="'lookup_masters'" 
+                            :fields="['id','lookup_value','lookup_description','genaral_value']" 
+                            :search_filed="'lookup_value'" 
+                            :where_field="'lookup_key'"
+                            :where_value="'TAX'"
+                            @selected="getTax($event)"
+                            ></choose-component>
+                                
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- yarn popup modal end -->
         <div class="modal fade" id="chooseCustomer" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -369,62 +623,8 @@
             </div>
         </div><!-- modal end -->
 
-        <div class="modal fade" id="sectionPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
-                <div class="modal-content tx-14 card">
-
-                    <div class="modal-body">
-                            
-                        <div class="card-body card-block">
-                            <choose-component 
-                            :id="'section'"
-                            :table="'lookup_masters'" 
-                            :fields="['id','lookup_value','lookup_description']" 
-                            :search_filed="'lookup_value'" 
-                            :where_field="'lookup_key'"
-                            :where_value="'DEPARTMENT'"
-                            @selected="getSection($event)"
-                            ></choose-component>
-                                
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="familyPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-
-                <div class="modal-content tx-14 card">
-
-                    <div class="modal-body">
-                            
-                        <div class="card-body card-block">
-                            <choose-component 
-                            :id ="'family'"
-                            :table="'lookup_masters'" 
-                            :fields="['id','lookup_value','lookup_description']" 
-                            :search_filed="'lookup_value'" 
-                            :where_field="'lookup_key'"
-                            :where_value="'PRODUCT FAMILY'"
-                            @selected="getFamily($event)"
-                            ></choose-component>
-                                
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- yarn popup modal end -->
+  
         <div class="modal fade" id="itemPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -473,7 +673,7 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="IndentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+        <div class="modal fade" id="enquiryPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -483,11 +683,11 @@
                             
                         <div class="card-body card-block">
                             <choose-component 
-                            :id="'indents'"
-                            :table="'indents'" 
-                            :fields="['id','indent_no','department']" 
-                            :search_filed="'indent_no'" 
-                            @selected="getIndentEdit($event)"
+                            :id="'sales_enquiry'"
+                            :table="'sales_enquiry'" 
+                            :fields="['id','enquiry_no','enquiry_date']" 
+                            :search_filed="'enquiry_no'" 
+                            @selected="getEnquiry($event)"
                             ></choose-component>
                                 
                         </div>
@@ -525,6 +725,7 @@
     var app = new Vue({
        el: '#app',
        data: {
+           sal_qot : {},
            assortment:{},
            errors:[],
            shades : [],
@@ -655,6 +856,9 @@
             var vm = this;
             vm.item_ob = val;
             vm.item_ob.item_id = val.id;
+            vm.item_ob.rate = val.list_price;
+       
+
             console.log('val', vm.item_ob);
             // vm.items.push(vm.item_ob)
             if(this.check_item_in_items(val.id)){
@@ -789,18 +993,19 @@
             // vm.errors = error.errors;
             });
         },
-        save_indent:function() {
+        save_quote:function() {
             var vm = this;
-            vm.indent.items = vm.items; 
-            if(vm.items.length <= 0){
+            vm.sal_qot.items = vm.items; 
+          /*  if(vm.items.length <= 0){
                 alert('please provide item')
                 return;
-            }
+            }*/
             
-            axios.post( '/company/indent',vm.indent).then(response => {
-                this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
+            axios.post( '/company/salesquotation',vm.sal_qot).then(response => {
+               // this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
                 alert('Succesfully Saved..!');
                 console.log(response.data)
+                document.write(response.data);
                   })
             .catch((error)=>{
                 console.log('FAILURE!!');
@@ -816,18 +1021,77 @@
                 console.log(this.errors)
             });
          },
-         getIndentEdit : function(val){
-            var vm = this;
-            vm.update_flag = true;
-            axios.get('/company/indent/'+val.id).then((response) => {
-                document.write(response.data);
-               alert(response.data);
-                this.indent = response.data;
-                this.items = response.data.items;
-                $("#IndentPopup").modal('toggle');
-            }, (error) => {
-            // vm.errors = error.errors;
-            });
+           getCustomerPopup: function(event) {
+                console.log(event)
+                if (event.code == 'F1' || event.code == 'F2') {
+                     $("#customerPopup").modal('toggle');
+                    // this.get_article_by_number();
+                }
+            },
+
+        getCustomer : function(val){
+               console.log(val)
+               
+                 var vm = this;
+          //  vm.quote = val;
+            vm.sal_qot.customer_id = val.id;
+            vm.sal_qot.customer_name = val.name;
+           $("#customerPopup").modal('toggle');
+            },
+
+            getEnquiryPopup: function(event) {
+                console.log(event)
+                if (event.code == 'F1' || event.code == 'F2') {
+                     $("#enquiryPopup").modal('toggle');
+                    // this.get_article_by_number();
+                }
+            },
+         getEnquiry : function(val){
+            // console.log(val)
+               
+                 var vm = this;
+           // vm.sal_qot = val;
+            vm.sal_qot.enquiry_no = val.enquiry_no;
+            vm.sal_qot.enquiry_date = val.enquiry_date;
+           $("#enquiryPopup").modal('toggle');
+        },
+
+        getTaxPopup : function(event){
+             console.log(event)
+            if(event.code == 'F1' || event.code == 'F2'){
+                $("#taxPopup").modal('toggle');
+                // this.get_article_by_number();
+            }
+        },
+         
+        getTax : function(event){
+             console.log(event)
+            // this.rateObj.tax_code = event.lookup_value;
+             this.sal_qot.gst_value = event.genaral_value;
+             this.sal_qot.gst_perc = event.lookup_description;
+
+            // if(event.code == 'F1' || event.code == 'F2'){
+                $("#taxPopup").modal('toggle');
+                // this.get_article_by_number();
+            // }
+        },
+        getCurrencyPopup : function(event){
+             console.log(event)
+            if(event.code == 'F1' || event.code == 'F2'){
+                $("#currencyPopup").modal('toggle');
+                // this.get_article_by_number();
+            }
+        },
+         
+        getCurrency : function(event){
+             console.log(event)
+             this.sal_qot.currency = event.lookup_value;
+             this.sal_qot.exchange_rate = event.genaral_value;
+
+            // if(event.code == 'F1' || event.code == 'F2'){
+                $("#currencyPopup").modal('toggle');
+                // this.get_article_by_number();
+            // }
         }
      
      },

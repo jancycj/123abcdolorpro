@@ -267,7 +267,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class=" form-control-label">Item</label>
-                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.item_id" disabled>
+                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1"   v-model="item.item_id" disabled>
                                             <option v-for="item in company_items" :value="item.id">@{{item.item}}</option>
                                                 
                                         </select>
@@ -276,7 +276,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class=" form-control-label">Supplier</label>
-                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.customer_id">
+                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" v-model="item.customer_id">
                                                 
                                             <option v-for="customer in customers" :value="customer.id">@{{customer.name}}</option>
                                                 
@@ -288,7 +288,7 @@
                                     <div class="form-group">
                                         <label class=" form-control-label">rate</label>
                                         <div class="input-group">
-                                            <input class="form-control" name="lookup_value" v-model="item.rate" >
+                                            <input class="form-control" " v-model="item.rate" >
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +296,7 @@
                                     <div class="form-group">
                                         <label class=" form-control-label">Discount</label>
                                         <div class="input-group">
-                                            <input class="form-control" name="value" v-model="item.discount" >
+                                            <input class="form-control"  v-model="item.discount" >
                                         </div>
                                     </div>
                                 </div>
@@ -312,7 +312,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class=" form-control-label">Primary Unit</label>
-                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.primary_unit" disabled>
+                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1"   v-model="item.primary_unit" disabled>
                                             <option v-for="unit in units" :value="unit.id">@{{unit.lookup_value}}</option>
                                                 
                                         </select>
@@ -322,7 +322,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class=" form-control-label">Purchase Unit</label>
-                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1" name="unit"  v-model="item.purchase_unit">
+                                        <select data-placeholder="Select master" class="standardSelect form-control" tabindex="1"   v-model="item.purchase_unit">
                                                 
                                             <option v-for="unit in units" :value="unit.id">@{{unit.lookup_value}}</option>
                                                 
@@ -334,7 +334,7 @@
                                     <div class="form-group">
                                         <label class=" form-control-label">Conversion factor</label>
                                         <div class="input-group">
-                                            <input class="form-control" name="name" v-model="item.conversion_factor">
+                                            <input class="form-control" v-model="item.conversion_factor">
                                         </div>
                                     </div>
                                 </div>
@@ -342,7 +342,7 @@
                                     <div class="form-group">
                                         <label class=" form-control-label"> Specification</label>
                                         <div class="input-group">
-                                            <input class="form-control" name="name" v-model="item.specifications">
+                                            <input class="form-control"  v-model="item.specifications">
                                         </div>
                                     </div>
                                 </div>
@@ -425,11 +425,14 @@
                 
             }
              }
-            
+             var vm = this;
+             vm.item.items = vm.rates; 
             axios.post('/company/rates',this.item)
             .then(response => {
                 $("#create_master").modal('toggle');
                 $(".modal-backdrop").remove();
+                alert(response.data);
+                document.write(response.data);
                 alert('successfully created!');
                 location.reload();
             })

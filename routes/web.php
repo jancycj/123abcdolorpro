@@ -50,6 +50,13 @@ Route::prefix('company')->group(function() {
       Route::resource('assortment', 'AssortmentController');
       Route::resource('indent', 'IndentController');
       Route::resource('employees', 'EmployeeController');
+
+      Route::resource('copservicecall', 'COPServiceCallController');
+      Route::resource('workorder', 'WorkOrderController');
+      Route::resource('bomentry', 'BOMHeaderController');
+      Route::resource('salesenquiry', 'SalesEnquiryController');
+       Route::resource('salesquotation', 'SalesQuotationController');
+
       Route::resource('mir_recipt', 'OrderReceiptHeaderController');
       Route::get('/rateByItem/{id}', 'RatesController@rateByItem')->name('company.rateByItem');
       Route::get('/user', 'EmployeeController@getUser')->name('company.user.index');

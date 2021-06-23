@@ -113,7 +113,7 @@
             <div class="d-sm-flex align-items-center justify-content-between ">
                 <div>
                     <div >
-                        <h5 class="hd">#Purchase Indent </h5> 
+                        <h5 class="hd">#BOM - Bill of Material Entry </h5> 
                     </div> 
                 </div>
                 
@@ -124,101 +124,39 @@
             <div class="card mg-b-2">
                 <div class="card-header ">
                     <div class="row">
-                        <div class="col-md-9">
+                       <div class="col-md-9">
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getIndent($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getParentItemPopup($event)" >
                                     <div class="form-group row">
-                                        <label class="col-5 form-control-label">Indent No*</label>
+                                        <label class="col-5 form-control-label">Parent Part No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_no" >
+                                            <input autocomplete="off" class="form-control"  v-model="bom.parent_item" name="parent_item" >
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5 col-lg-5 col-sm-6">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
                                     <div class="form-group row">
-                                        <label class="col-4 form-control-label">Request Date* </label>
-                                        <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_date" disabled>
-                                        </div>
+                                    <div class="col-12 input-group">
+                                    <input autocomplete="off" class="form-control"  v-model="bom.parent_name" name="parent_name" disabled>
+                                </div>
                                     </div>
                                 </div>
                                 
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getSectionPopup($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6"  >
                                     <div class="form-group row">
-                                        <label class=" col-5 form-control-label">section*</label>
+                                        <label class=" col-5 form-control-label">Parent Part Quantity</label>
                                         <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.section">
+                                        <input autocomplete="off" class="form-control" v-model="bom.parent_qty" name="parent_qty">
+                                            <input autocomplete="off" class="form-control" v-model="bom.parent_type" type="hidden" name="parent_type">
+                                            <input autocomplete="off" class="form-control" v-model="bom.parent_item_id" type="hidden" name="parent_item_id">
                                         </div>
                                     </div>
                                 </div>
-                                
-
-                                <div class="col-md-6 col-lg-6 col-sm-12">
-                                    <div class="form-group row">
-                                        <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.section_des" disabled>
-                                        </div>
-                                    </div>
-                                </div>
+                            
                             </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getFamilyPopup($event)" >
-                                    <div class="form-group row">
-                                        <label class=" col-5 form-control-label">family*</label>
-                                        <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.family">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-sm-12">
-                                    <div class="form-group row">
-                                        <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.family_des" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-lg-6 col-sm-6" >
-                                    <div class="form-group row">
-                                        <label class="col-3 form-control-label">Remarks</label>
-                                        <div class="col-9 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="indent.remarks">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="col-3">
-                                    <div class="form-group row">
-                                        <a href="#" class="btn btn-white btn-block">Copy Assortment</a>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <!-- <div data-label="Sort By" class="df-example demo-forms">
-                                <div class="row row-sm">
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Part No</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Part name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="customRadio1">Party</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
+                                                     
                         </div>
                     </div>
                     
@@ -237,14 +175,10 @@
                                 <thead>
                                     <tr>
                                     <th scope="col">SiNo</th>
-                                    <th scope="col">Part No *</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Qty</th>
+                                    <th scope="col">Child Part No *</th>
+                                    <th scope="col">Child Part Name</th>
                                     <th scope="col">UOM</th>
-                                    <th scope="col">Nd By date</th>
-                                    <th scope="col">Remarks</th>
-                                    <th scope="col">stat</th>
-                                    <th scope="col">mode</th>
+                                    <th scope="col">Child Qty</th>
                                     <th scope="col">action</th>
                                     </tr>
                                 </thead>
@@ -252,30 +186,18 @@
                                     <tr v-for="(d,index) in items">
                                         <td scope="row">@{{index+1}}</td>
                                         <td>
-                                            @{{d.part_no}}
+                                            @{{d.child_item}}
                                         </td>
                                         <td>
-                                             @{{d.name}}
+                                         
+                                        </td>
+                                        
+                                        <td>
+                                           
                                         </td>
                                         <td>
-                                             <input autocomplete="off" class="form-control"  v-model="d.qty" >
+                                            @{{d.child_qty}} 
                                         </td>
-                                        <td>
-                                             @{{d.unit}} 
-                                        </td>
-                                        <td>
-                                             @{{d.need_by_date}} 
-                                        </td>
-                                        <td>
-                                             @{{d.remark}} 
-                                        </td>
-                                        <td>
-                                             @{{d.status}} 
-                                        </td>
-                                        <td>
-                                             @{{d.mode}} 
-                                        </td>
-
                                         <td>
                                             <a  class="action-icon " @click="deleteRow(index)"><i class="fa fa-trash-o tx-danger"></i>
                                             </a>
@@ -284,28 +206,18 @@
                                     <tr>
                                         <td scope="row">#</td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.part_no" @keydown="getItemPopup($event)">
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.child_item" name="item_ob.child_item" @keydown="getItemPopup($event)">
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.name" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.child_name" disabled>
+                                        </td>
+                                        
+                                        <td>
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.child_uom" @keydown="getUnitPopup($event)">
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.child_type" type="hidden" @keydown="getUnitPopup($event)">
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.qty" @keydown="add_ob($event)">
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.unit" disabled>
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" type="date" class="form-control"  v-model="item_ob.need_by_date" >
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.remark" @keydown="add_ob($event)">
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.status" disabled>
-                                        </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.mode" disabled>
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.child_qty" @keydown="add_ob($event)">
                                         </td>
                                         <td>
                                             #
@@ -327,9 +239,6 @@
                 </div><!-- card-body -->
                 <div class="card-footer ">
                     <div class="row order-ft">
-                        <div class="col-md-2 col-lg-2 col-sm-6 offset-8 mg-t-5" v-if="print_flag">
-                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
-                        </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
                                 <button class="btn btn-primary btn-block " @click="save_indent()">Save</button>
                         </div>
@@ -425,6 +334,26 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
+
+  
+<div class="modal fade" id="ParentItemPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+                <div class="modal-content tx-14 card">
+
+                    <div class="modal-body">
+
+                        <div class="card-body card-block">
+                        <choose-component :id="'items'" :table="'items'" :fields="['id','part_no','name','part_type']" :search_filed="'name'" @selected="getParentByNum($event)"></choose-component>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+                    </div>
+            </div>
+        </div>
+</div>
+        
         <div class="modal fade" id="itemPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -448,31 +377,24 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="assortmentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
-  aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal fade" id="unitPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
-                <div class="modal-content tx-14 card">
+        <div class="modal-content tx-14 card">
 
-                    <div class="modal-body">
-                            
-                        <div class="card-body card-block">
-                            <choose-component 
-                            :table="'assortments'" 
-                            :fields="['id','assortment_no','assortment_name']" 
-                            :search_filed="'assortment_no'" 
-                            @selected="getAssortmentByNumber($event)"
-                            ></choose-component>
-                                
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary tx-13" @click.prevent="save_item()">Create</button>
-                    </div>
+            <div class="modal-body">
+
+                <div class="card-body card-block">
+                    <choose-component :id="'units'" :table="'lookup_masters'" :fields="['id','lookup_value','lookup_description']" :search_filed="'lookup_value'" :where_field="'lookup_key'" :where_value="'UNIT'" @selected="getUnit($event)"></choose-component>
+
                 </div>
             </div>
-        </div><!-- yarn popup modal end -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary tx-13" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
         <div class="modal fade" id="IndentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -525,6 +447,7 @@
     var app = new Vue({
        el: '#app',
        data: {
+           bom : {},
            assortment:{},
            errors:[],
            shades : [],
@@ -578,9 +501,11 @@
             this.assortment_shades.splice(ind, 1);
         },
         addRow : function(ind){
+            alert('in addrow');
             this.removeFlag = true;
             var last_obj = this.assortment_shades[this.assortment_shades.length - 1]
-            this.items.push({id: '' , part_no:'',name:''});
+        //   this.items.push({id: '' , part_no:'',name:''});
+          
         },
          toggleShow: function() {
            this.showMenu = !this.showMenu;
@@ -654,42 +579,49 @@
         getItem : function(val){
             var vm = this;
             vm.item_ob = val;
-            vm.item_ob.item_id = val.id;
+            vm.item_ob.child_item = val.part_no;
+            vm.item_ob.child_name = val.name;
+            vm.item_ob.child_type = val.part_type;
+            vm.item_ob.child_uom = val.unit;
+            vm.item_ob.child_item_id = val.id;
+            alert(val.id);
             console.log('val', vm.item_ob);
             // vm.items.push(vm.item_ob)
-            if(this.check_item_in_items(val.id)){
+           /* if(this.check_item_in_items(val.id)){
                     alert('duplicate item');
                     return;
-                }
+                }*/
             $("#itemPopup").modal('toggle');
+            alert('nnnn');
         },
         add_ob : function(event){
 
             var vm = this;
 
             if(event.code == 'Enter' ){
-                console.log(this.check_item_in_items(vm.item_ob.item_id),'trueeee')
-                if(this.check_item_in_items(vm.item_ob.item_id)){
+                alert("after enter");
+             //   console.log(this.check_item_in_items(vm.item_ob.item_id),'trueeee')
+                /*if(this.check_item_in_items(vm.item_ob.item_id)){
                     alert('duplicate item');
                     return;
                 }
-                if(! vm.item_ob.unit){
+                if(! vm.item_ob.unit_id){
                     alert('please provide an item');
                     return;
                 }
-                if(! vm.item_ob.qty){
+                if(! vm.item_ob.child_qty){
                     alert('please provide a quantity');
                     return;
-                }
-                if(! vm.item_ob.need_by_date){
-                    alert('please provide a Need By Date');
-                    return;
-                }
-                vm.items.push(vm.item_ob);
-                vm.item_ob = {};
+                }*/
+                alert(vm.item_ob.child_item);
+              vm.items.push(vm.item_ob);
+            alert('aaa');
+               vm.item_ob = {};
+               alert('end enter');
             }
         },
         check_item_in_items(check_item){
+            alert('check');
             console.log(this.items, check_item)
             var valueArr = [];
             valueArr = this.items.filter(function(item){ return item.item_id == check_item });
@@ -776,6 +708,70 @@
             this.url = URL.createObjectURL(this.selected_file);
             
         },
+       
+        getParentItemPopup : function(event, obj){
+          
+            if(event.code == 'F1' || event.code == 'F2'){
+                $("#ParentItemPopup").modal('toggle');
+                // this.get_article_by_number();
+               // alert(123);
+            }
+            var vm = this;
+            // $("#IndentPopup").modal('toggle');
+
+            // vm.assortment.article_no =val.article_no;
+            // vm.assortment.billing_name =val.billing_name;
+        },
+        
+        getParentByNum : function(val){
+           // this.selected_customer = val;
+          // alert(val.part_no);
+           // console.log(event);
+           // $("#ParentItemPopup").modal('toggle');
+
+
+            var vm = this;
+           vm.bom.parent_item = val.part_no;
+            vm.bom.parent_name = val.name;
+            vm.bom.parent_type = val.part_type;
+            vm.bom.parent_item_id = val.id;
+alert(val.part_no+' '+val.id+'' +vm.bom.parent_item);
+           /* axios.get('/company/bomentry/'+val.part_no).then((response) => {
+                alert(response.data);
+                //document.write(response.data);
+
+             if ($.trim(response.data) != ''){
+                 vm.update_flag = true;
+                  vm.save_flag = false;
+
+             }
+                 console.log(response.data);
+              //  vm.bom = response.data;
+                this.items = response.data.items;
+            
+             
+             
+             // alert(response.data.items);
+            }, (error) => {
+             vm.errors = error.errors;
+            });*/
+            //$("#ParentItemPopup").modal('toggle');
+         },
+
+         getUnitPopup: function(event) {
+                console.log(event)
+                if (event.code == 'F1' || event.code == 'F2') {
+                    $("#unitPopup").modal('toggle');
+                    // this.get_article_by_number();
+                }
+            },
+            getUnit: function(ev) {
+                console.log(ev)
+                this.item_ob.unit = ev.lookup_value;
+                $("#unitPopup").modal('toggle');
+
+            },
+
         getIndentNo(){
             axios.get('/company/indent?details=true').then((response) => {
                 this.indent_details = response.data;
@@ -791,17 +787,16 @@
         },
         save_indent:function() {
             var vm = this;
-            vm.indent.items = vm.items; 
-            if(vm.items.length <= 0){
-                alert('please provide item')
-                return;
-            }
-            
-            axios.post( '/company/indent',vm.indent).then(response => {
-                this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
+            vm.bom.items = vm.items; 
+            alert(this.bom.items.id);
+            axios.post('/company/bomentry',this.bom).then(response => {
+              //  this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
                 alert('Succesfully Saved..!');
-                console.log(response.data)
-                  })
+                alert(response.data);
+                document.write(response.data);
+                console.log(response.data);
+              
+                })
             .catch((error)=>{
                 console.log('FAILURE!!');
             });
@@ -820,8 +815,6 @@
             var vm = this;
             vm.update_flag = true;
             axios.get('/company/indent/'+val.id).then((response) => {
-                document.write(response.data);
-               alert(response.data);
                 this.indent = response.data;
                 this.items = response.data.items;
                 $("#IndentPopup").modal('toggle');
@@ -832,7 +825,7 @@
      
      },
      mounted(){
-        this.getIndentNo();
+      // this.getIndentNo();
      },
      created(){
         this.get_colors();

@@ -113,7 +113,7 @@
             <div class="d-sm-flex align-items-center justify-content-between ">
                 <div>
                     <div >
-                        <h5 class="hd">#Purchase Indent </h5> 
+                        <h5 class="hd">#Work Order Generation for Stock / Sub Assembly</h5> 
                     </div> 
                 </div>
                 
@@ -125,76 +125,62 @@
                 <div class="card-header ">
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getIndent($event)" >
+                        <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getWorkOrder($event)" >
                                     <div class="form-group row">
-                                        <label class="col-5 form-control-label">Indent No*</label>
+                                        <label class="col-5 form-control-label">Work Order No*</label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_no" >
+                                            <input autocomplete="off" class="form-control"  v-model="wo_itm.wo_no" name="wo_no" >
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-6">
                                     <div class="form-group row">
-                                        <label class="col-4 form-control-label">Request Date* </label>
+                                        <label class="col-4 form-control-label">Date* </label>
                                         <div class="col-7 input-group">
-                                            <input autocomplete="off" class="form-control"  v-model="indent.indent_date" disabled>
+                                            <input autocomplete="off" class="form-control"   v-model="wo_itm.wo_date" :value="get_wo_date()" disabled>
                                         </div>
                                     </div>
                                 </div>
                                 
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getSectionPopup($event)" >
+                                <div class="col-md-4 col-lg-4 col-sm-6"  >
                                     <div class="form-group row">
-                                        <label class=" col-5 form-control-label">section*</label>
-                                        <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.section">
-                                        </div>
+                                        <label class=" col-5 form-control-label">WO Type*</label>
+                                       <select  class="standardSelect col-7 form-control"  v-model="wo_itm.wo_type" name="wo_type">
+                                           @foreach ($wo_type as $item)
+                                    <option value='{{$item->lookup_value}}'>{{$item->lookup_description}}</option>
+                                                 @endforeach
+                                            </select>
                                     </div>
                                 </div>
                                 
 
-                                <div class="col-md-6 col-lg-6 col-sm-12">
-                                    <div class="form-group row">
-                                        <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.section_des" disabled>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-sm-6" @keydown="getFamilyPopup($event)" >
+                                <div class="col-md-10 col-lg-10 col-sm-10"  >
                                     <div class="form-group row">
-                                        <label class=" col-5 form-control-label">family*</label>
-                                        <div class=" col-7 input-group">
-                                            <input autocomplete="off" class="form-control" v-model="indent.family">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-sm-12">
-                                    <div class="form-group row">
-                                        <div class="col-12 input-group">
-                                            <input autocomplete="off" class="form-control" name="unit" v-model="indent.family_des" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-lg-6 col-sm-6" >
-                                    <div class="form-group row">
-                                        <label class="col-3 form-control-label">Remarks</label>
+                                        <label class=" col-2 form-control-label">WO Desc*</label>
                                         <div class="col-9 input-group">
-                                            <input autocomplete="off" class="form-control" type="text"  v-model="indent.remarks">
+                                            <input autocomplete="off" class="form-control" name="unit" v-model="wo_itm.wo_description" >
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-3">
+                               </div>
+                            
+                            <div class="row">
+                                <div class="col-md-10 col-lg-10 col-sm-10" >
                                     <div class="form-group row">
-                                        <a href="#" class="btn btn-white btn-block">Copy Assortment</a>
+                                        <label class="col-2 form-control-label">Remarks</label>
+                                        <div class="col-9 input-group">
+                                            <input autocomplete="off" class="form-control" type="text"  v-model="wo_itm.remarks">
+                                        </div>
                                     </div>
-                                </div> -->
+                                </div>
+                               
                             </div>
+                         
                         </div>
                         <div class="col-md-3">
                             <!-- <div data-label="Sort By" class="df-example demo-forms">
@@ -240,11 +226,10 @@
                                     <th scope="col">Part No *</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Qty</th>
-                                    <th scope="col">UOM</th>
-                                    <th scope="col">Nd By date</th>
-                                    <th scope="col">Remarks</th>
+                                   
+                                    <th scope="col">Need By date</th>
+                                    <th scope="col">JobNo</th>
                                     <th scope="col">stat</th>
-                                    <th scope="col">mode</th>
                                     <th scope="col">action</th>
                                     </tr>
                                 </thead>
@@ -255,26 +240,23 @@
                                             @{{d.part_no}}
                                         </td>
                                         <td>
-                                             @{{d.name}}
+                                             @{{d.name}} 
                                         </td>
                                         <td>
-                                             <input autocomplete="off" class="form-control"  v-model="d.qty" >
+                                            <!-- <input autocomplete="off" class="form-control"  v-model="d.qty" >-->
+                                            @{{d.qty}} 
                                         </td>
-                                        <td>
-                                             @{{d.unit}} 
-                                        </td>
+                                       
                                         <td>
                                              @{{d.need_by_date}} 
                                         </td>
                                         <td>
-                                             @{{d.remark}} 
+                                             @{{d.job_no}} 
                                         </td>
                                         <td>
                                              @{{d.status}} 
                                         </td>
-                                        <td>
-                                             @{{d.mode}} 
-                                        </td>
+                                       
 
                                         <td>
                                             <a  class="action-icon " @click="deleteRow(index)"><i class="fa fa-trash-o tx-danger"></i>
@@ -292,21 +274,17 @@
                                         <td>
                                             <input autocomplete="off" class="form-control"  v-model="item_ob.qty" @keydown="add_ob($event)">
                                         </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.unit" disabled>
-                                        </td>
+                                       
                                         <td>
                                             <input autocomplete="off" type="date" class="form-control"  v-model="item_ob.need_by_date" >
                                         </td>
                                         <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.remark" @keydown="add_ob($event)">
+                                            <input autocomplete="off" class="form-control"  v-model="item_ob.job_no" @keydown="add_ob($event)">
                                         </td>
                                         <td>
                                             <input autocomplete="off" class="form-control"  v-model="item_ob.status" disabled>
                                         </td>
-                                        <td>
-                                            <input autocomplete="off" class="form-control"  v-model="item_ob.mode" disabled>
-                                        </td>
+                                       
                                         <td>
                                             #
                                         </td>
@@ -327,14 +305,11 @@
                 </div><!-- card-body -->
                 <div class="card-footer ">
                     <div class="row order-ft">
-                        <div class="col-md-2 col-lg-2 col-sm-6 offset-8 mg-t-5" v-if="print_flag">
-                                <button class="btn btn-outline-danger btn-block " @click="downloadPdf()">Print PO</button>
-                        </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-md-6 mg-t-5" v-if="!print_flag && !update_flag">
-                                <button class="btn btn-primary btn-block " @click="save_indent()">Save</button>
+                                <button class="btn btn-primary btn-block " @click="save_wo()">Save</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12 offset-6 mg-t-5" v-if="!print_flag && update_flag">
-                                <button class="btn btn-primary btn-block " @click="update_indent()">Update</button>
+                                <button class="btn btn-primary btn-block " @click="update_wo()">Update</button>
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-12  mg-t-5" >
                                 <button class="btn btn-secondary btn-block " @click="clear_indent()">Cancel</button>
@@ -473,7 +448,7 @@
                 </div>
             </div>
         </div><!-- yarn popup modal end -->
-        <div class="modal fade" id="IndentPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
+        <div class="modal fade" id="WorkOrderPopup" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel4"
   aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -483,11 +458,11 @@
                             
                         <div class="card-body card-block">
                             <choose-component 
-                            :id="'indents'"
-                            :table="'indents'" 
-                            :fields="['id','indent_no','department']" 
-                            :search_filed="'indent_no'" 
-                            @selected="getIndentEdit($event)"
+                            :id="'wo_no'"
+                            :table="'workorder_header'" 
+                            :fields="['id','wo_no']" 
+                            :search_filed="'wo_no'" 
+                            @selected="getWoEdit($event)"
                             ></choose-component>
                                 
                         </div>
@@ -525,6 +500,7 @@
     var app = new Vue({
        el: '#app',
        data: {
+           wo_itm:{},
            assortment:{},
            errors:[],
            shades : [],
@@ -673,7 +649,7 @@
                     alert('duplicate item');
                     return;
                 }
-                if(! vm.item_ob.unit){
+                if(! vm.item_ob.unit_id){
                     alert('please provide an item');
                     return;
                 }
@@ -743,16 +719,13 @@
         },
         clear_indent : function(){
             this.items =  [];
-            this.indent =   {
-                indent_no : '',
-                indent_date:'',
-                department :'',
-                product_group : '',
-                section : '',
-                section_des : '',
-                family : '',
-                family_des : '',
-            };
+            this.wo_itm =   {
+                wo_no : '',
+                wo_date:'',
+                wo_type :'',
+                wo_desc : '',
+                wo_remarks : '',
+                 };
             this.update_flag = false;
             this.print_flag = false;
             this.item_ob = {sl_no : 1, shade_code:'', colour: ''},
@@ -760,17 +733,13 @@
 
             
         },
-        getIndent : function(val){
+        getWorkOrder : function(val){
             if(event.code == 'F1' || event.code == 'F2'){
-                $("#IndentPopup").modal('toggle');
+                $("#WorkOrderPopup").modal('toggle');
                 // this.get_article_by_number();
             }
             var vm = this;
-            // $("#IndentPopup").modal('toggle');
-
-            // vm.assortment.article_no =val.article_no;
-            // vm.assortment.billing_name =val.billing_name;
-        },
+           },
         onFileChange(e) {
             this.selected_file = e.target.files[0];
             this.url = URL.createObjectURL(this.selected_file);
@@ -784,49 +753,53 @@
                 var day = dateObj.getUTCDate();
                 var year = dateObj.getUTCFullYear();
 
-                this.indent.indent_date = day + "-" + month + "-" + year
+               // this.indent.indent_date = day + "-" + month + "-" + year
             }, (error) => {
             // vm.errors = error.errors;
             });
         },
-        save_indent:function() {
+        get_wo_date:function(){
+               
+               var dateObj = new Date();
+               var month = dateObj.getUTCMonth() + 1; //months from 1-12
+               var day = dateObj.getUTCDate();
+               var year = dateObj.getUTCFullYear();
+
+               this.wo_itm.wo_date = day + "-" + month + "-" + year
+           },
+        save_wo:function() {
             var vm = this;
-            vm.indent.items = vm.items; 
-            if(vm.items.length <= 0){
-                alert('please provide item')
-                return;
-            }
-            
-            axios.post( '/company/indent',vm.indent).then(response => {
-                this.indent.indent_no = this.indent_details.prefix_string+ (parseInt(this.indent_details.last_value+1));
+            vm.wo_itm.items = vm.items; 
+              axios.post( '/company/workorder',this.wo_itm).then(response => {
                 alert('Succesfully Saved..!');
-                console.log(response.data)
-                  })
+                 vm.wo_itm = response.data;
+                 this.items = response.data.items;
+                 vm.update_flag = true;
+                 })
             .catch((error)=>{
                 console.log('FAILURE!!');
             });
          },
-         update_indent:function() {
-            axios.put('/company/indent/'+this.indent.id,this.indent)
+         update_wo:function() {
+             axios.put('/company/workorder/'+this.wo_itm.id,this.wo_itm)
             .then(response => {
                 alert('successfully updated!');
             })
             .catch((err) =>{
                 this.errors = err.response.data.errors;
+                alert(this.errors);
                 console.log(this.errors)
             });
          },
-         getIndentEdit : function(val){
+         getWoEdit : function(val){
             var vm = this;
             vm.update_flag = true;
-            axios.get('/company/indent/'+val.id).then((response) => {
-                document.write(response.data);
-               alert(response.data);
-                this.indent = response.data;
+           axios.get('/company/workorder/'+val.id).then((response) => {
+                vm.wo_itm = response.data;
                 this.items = response.data.items;
-                $("#IndentPopup").modal('toggle');
+                $("#WorkOrderPopup").modal('toggle');
             }, (error) => {
-            // vm.errors = error.errors;
+             vm.errors = error.errors;
             });
         }
      

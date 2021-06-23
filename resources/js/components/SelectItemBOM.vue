@@ -16,9 +16,9 @@
                     <thead>
                     <tr>
                         <th>S/L</th>
-                        <th>part No1</th>
-                        <th>part name1</th>
-                        <th>part unit1</th>
+                        <th>part No</th>
+                        <th>part name</th>
+                        <th>part unit</th>
                         <th>part category</th>
                         <th>part type</th>
                     </tr>
@@ -83,7 +83,7 @@
             get_customers_by:function(){
 
                 var vm = this;
-                axios.get('/quick/items?limit=5&name='+this.search+'&code='+this.search).then((response) => {
+                axios.get('/quick/itemsbom?limit=5&name='+this.search+'&code='+this.search).then((response) => {
                     vm.customers = response.data;
                     // $("#itemModal").modal('toggle');
                 }, (error) => {

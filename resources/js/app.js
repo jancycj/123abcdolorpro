@@ -30,6 +30,7 @@ Vue.component('nav-bar', require('./components/NavBarComponent.vue').default);
 Vue.component('choose-customer', require('./components/SelectCustomer.vue').default);
 Vue.component('choose-component', require('./components/SelectComponent.vue').default);
 Vue.component('raw-component', require('./components/RawSelectComponent.vue').default);
+Vue.component('choose-itembom', require('./components/SelectItemBOM.vue').default);
 Vue.component('choose-item', require('./components/SelectItem.vue').default);
 Vue.component('add-user', require('./components/AddUserComponent.vue').default);
 
